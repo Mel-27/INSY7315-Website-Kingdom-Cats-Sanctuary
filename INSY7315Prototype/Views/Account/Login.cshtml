@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Sign in";
+}
+
+<div class="min-h-screen flex items-center justify-center p-6">
+    <main class="w-full max-w-md">
+        <div class="bg-[var(--card)] rounded-2xl shadow-xl border border-[var(--hairline)] px-8 py-10 sm:px-10">
+
+            <!-- Logo + wordmark -->
+            <div class="flex flex-col items-center text-center mb-8">
+                <img src="~/images/KKS logo.jpeg" alt="Kingdom Cats Sanctuary logo" class="w-16 h-16 object-contain mb-4">
+                <p class="text-[11px] tracking-[0.2em] uppercase text-[var(--muted)] mb-1">A heaven for felines</p>
+                <h1 class="font-display italic text-2xl text-[var(--red)]">Kingdom Cats Sanctuary</h1>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-[var(--hairline)] mb-7" role="tablist">
+                <button id="tab-login" class="tab-btn active flex-1 pb-3 text-sm font-semibold tracking-wide uppercase" role="tab" aria-selected="true" onclick="setMode('login')">
+                    Login<span class="tab-underline"></span>
+                </button>
+                <button id="tab-register" class="tab-btn flex-1 pb-3 text-sm font-semibold tracking-wide uppercase" role="tab" aria-selected="false" onclick="setMode('register')">
+                    Register<span class="tab-underline"></span>
+                </button>
+            </div>
+
+            <p id="mode-subtext" class="text-sm text-[var(--muted)] text-center mb-6 -mt-2">Sign in to manage your donations, bookings, and adoption journey.</p>
+
+            <!-- Form -->
+            <form asp-controller="Account" asp-action="Login" method="post" class="space-y-5">
+
+                <div id="field-name" class="field-panel hidden">
+                    <label for="fullname" class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">Full name</label>
+                    <input id="fullname" name="FullName" type="text" placeholder="Your full name"
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">Email address</label>
+                    <input id="email" name="Email" type="email" placeholder="you@example.com"
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label for="password" class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)]">Password</label>
+                        <a id="forgot-link" href="#" class="text-xs font-medium text-[var(--red)] hover:text-[var(--red-dark)]">Forgot?</a>
+                    </div>
+                    <input id="password" name="Password" type="password" placeholder="••••••••"
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                </div>
+
+                <div id="field-confirm" class="field-panel hidden">
+                    <label for="confirm" class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">Confirm password</label>
+                    <input id="confirm" name="ConfirmPassword" type="password" placeholder="••••••••"
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                </div>
+
+                <button id="submit-btn" type="submit" class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3 mt-2">
+                    Sign in
+                </button>
+            </form>
+
+            <p class="text-center text-sm text-[var(--muted)] mt-6">
+                <span id="switch-text">Don't have an account?</span>
+                <button type="button" onclick="setMode(currentMode === 'login' ? 'register' : 'login')" class="font-semibold text-[var(--ink)] hover:text-[var(--red)] underline underline-offset-2">
+                    <span id="switch-action">Sign up</span>
+                </button>
+            </p>
+        </div>
+
+        <p class="text-center text-xs text-[var(--muted)] mt-6">Kingdom Cats Sanctuary &middot; non-kill rescue for abandoned &amp; abused cats</p>
+    </main>
+</div>
+
+@section Scripts {
+    <script>
+        let currentMode = 'login';
+        function setMode(mode){
+          currentMode = mode;
+          const isLogin = mode === 'login';
+
+          document.getElementById('tab-login').classList.toggle('active', isLogin);
+          document.getElementById('tab-login').setAttribute('aria-selected', isLogin);
+          document.getElementById('tab-register').classList.toggle('active', !isLogin);
+          document.getElementById('tab-register').setAttribute('aria-selected', !isLogin);
+
+          document.getElementById('field-name').classList.toggle('hidden', isLogin);
+          document.getElementById('field-confirm').classList.toggle('hidden', isLogin);
+          document.getElementById('forgot-link').classList.toggle('hidden', !isLogin);
+
+          document.getElementById('submit-btn').textContent = isLogin ? 'Sign in' : 'Create account';
+          document.getElementById('mode-subtext').textContent = isLogin
+            ? 'Sign in to manage your donations, bookings, and adoption journey.'
+            : 'Join the sanctuary community — donate, adopt, and follow our cats.';
+          document.getElementById('switch-text').textContent = isLogin ? "Don't have an account?" : 'Already have an account?';
+          document.getElementById('switch-action').textContent = isLogin ? 'Sign up' : 'Sign in';
+
+          const form = document.querySelector('form');
+          form.action = isLogin ? '@Url.Action("Login", "Account")' : '@Url.Action("Register", "Account")';
+        }
+    </script>
+}
