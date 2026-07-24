@@ -1,3 +1,6 @@
+using INSY7315Prototype.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace INSY7315Prototype
 {
     public class Program
@@ -8,6 +11,8 @@ namespace INSY7315Prototype
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<KingdomCatsDb>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("KingdomCatsDb")));
 
             var app = builder.Build();
 
