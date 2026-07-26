@@ -5,10 +5,7 @@
 
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-10">
 
-    <div class="flex items-center justify-between mb-2">
-        <h1 class="font-display text-3xl">Find your companion</h1>
-       
-    </div>
+    <h1 class="font-display text-3xl mb-2">Find your companion</h1>
     <p class="text-[var(--muted)] text-sm max-w-2xl mb-6">
         Our sanctuary is home to gentle souls seeking their forever families. Every adoption saves a life and brings warmth to a home.
     </p>
@@ -24,9 +21,7 @@
         <button data-filter="Senior" class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
             Senior Cats
         </button>
-        <button data-filter="SpecialNeeds" class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
-            Special Needs
-        </button>
+       
     </div>
 
     <!-- Cat grid -->
@@ -35,23 +30,25 @@
         {
             <div class="cat-card bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden" data-category="@cat.Category">
 
-                <div class="aspect-square bg-[var(--hairline)]/40 relative overflow-hidden">
+                <div class="pixelated-image-card aspect-square" title="Double-click to reveal">
                     @if (!string.IsNullOrEmpty(cat.Badge))
                     {
-                        <span class="absolute top-3 right-3 z-10 bg-[var(--ink)] text-white text-[10px] tracking-wide uppercase px-2 py-1 rounded-full">
+                        <span class="absolute top-3 right-3 z-20 bg-[var(--ink)] text-white text-[10px] tracking-wide uppercase px-2 py-1 rounded-full">
                             @cat.Badge
                         </span>
                     }
                     @if (!string.IsNullOrEmpty(cat.PhotoUrl))
                     {
-                        <img src="@cat.PhotoUrl" alt="@cat.Name" class="w-full h-full object-cover">
+                        <img src="@cat.PhotoUrl" alt="@cat.Name" class="pixelated-image-card__img">
                     }
                     else
                     {
-                        <div class="w-full h-full flex items-center justify-center">
+                        <div class="w-full h-full flex items-center justify-center bg-[var(--hairline)]/40">
                             <p class="text-xs text-[var(--muted)] uppercase tracking-wide">No photo yet</p>
                         </div>
                     }
+                    <div class="pixelated-image-card__pixels"></div>
+                    <span class="pixelated-image-card__hint">Double-click to reveal</span>
                 </div>
 
                 <div class="p-4">
@@ -84,6 +81,12 @@
     <p id="no-results" class="hidden text-center text-sm text-[var(--muted)] py-12">
         No cats match this filter right now — check back soon!
     </p>
+
+    <div class="text-center mt-8">
+        <button id="see-more-btn" class="hidden bg-[var(--card)] border border-[var(--hairline)] text-sm font-semibold uppercase tracking-wide px-6 py-3 rounded-lg hover:border-[var(--red)] hover:text-[var(--red)] transition-colors">
+            See more
+        </button>
+    </div>
 </section>
 
 <style>
@@ -99,27 +102,186 @@
             color: white;
             border-color: var(--ink);
         }
+
+    /* Hover highlight outline on the whole card */
+    .cat-card {
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+        .cat-card:hover {
+            box-shadow: 0 0 0 3px var(--red), 0 10px 24px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+    /* Pixel reveal image card */
+    .pixelated-image-card {
+        position: relative;
+        overflow: hidden;
+        background-color: var(--hairline);
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .pixelated-image-card__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .pixelated-image-card__pixels {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        pointer-events: none;
+    }
+
+    .pixelated-image-card__pixel {
+        background-color: var(--cream);
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity .35s ease, transform .35s ease;
+    }
+
+        .pixelated-image-card__pixel.revealed {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+    .pixelated-image-card__hint {
+        position: absolute;
+        inset: 0;
+        z-index: 11;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1rem;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--ink);
+        pointer-events: none;
+        transition: opacity .3s ease;
+    }
+
+        .pixelated-image-card__hint.hidden-hint {
+            opacity: 0;
+        }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .pixelated-image-card__pixel {
+            transition: none !important;
+        }
+    }
 </style>
 
 @section Scripts {
     <script>
+        const PAGE_SIZE = 6;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function buildPixelGrid(wrap) {
+            const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
+            if (!pixelContainer || wrap.dataset.built === 'true') return;
+            wrap.dataset.built = 'true';
+
+            const total = 36;
+            for (let i = 0; i < total; i++) {
+                const pixel = document.createElement('div');
+                pixel.className = 'pixelated-image-card__pixel';
+                pixelContainer.appendChild(pixel);
+            }
+        }
+
+        // Re-cover the image so the reveal animation can play again
+        function coverImage(wrap) {
+            const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
+            if (!pixelContainer) return;
+            pixelContainer.querySelectorAll('.pixelated-image-card__pixel')
+                .forEach(p => p.classList.remove('revealed'));
+        }
+
+        function revealPixels(wrap) {
+            const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
+            if (!pixelContainer) return;
+
+            const hint = wrap.querySelector('.pixelated-image-card__hint');
+            if (hint) hint.classList.add('hidden-hint');
+
+            const pixels = Array.from(pixelContainer.querySelectorAll('.pixelated-image-card__pixel'));
+
+            if (prefersReducedMotion) {
+                pixels.forEach(p => p.classList.add('revealed'));
+                return;
+            }
+
+            const order = pixels.map((p, i) => i).sort(() => Math.random() - 0.5);
+            order.forEach((pixelIndex, step) => {
+                setTimeout(() => {
+                    pixels[pixelIndex].classList.add('revealed');
+                }, step * 12);
+            });
+        }
+
+        function initCard(wrap) {
+            if (!wrap || wrap.dataset.initialized === 'true') {
+                if (wrap) buildPixelGrid(wrap);
+                return;
+            }
+            wrap.dataset.initialized = 'true';
+
+            buildPixelGrid(wrap);
+
+            // Auto-reveal once, right after load
+            requestAnimationFrame(() => revealPixels(wrap));
+
+            // Double-click always replays the effect, even after it's already revealed
+            wrap.addEventListener('dblclick', function () {
+                coverImage(wrap);
+                requestAnimationFrame(() => revealPixels(wrap));
+            });
+        }
+
+        function applyDisplay() {
+            const activeFilter = document.querySelector('.filter-pill.active').getAttribute('data-filter');
+            const allCards = Array.from(document.querySelectorAll('.cat-card'));
+            const matching = allCards.filter(card =>
+                activeFilter === 'All' || card.getAttribute('data-category') === activeFilter
+            );
+
+            allCards.forEach(card => card.style.display = 'none');
+
+            const visibleCount = Math.min(parseInt(document.getElementById('cat-grid').dataset.visible || PAGE_SIZE), matching.length);
+            matching.slice(0, visibleCount).forEach(card => {
+                card.style.display = '';
+                initCard(card.querySelector('.pixelated-image-card'));
+            });
+
+            document.getElementById('no-results').classList.toggle('hidden', matching.length > 0);
+            document.getElementById('see-more-btn').classList.toggle('hidden', visibleCount >= matching.length);
+        }
+
         document.querySelectorAll('.filter-pill').forEach(function (pill) {
             pill.addEventListener('click', function () {
                 document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
                 this.classList.add('active');
-
-                const filter = this.getAttribute('data-filter');
-                const cards = document.querySelectorAll('.cat-card');
-                let visibleCount = 0;
-
-                cards.forEach(function (card) {
-                    const matches = filter === 'All' || card.getAttribute('data-category') === filter;
-                    card.style.display = matches ? '' : 'none';
-                    if (matches) visibleCount++;
-                });
-
-                document.getElementById('no-results').classList.toggle('hidden', visibleCount > 0);
+                document.getElementById('cat-grid').dataset.visible = PAGE_SIZE;
+                applyDisplay();
             });
         });
+
+        document.getElementById('see-more-btn').addEventListener('click', function () {
+            const grid = document.getElementById('cat-grid');
+            grid.dataset.visible = parseInt(grid.dataset.visible || PAGE_SIZE) + PAGE_SIZE;
+            applyDisplay();
+        });
+
+        document.getElementById('cat-grid').dataset.visible = PAGE_SIZE;
+        applyDisplay();
     </script>
 }
