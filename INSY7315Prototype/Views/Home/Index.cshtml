@@ -7,16 +7,16 @@
     <div class="bg-[var(--ink)] aspect-[4/3] md:aspect-[16/9] min-h-[420px] md:min-h-[560px] w-full relative overflow-hidden">
         <img src="~/images/catFour.jpeg" alt="Main Cat for KCS" class="absolute inset-0 w-full h-full object-cover animate-kenburns">
         <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 2px, transparent 2.5px), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 2px, transparent 2.5px); background-size: 50px 50px;"></div>
-        <!-- Stronger overlay so text is readable regardless of what's behind it -->
         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
     </div>
-
     <div class="absolute bottom-0 left-0 right-0 pt-20 pb-8 px-6 md:px-12">
         <div class="max-w-6xl mx-auto animate-fade-up">
             <span class="inline-block bg-[var(--red)] text-white text-[11px] tracking-[0.2em] uppercase px-3 py-1 rounded-full mb-4 shadow-lg">Non-kill rescue sanctuary</span>
-            <h1 class="font-display text-3xl md:text-5xl text-white max-w-2xl leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+
+            <h1 id="hero-heading" class="font-display text-3xl md:text-5xl text-white max-w-2xl leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
                 Every life is worth a <span class="italic text-[var(--red)]">thousand</span> purrs.
             </h1>
+
             <p class="text-white max-w-xl mt-4 drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
                 Kingdom Cats Sanctuary is a dedicated no-kill haven providing permanent solace and finding forever homes for abandoned and abused cats.
             </p>
@@ -32,11 +32,45 @@
     </div>
 </section>
 
+<!-- This section makes sure the Split Text animation is done -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            gsap.registerPlugin(SplitText);
+
+            document.fonts.ready.then(function () {
+                const heading = document.getElementById('hero-heading');
+                if (!heading) return;
+
+                const split = new SplitText(heading, {
+                    type: 'chars',
+                    charsClass: 'split-char'
+                });
+
+                gsap.fromTo(
+                    split.chars,
+                    { opacity: 0, y: 40 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.25,
+                        ease: 'power3.out',
+                        stagger: 0.03,
+                        force3D: true
+                    }
+                );
+            });
+        });
+    </script>
+}
+
 <!-- Promise + Stats -->
 <section class="max-w-6xl mx-auto px-6 md:px-12 -mt-1 py-12 grid md:grid-cols-3 gap-6">
 
     <div class="relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center order-1 md:order-1">
-        <img src="~/images/catSix.jpeg" alt="Cat is multi colour" class="absolute inset-0 w-full h-full object-cover">
+        <img src="~/images/catWhite.jpeg" alt="Cat is multi colour" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10"></div>
         <div class="relative z-10">
             <p class="text-3xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">1,240+</p>
@@ -152,51 +186,235 @@
     <a asp-controller="Cats" asp-action="Index" class="md:hidden block text-center text-sm font-semibold text-[var(--red)] mt-6">View all cats &rarr;</a>
 </section>
 
-<!-- How You Can Help -->
+<!-- Meet the Founders -->
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
-    <h2 class="font-display text-2xl text-center mb-8">How you can help</h2>
-    <div class="grid md:grid-cols-3 gap-6">
+    <h2 class="font-display text-2xl text-center mb-2">Meet the founders of KCS</h2>
+    <p class="text-[var(--muted)] text-sm text-center max-w-xl mx-auto mb-10">
+        The two people behind Kingdom Cats Sanctuary and the vow that keeps it running.
+    </p>
 
-        <div class="text-center px-4">
-            <div class="w-12 h-12 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-4">
-                <img src="https://www.image2url.com/r2/default/images/1785068623108-de61d275-77ae-40ab-a784-cf19f16e99ce.jpeg" alt="image" />
-                class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.1 0-2 .9-2 2s.9 2 2 2 2 .9 2 2-.9 2-2 2m0-8V6m0 12v2M12 8c1.1 0 2 .9 2 2m-2-2c-1.1 0-2 .9-2 2" />
-                    <circle cx="12" cy="12" r="9" stroke-linecap="round" />
-              
+    <div class="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+            <div class="aspect-square w-full overflow-hidden">
+                <img src="~/images/GregTemp.jpeg" alt="Photo of founder Greg Bower" class="w-full h-full object-cover">
             </div>
-            <h3 class="font-semibold mb-1">Donate</h3>
-            <p class="text-sm text-[var(--muted)]">Give toward food, medical care, or a specific fundraiser event.</p>
+            <div class="p-6">
+                <h3 class="font-display text-lg mb-1">Greg Bower</h3>
+                <p class="text-[11px] tracking-[0.15em] uppercase text-[var(--red)] mb-3">Co-Founder</p>
+                <p class="text-sm text-[var(--muted)] leading-relaxed">
+                    Passionate about animal welfare, Greg is committed to providing every cat with a safe,
+                    caring environment where they can recover and thrive. 
+                    He works to promote responsible pet ownership, community education, and compassionate care while ensuring that every cat receives the love and support they deserve.
+                </p>
+            </div>
         </div>
 
-        <div class="text-center px-4">
-            <div class="w-12 h-12 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-4">
-                <img src="https://www.image2url.com/r2/default/images/1785069645851-f3d3d1ac-6d74-42d6-9474-aca005a8166c.jpeg" alt="image" /> class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-                    <circle cx="12" cy="12" r="9" stroke-linecap="round" />
-                
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+            <div class="aspect-square w-full overflow-hidden">
+                <img src="~/images/jennyTemp.jpeg" alt="Photo of founder Jenny Bower" class="w-full h-full object-cover">
             </div>
-            <h3 class="font-semibold mb-1">Book a session</h3>
-            <p class="text-sm text-[var(--muted)]">Spend time with our kittens through a purr-therapy session.</p>
-        </div>
-
-        <div class="text-center px-4">
-            <div class="w-12 h-12 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-4">
-                <img src="https://www.image2url.com/r2/default/images/1785069101914-81d956fc-1d63-485c-a974-ef5d92aec691.jpeg" alt="image" /> class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
-               
+            <div class="p-6">
+                <h3 class="font-display text-lg mb-1">Jenny Bower</h3>
+                <p class="text-[11px] tracking-[0.15em] uppercase text-[var(--red)] mb-3">Co-Founder</p>
+                <p class="text-sm text-[var(--muted)] leading-relaxed">
+                    Jenny is dedicated to creating a safe and nurturing environment where every cat has the opportunity to heal and find a loving home. 
+                    She is committed to promoting compassion, responsible pet ownership, and community awareness while advocating for the lifelong wellbeing of every cat in the sanctuary.
+                </p>
             </div>
-            <h3 class="font-semibold mb-1">Adopt</h3>
-            <p class="text-sm text-[var(--muted)]">Browse our residents and give one of them a forever home.</p>
         </div>
 
     </div>
 </section>
 
-<!-- Community CTA -->
+
+<!-- How You Can Help -->
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
+    <h2 class="font-display text-2xl text-center mb-8">How you can help</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+            <div class="aspect-[4/3] w-full overflow-hidden">
+                <img src="~/images/catFood.jpeg" alt="Cat receiving care, representing donations" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6">
+                <h3 class="font-semibold mb-1">Donate</h3>
+                <p class="text-sm text-[var(--muted)]">Give toward food, medical care, or a specific fundraiser event.</p>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+            <div class="aspect-[4/3] w-full overflow-hidden">
+                <img src="~/images/catNine.jpeg" alt="Black cat during a purr-therapy session" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6">
+                <h3 class="font-semibold mb-1">Book a session</h3>
+                <p class="text-sm text-[var(--muted)]">Spend time with our kittens through a purr-therapy session.</p>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+            <div class="aspect-[4/3] w-full overflow-hidden">
+                <img src="~/images/catOrange.jpeg" alt="Cat available for adoption" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6">
+                <h3 class="font-semibold mb-1">Adopt</h3>
+                <p class="text-sm text-[var(--muted)]">Browse our residents and give one of them a forever home.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Reviews -->
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
+    <h2 class="font-display text-2xl text-center mb-2">Check Out Our Reviews!</h2>
+    <p class="text-[var(--muted)] text-sm text-center max-w-xl mx-auto mb-10">
+        Stories from adopters, donors, and visitors of the sanctuary.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Reviews Start From Here -->
+            <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                "An amazing place to visit, if you looking to adopt, it's a must"
+            </p>
+            <p class="text-sm font-semibold">— Wouter Geldenhuys</p>
+            <p class="text-sm font-semibold">February 15, 2020</p>
+        </div>
+
+        <!-- Another Review -->
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                "Animal loving people who give of their time and from their hearts. Bless you"
+            </p>
+            <p class="text-sm font-semibold">— Pamiann Mac Gregor</p>
+            <p class="text-sm font-semibold">October 26, 2019</p>
+        </div>
+
+
+        <!-- Another Review -->
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                "Homing a furbaby who doesn't expect anything more than love, food and a safe place to be is the best thing I have ever done ...
+                I so admire Greg and your team xxx"
+        
+            </p>
+            <p class="text-sm font-semibold">— Shirley Lyle Gould</p>
+            <p class="text-sm font-semibold">May 16, 2019</p>
+        </div>
+
+        <!-- Another Review -->
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                "What a wonderful initiative & what lovely people that run it! 
+                I am blown away by their love for their animals xxx Thank you Jenny & Greg from the bottom of my heart! Take care!"
+              
+            </p>
+            <p class="text-sm font-semibold">— Shanna Stokes</p>
+            <p class="text-sm font-semibold">May 25, 2018</p>
+        </div>
+
+        <!-- Another Review -->
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                "Most amazing place in the world , the cats are all so happy and well looked after."
+            </p>
+            <p class="text-sm font-semibold">— Jay Jamieson</p>
+            <p class="text-sm font-semibold">August 9, 2017</p>
+        </div>
+
+    </div>
+</section>
+<style>
+    .review-card {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+
+        .review-card.bounce-in {
+            animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+    @@keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+        }
+
+        60% {
+            opacity: 1;
+            transform: translateY(-8px) scale(1.03);
+        }
+
+        80% {
+            transform: translateY(4px) scale(0.99);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .review-card {
+            opacity: 1;
+            transform: none;
+        }
+
+            .review-card.bounce-in {
+                animation: none !important;
+            }
+    }
+</style>
+
+<script>
+    (function () {
+        const cards = document.querySelectorAll('.review-card');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReduced) {
+            cards.forEach(function (c) { c.style.opacity = '1'; c.style.transform = 'none'; });
+            return;
+        }
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry, i) {
+                if (entry.isIntersecting) {
+                    const index = Array.from(cards).indexOf(entry.target);
+                    setTimeout(function () {
+                        entry.target.classList.add('bounce-in');
+                    }, index * 120);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        cards.forEach(function (c) { observer.observe(c); });
+    })();
+</script>
+
+<!-- Community Blog (KCS) -->
 <section class="bg-[var(--ink)] text-white py-12 mt-4">
     <div class="max-w-6xl mx-auto px-6 md:px-12 text-center">
-        <h2 class="font-display text-2xl mb-3">Join the community</h2>
+        <h2 class="font-display text-2xl mb-3">Join the Kingdom Cats Sanctuary community</h2>
         <p class="text-white/70 max-w-xl mx-auto mb-6 text-sm">
             Follow adoption stories, share cat tips, and help reunite lost cats with their families.
         </p>
@@ -211,10 +429,6 @@
 <footer class="border-t border-[var(--hairline)] py-8">
     <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
         <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
-        <div class="flex gap-4">
-            <a asp-controller="Contact" asp-action="Index" class="hover:text-[var(--red)]">Contact</a>
-            <a asp-controller="Merch" asp-action="Index" class="hover:text-[var(--red)]">Merch</a>
-            <a asp-controller="Events" asp-action="Index" class="hover:text-[var(--red)]">Events</a>
-        </div>
+       
     </div>
 </footer>

@@ -14,6 +14,7 @@ namespace INSY7315Prototype
             builder.Services.AddDbContext<KingdomCatsDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("KingdomCatsDb")));
 
+          
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
