@@ -1,9 +1,176 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Kingdom Cats Sanctuary</h1>
-    <p>Learn about <a href="https://www.image2url.com/9b800278-f3b1-4e03-96f3-cd34c8f35eaf">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="relative">
+    <div class="bg-[var(--ink)] aspect-[16/9] md:aspect-[21/9] w-full relative overflow-hidden">
+        <img src="~/images/catFour.jpeg" alt="Main Cat for KCS" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 2px, transparent 2.5px), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 2px, transparent 2.5px); background-size: 50px 50px;"></div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[var(--ink)]/80 to-transparent pt-20 pb-8 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+            <span class="inline-block bg-[var(--red)] text-black text-[11px] tracking-[0.2em] uppercase px-3 py-1 rounded-full mb-4">Non-kill rescue sanctuary</span>
+            <h1 class="font-display text-3xl md:text-5xl text-black max-w-2xl leading-tight">
+                Every life is worth a <span class="italic text-[var(--red)]">thousand</span> purrs.
+            </h1>
+            <p class="text-black/80 max-w-xl mt-4">
+                Kingdom Cats Sanctuary is a dedicated no-kill haven providing permanent solace and finding forever homes for abandoned and abused cats.
+            </p>
+            <div class="flex flex-wrap gap-3 mt-6">
+                <a asp-controller="Donations" asp-action="Index" class="btn-primary text-black text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3">
+                    Donate now
+                </a>
+                <a asp-controller="Cats" asp-action="Index" class="bg-white/10 border border-white/30 text-white text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3 hover:bg-white/20 transition-colors">
+                    Meet the cats
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Promise + Stats -->
+<section class="max-w-6xl mx-auto px-6 md:px-12 -mt-1 py-12 grid md:grid-cols-3 gap-6">
+    <div class="md:col-span-2 bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-8">
+        <h2 class="font-display text-xl mb-3">Our no-kill promise</h2>
+        <p class="text-[var(--muted)] text-sm leading-relaxed">
+            At Kingdom Cats Sanctuary, "no-kill" isn't just a label — it's a sacred vow. We believe no cat should ever be euthanised due to lack of space or treatable medical conditions. We provide a lifetime commitment to every resident who enters our gates, ensuring they live with dignity, love, and professional care for as long as they need us.
+        </p>
+    </div>
+    <div class="relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center">
+        <img src="~/images/catSix.jpeg" alt="Cat is multi colour" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-[var(--ink)]/60"></div>
+
+        <div class="relative z-10">
+            <p class="text-2xl font-bold">1,240+</p>
+            <p class="text-[11px] tracking-[0.15em] uppercase text-black/60">Cats saved</p>
+            <p class="text-xs text-black-50 mt-2">And counting, thanks to your support.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Cats -->
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-8">
+    <div class="flex items-end justify-between mb-6">
+        <div>
+            <h2 class="font-display text-2xl">Looking for a forever home</h2>
+            <p class="text-[var(--muted)] text-sm mt-1">A few of our residents waiting to meet you.</p>
+        </div>
+        <a asp-controller="Cats" asp-action="Index" class="hidden md:inline text-sm font-semibold text-[var(--red)] hover:text-[var(--red-dark)]">View all &rarr;</a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-square bg-[var(--hairline)]/40 flex items-center justify-center">
+                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Cat photo</p>
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold">Oliver</h3>
+                <p class="text-xs text-[var(--muted)] mb-3">2 years &middot; Male</p>
+                <a asp-controller="Bookings" asp-action="Create" asp-route-catId="1"
+                   class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
+                    Book a viewing
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-square bg-[var(--hairline)]/40 flex items-center justify-center">
+                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Cat photo</p>
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold">Luna</h3>
+                <p class="text-xs text-[var(--muted)] mb-3">4 years &middot; Female</p>
+                <a asp-controller="Bookings" asp-action="Create" asp-route-catId="2"
+                   class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
+                    Book a viewing
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-square bg-[var(--hairline)]/40 flex items-center justify-center">
+                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Cat photo</p>
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold">Mochi</h3>
+                <p class="text-xs text-[var(--muted)] mb-3">6 months &middot; Female</p>
+                <a asp-controller="Bookings" asp-action="Create" asp-route-catId="3"
+                   class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
+                    Book a viewing
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <a asp-controller="Cats" asp-action="Index" class="md:hidden block text-center text-sm font-semibold text-[var(--red)] mt-6">View all cats &rarr;</a>
+</section>
+
+<!-- How You Can Help -->
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
+    <h2 class="font-display text-2xl text-center mb-8">How you can help</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="text-center px-4">
+            <div class="w-12 h-12 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-4">
+                <img src="https://www.image2url.com/r2/default/images/1785068623108-de61d275-77ae-40ab-a784-cf19f16e99ce.jpeg" alt="image" />
+                class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.1 0-2 .9-2 2s.9 2 2 2 2 .9 2 2-.9 2-2 2m0-8V6m0 12v2M12 8c1.1 0 2 .9 2 2m-2-2c-1.1 0-2 .9-2 2" />
+                    <circle cx="12" cy="12" r="9" stroke-linecap="round" />
+              
+            </div>
+            <h3 class="font-semibold mb-1">Donate</h3>
+            <p class="text-sm text-[var(--muted)]">Give toward food, medical care, or a specific fundraiser event.</p>
+        </div>
+
+        <div class="text-center px-4">
+            <div class="w-12 h-12 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-4">
+                <img src="https://www.image2url.com/r2/default/images/1785069645851-f3d3d1ac-6d74-42d6-9474-aca005a8166c.jpeg" alt="image" /> class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
+                    <circle cx="12" cy="12" r="9" stroke-linecap="round" />
+                
+            </div>
+            <h3 class="font-semibold mb-1">Book a session</h3>
+            <p class="text-sm text-[var(--muted)]">Spend time with our kittens through a purr-therapy session.</p>
+        </div>
+
+        <div class="text-center px-4">
+            <div class="w-12 h-12 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-4">
+                <img src="https://www.image2url.com/r2/default/images/1785069101914-81d956fc-1d63-485c-a974-ef5d92aec691.jpeg" alt="image" /> class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+               
+            </div>
+            <h3 class="font-semibold mb-1">Adopt</h3>
+            <p class="text-sm text-[var(--muted)]">Browse our residents and give one of them a forever home.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Community CTA -->
+<section class="bg-[var(--ink)] text-white py-12 mt-4">
+    <div class="max-w-6xl mx-auto px-6 md:px-12 text-center">
+        <h2 class="font-display text-2xl mb-3">Join the community</h2>
+        <p class="text-white/70 max-w-xl mx-auto mb-6 text-sm">
+            Follow adoption stories, share cat tips, and help reunite lost cats with their families.
+        </p>
+        <a asp-controller="Community" asp-action="Index"
+           class="inline-block btn-primary text-white text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3">
+            Visit the community feed
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-[var(--hairline)] py-8">
+    <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
+        <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
+        <div class="flex gap-4">
+            <a asp-controller="Contact" asp-action="Index" class="hover:text-[var(--red)]">Contact</a>
+            <a asp-controller="Merch" asp-action="Index" class="hover:text-[var(--red)]">Merch</a>
+            <a asp-controller="Events" asp-action="Index" class="hover:text-[var(--red)]">Events</a>
+        </div>
+    </div>
+</footer>
