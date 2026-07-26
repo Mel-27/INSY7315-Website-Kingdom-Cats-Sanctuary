@@ -4,24 +4,27 @@
 
 <!-- Hero Section -->
 <section class="relative">
-    <div class="bg-[var(--ink)] aspect-[16/9] md:aspect-[21/9] w-full relative overflow-hidden">
-        <img src="~/images/catFour.jpeg" alt="Main Cat for KCS" class="absolute inset-0 w-full h-full object-cover">
+    <div class="bg-[var(--ink)] aspect-[4/3] md:aspect-[16/9] min-h-[420px] md:min-h-[560px] w-full relative overflow-hidden">
+        <img src="~/images/catFour.jpeg" alt="Main Cat for KCS" class="absolute inset-0 w-full h-full object-cover animate-kenburns">
         <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 2px, transparent 2.5px), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 2px, transparent 2.5px); background-size: 50px 50px;"></div>
+        <!-- Stronger overlay so text is readable regardless of what's behind it -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
     </div>
-    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[var(--ink)]/80 to-transparent pt-20 pb-8 px-6 md:px-12">
-        <div class="max-w-6xl mx-auto">
-            <span class="inline-block bg-[var(--red)] text-black text-[11px] tracking-[0.2em] uppercase px-3 py-1 rounded-full mb-4">Non-kill rescue sanctuary</span>
-            <h1 class="font-display text-3xl md:text-5xl text-black max-w-2xl leading-tight">
+
+    <div class="absolute bottom-0 left-0 right-0 pt-20 pb-8 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto animate-fade-up">
+            <span class="inline-block bg-[var(--red)] text-white text-[11px] tracking-[0.2em] uppercase px-3 py-1 rounded-full mb-4 shadow-lg">Non-kill rescue sanctuary</span>
+            <h1 class="font-display text-3xl md:text-5xl text-white max-w-2xl leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
                 Every life is worth a <span class="italic text-[var(--red)]">thousand</span> purrs.
             </h1>
-            <p class="text-black/80 max-w-xl mt-4">
+            <p class="text-white max-w-xl mt-4 drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
                 Kingdom Cats Sanctuary is a dedicated no-kill haven providing permanent solace and finding forever homes for abandoned and abused cats.
             </p>
             <div class="flex flex-wrap gap-3 mt-6">
-                <a asp-controller="Donations" asp-action="Index" class="btn-primary text-black text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3">
+                <a asp-controller="Donations" asp-action="Index" class="btn-primary text-white text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3 shadow-lg">
                     Donate now
                 </a>
-                <a asp-controller="Cats" asp-action="Index" class="bg-white/10 border border-white/30 text-white text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3 hover:bg-white/20 transition-colors">
+                <a asp-controller="Cats" asp-action="Index" class="bg-white/10 border border-white/30 text-white text-sm font-semibold tracking-[0.1em] uppercase rounded-lg px-6 py-3 hover:bg-white/20 transition-colors backdrop-blur-sm">
                     Meet the cats
                 </a>
             </div>
@@ -31,23 +34,64 @@
 
 <!-- Promise + Stats -->
 <section class="max-w-6xl mx-auto px-6 md:px-12 -mt-1 py-12 grid md:grid-cols-3 gap-6">
-    <div class="md:col-span-2 bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-8">
+
+    <div class="relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center order-1 md:order-1">
+        <img src="~/images/catSix.jpeg" alt="Cat is multi colour" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10"></div>
+        <div class="relative z-10">
+            <p class="text-3xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">1,240+</p>
+            <p class="text-[11px] tracking-[0.15em] uppercase text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">Cats saved</p>
+            <p class="text-xs text-white/80 mt-2 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">And counting, thanks to your support.</p>
+        </div>
+    </div>
+
+    <div class="md:col-span-2 bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-8 order-2 md:order-2">
         <h2 class="font-display text-xl mb-3">Our no-kill promise</h2>
         <p class="text-[var(--muted)] text-sm leading-relaxed">
             At Kingdom Cats Sanctuary, "no-kill" isn't just a label — it's a sacred vow. We believe no cat should ever be euthanised due to lack of space or treatable medical conditions. We provide a lifetime commitment to every resident who enters our gates, ensuring they live with dignity, love, and professional care for as long as they need us.
         </p>
     </div>
-    <div class="relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center">
-        <img src="~/images/catSix.jpeg" alt="Cat is multi colour" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute inset-0 bg-[var(--ink)]/60"></div>
 
-        <div class="relative z-10">
-            <p class="text-2xl font-bold">1,240+</p>
-            <p class="text-[11px] tracking-[0.15em] uppercase text-black/60">Cats saved</p>
-            <p class="text-xs text-black-50 mt-2">And counting, thanks to your support.</p>
-        </div>
-    </div>
 </section>
+
+<style>
+    @@keyframes kenburns {
+        0% {
+            transform: scale(1) translate(0, 0);
+        }
+
+        100% {
+            transform: scale(1.12) translate(-1%, -1%);
+        }
+    }
+
+    .animate-kenburns {
+        animation: kenburns 12s ease-in-out infinite alternate;
+    }
+
+    @@keyframes fadeUp {
+        0% {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-up {
+        animation: fadeUp 0.9s ease-out both;
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .animate-kenburns, .animate-fade-up {
+            animation: none !important;
+        }
+    }
+</style>
+     
 
 <!-- Featured Cats -->
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-8">
