@@ -5,7 +5,7 @@
 
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-10">
 
-    <h1 class="font-display text-3xl mb-2">Find your companion</h1>
+    <h1 class="font-display adopt-heading mb-2" id="adopt-heading" data-blur-text="Find your companion"></h1>
     <p class="text-[var(--muted)] text-sm max-w-2xl mb-6">
         Our sanctuary is home to gentle souls seeking their forever families. Every adoption saves a life and brings warmth to a home.
     </p>
@@ -21,55 +21,84 @@
         <button data-filter="Senior" class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
             Senior Cats
         </button>
-       
+
     </div>
 
     <!-- Cat grid -->
     <div id="cat-grid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
         @foreach (var cat in Model)
         {
-            <div class="cat-card bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden" data-category="@cat.Category">
+            <div class="cat-card bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden"
+                 data-category="@cat.Category">
 
-                <div class="pixelated-image-card aspect-square" title="Double-click to reveal">
+                <div class="pixelated-image-card aspect-square"
+                     title="Double-click to reveal"
+                     data-name="@cat.Name"
+                     data-description="@cat.Description">
+
                     @if (!string.IsNullOrEmpty(cat.Badge))
                     {
                         <span class="absolute top-3 right-3 z-20 bg-[var(--ink)] text-white text-[10px] tracking-wide uppercase px-2 py-1 rounded-full">
                             @cat.Badge
                         </span>
                     }
+
                     @if (!string.IsNullOrEmpty(cat.PhotoUrl))
                     {
-                        <img src="@cat.PhotoUrl" alt="@cat.Name" class="pixelated-image-card__img">
+                        <img src="@cat.PhotoUrl"
+                             alt="@cat.Name"
+                             class="pixelated-image-card__img" />
                     }
                     else
                     {
                         <div class="w-full h-full flex items-center justify-center bg-[var(--hairline)]/40">
-                            <p class="text-xs text-[var(--muted)] uppercase tracking-wide">No photo yet</p>
+                            <p class="text-xs text-[var(--muted)] uppercase tracking-wide">
+                                No photo yet
+                            </p>
                         </div>
                     }
+
                     <div class="pixelated-image-card__pixels"></div>
-                    <span class="pixelated-image-card__hint">Double-click to reveal</span>
+                    <span class="pixelated-image-card__hint">
+                        Double-click to reveal
+                    </span>
                 </div>
 
                 <div class="p-4">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="font-semibold">@cat.Name</h3>
-                        <button aria-label="Save @cat.Name" class="text-[var(--muted)] hover:text-[var(--red)]">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+
+                        <button aria-label="Save @cat.Name"
+                                class="text-[var(--muted)] hover:text-[var(--red)]">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="w-5 h-5"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor"
+                                 stroke-width="1.5">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
                             </svg>
                         </button>
                     </div>
-                    <p class="text-xs text-[var(--muted)] mb-3">@cat.AgeDisplay &middot; @cat.Gender</p>
+
+                    <p class="text-xs text-[var(--muted)] mb-3">
+                        @cat.AgeDisplay &middot; @cat.Gender
+                    </p>
 
                     <div class="flex flex-wrap gap-1.5 mb-4">
                         @foreach (var tag in cat.Tags)
                         {
-                            <span class="bg-[var(--red)]/10 text-[var(--red)] text-[10px] font-medium px-2 py-1 rounded-full">@tag</span>
+                            <span class="bg-[var(--red)]/10 text-[var(--red)] text-[10px] font-medium px-2 py-1 rounded-full">
+                                @tag
+                            </span>
                         }
                     </div>
 
-                    <a asp-controller="Cats" asp-action="Details" asp-route-id="@cat.Id"
+                    <a asp-controller="Cats"
+                       asp-action="Details"
+                       asp-route-id="@cat.Id"
                        class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
                         Book a viewing
                     </a>
@@ -83,205 +112,402 @@
     </p>
 
     <div class="text-center mt-8">
-        <button id="see-more-btn" class="hidden bg-[var(--card)] border border-[var(--hairline)] text-sm font-semibold uppercase tracking-wide px-6 py-3 rounded-lg hover:border-[var(--red)] hover:text-[var(--red)] transition-colors">
+        <button id="see-more-btn"
+                class="hidden bg-[var(--card)] border border-[var(--hairline)] text-sm font-semibold uppercase tracking-wide px-6 py-3 rounded-lg hover:border-[var(--red)] hover:text-[var(--red)] transition-colors">
             See more
         </button>
     </div>
-</section>
 
-<style>
-    .filter-pill {
-        background-color: var(--card);
-        border: 1px solid var(--hairline);
-        color: var(--muted);
-        transition: background-color .15s ease, color .15s ease;
-    }
+    <style>
 
-        .filter-pill.active {
-            background-color: var(--ink);
-            color: white;
-            border-color: var(--ink);
+
+        /* ---------- Heading pop + continuous blur-in animation ---------- */
+        .adopt-heading {
+            font-size: clamp(2.25rem, 4vw, 3.25rem);
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            background: linear-gradient(90deg, var(--ink) 0%, var(--red) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            flex-wrap: wrap;
         }
 
-    /* Hover highlight outline on the whole card */
-    .cat-card {
-        transition: box-shadow .2s ease, transform .2s ease;
-    }
+            .adopt-heading .blur-word {
+                display: inline-block;
+                will-change: transform, filter, opacity;
+                animation: blurPop 2.4s ease-in-out infinite;
+            }
 
-        .cat-card:hover {
-            box-shadow: 0 0 0 3px var(--red), 0 10px 24px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
+                .adopt-heading .blur-word:not(:last-child) {
+                    margin-right: 0.28em;
+                }
+
+        @@keyframes blurPop {
+            0% {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(-30px);
+            }
+
+            25% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0);
+            }
+
+            75% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(30px);
+            }
         }
 
-    /* Pixel reveal image card */
-    .pixelated-image-card {
-        position: relative;
-        overflow: hidden;
-        background-color: var(--hairline);
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .pixelated-image-card__img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-
-    .pixelated-image-card__pixels {
-        position: absolute;
-        inset: 0;
-        z-index: 10;
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-        pointer-events: none;
-    }
-
-    .pixelated-image-card__pixel {
-        background-color: var(--cream);
-        opacity: 1;
-        transform: scale(1);
-        transition: opacity .35s ease, transform .35s ease;
-    }
-
-        .pixelated-image-card__pixel.revealed {
-            opacity: 0;
-            transform: scale(0);
+        @@media (prefers-reduced-motion: reduce) {
+            .adopt-heading .blur-word {
+                animation: none !important;
+                opacity: 1;
+                filter: none;
+                transform: none;
+            }
         }
 
-    .pixelated-image-card__hint {
-        position: absolute;
-        inset: 0;
-        z-index: 11;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 0 1rem;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        color: var(--ink);
-        pointer-events: none;
-        transition: opacity .3s ease;
-    }
-
-        .pixelated-image-card__hint.hidden-hint {
-            opacity: 0;
+        .filter-pill {
+            background-color: var(--card);
+            border: 1px solid var(--hairline);
+            color: var(--muted);
+            transition: background-color .15s ease, color .15s ease;
         }
 
-    @@media (prefers-reduced-motion: reduce) {
+            .filter-pill.active {
+                background-color: var(--ink);
+                color: white;
+                border-color: var(--ink);
+            }
+
+        /* Hover highlight outline on the whole card */
+        .cat-card {
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+
+            .cat-card:hover {
+                box-shadow: 0 0 0 3px var(--red), 0 10px 24px rgba(0,0,0,0.15);
+                transform: translateY(-2px);
+            }
+
+        /* Pixel reveal image card */
+        .pixelated-image-card {
+            position: relative;
+            overflow: hidden;
+            background-color: var(--hairline);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pixelated-image-card__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .pixelated-image-card__pixels {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            pointer-events: none;
+        }
+
         .pixelated-image-card__pixel {
-            transition: none !important;
+            background-color: var(--cream);
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity .35s ease, transform .35s ease;
         }
-    }
-</style>
+
+            .pixelated-image-card__pixel.revealed {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+        .pixelated-image-card__hint {
+            position: absolute;
+            inset: 0;
+            z-index: 11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1rem;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink);
+            pointer-events: none;
+            transition: opacity .3s ease;
+        }
+
+            .pixelated-image-card__hint.hidden-hint {
+                opacity: 0;
+            }
+
+        @@media (prefers-reduced-motion: reduce) {
+            .pixelated-image-card__pixel {
+                transition: none !important;
+            }
+        }
+
+        .cat-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(28,25,23,0.6);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+
+            .cat-modal-overlay.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+        .cat-modal {
+            background: var(--card);
+            border-radius: 1.25rem;
+            width: 100%;
+            max-width: 420px;
+            padding: 1.75rem;
+            position: relative;
+            transform: translateY(24px) scale(0.96);
+            opacity: 0;
+            transition: transform .25s ease, opacity .25s ease;
+        }
+
+        .cat-modal-overlay.open .cat-modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .cat-modal-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            border: none;
+            background: var(--hairline);
+            color: var(--ink);
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @@media (prefers-reduced-motion: reduce) {
+            .cat-modal-overlay, .cat-modal {
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <!-- Cat Description Modal -->
+    <div id="cat-modal-overlay" class="cat-modal-overlay">
+        <div id="cat-modal" class="cat-modal" role="dialog" aria-modal="true" aria-labelledby="cat-modal-name">
+            <button id="cat-modal-close" class="cat-modal-close" aria-label="Close">&times;</button>
+            <h3 id="cat-modal-name" class="font-display text-xl mb-3"></h3>
+            <p id="cat-modal-desc" class="text-sm text-[var(--muted)] leading-relaxed"></p>
+        </div>
+    </div>
 
 @section Scripts {
-    <script>
-        const PAGE_SIZE = 6;
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        <script>
+            const PAGE_SIZE = 6;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        function buildPixelGrid(wrap) {
-            const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
-            if (!pixelContainer || wrap.dataset.built === 'true') return;
-            wrap.dataset.built = 'true';
+            function buildPixelGrid(wrap) {
+                const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
+                if (!pixelContainer || wrap.dataset.built === 'true') return;
+                wrap.dataset.built = 'true';
 
-            const total = 36;
-            for (let i = 0; i < total; i++) {
-                const pixel = document.createElement('div');
-                pixel.className = 'pixelated-image-card__pixel';
-                pixelContainer.appendChild(pixel);
-            }
-        }
-
-        // Re-cover the image so the reveal animation can play again
-        function coverImage(wrap) {
-            const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
-            if (!pixelContainer) return;
-            pixelContainer.querySelectorAll('.pixelated-image-card__pixel')
-                .forEach(p => p.classList.remove('revealed'));
-        }
-
-        function revealPixels(wrap) {
-            const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
-            if (!pixelContainer) return;
-
-            const hint = wrap.querySelector('.pixelated-image-card__hint');
-            if (hint) hint.classList.add('hidden-hint');
-
-            const pixels = Array.from(pixelContainer.querySelectorAll('.pixelated-image-card__pixel'));
-
-            if (prefersReducedMotion) {
-                pixels.forEach(p => p.classList.add('revealed'));
-                return;
+                const total = 36;
+                for (let i = 0; i < total; i++) {
+                    const pixel = document.createElement('div');
+                    pixel.className = 'pixelated-image-card__pixel';
+                    pixelContainer.appendChild(pixel);
+                }
             }
 
-            const order = pixels.map((p, i) => i).sort(() => Math.random() - 0.5);
-            order.forEach((pixelIndex, step) => {
-                setTimeout(() => {
-                    pixels[pixelIndex].classList.add('revealed');
-                }, step * 12);
-            });
-        }
-
-        function initCard(wrap) {
-            if (!wrap || wrap.dataset.initialized === 'true') {
-                if (wrap) buildPixelGrid(wrap);
-                return;
+            // Re-cover the image so the reveal animation can play again
+            function coverImage(wrap) {
+                const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
+                if (!pixelContainer) return;
+                pixelContainer.querySelectorAll('.pixelated-image-card__pixel')
+                    .forEach(p => p.classList.remove('revealed'));
             }
-            wrap.dataset.initialized = 'true';
 
-            buildPixelGrid(wrap);
+            function revealPixels(wrap) {
+                const pixelContainer = wrap.querySelector('.pixelated-image-card__pixels');
+                if (!pixelContainer) return;
 
-            // Auto-reveal once, right after load
-            requestAnimationFrame(() => revealPixels(wrap));
+                const hint = wrap.querySelector('.pixelated-image-card__hint');
+                if (hint) hint.classList.add('hidden-hint');
 
-            // Double-click always replays the effect, even after it's already revealed
-            wrap.addEventListener('dblclick', function () {
-                coverImage(wrap);
+                const pixels = Array.from(pixelContainer.querySelectorAll('.pixelated-image-card__pixel'));
+
+                if (prefersReducedMotion) {
+                    pixels.forEach(p => p.classList.add('revealed'));
+                    return;
+                }
+
+                const order = pixels.map((p, i) => i).sort(() => Math.random() - 0.5);
+                order.forEach((pixelIndex, step) => {
+                    setTimeout(() => {
+                        pixels[pixelIndex].classList.add('revealed');
+                    }, step * 12);
+                });
+            }
+
+            function initCard(wrap) {
+                if (!wrap || wrap.dataset.initialized === 'true') {
+                    if (wrap) buildPixelGrid(wrap);
+                    return;
+                }
+                wrap.dataset.initialized = 'true';
+
+                buildPixelGrid(wrap);
+
+                // Auto-reveal once, right after load
                 requestAnimationFrame(() => revealPixels(wrap));
+
+                // Double-click always replays the effect, even after it's already revealed
+                wrap.addEventListener('dblclick', function () {
+                    coverImage(wrap);
+                    requestAnimationFrame(() => revealPixels(wrap));
+                });
+            }
+
+            //added for pop up window
+                    // ---------- Cat description modal ----------
+            const modalOverlay = document.getElementById('cat-modal-overlay');
+            const modalName = document.getElementById('cat-modal-name');
+            const modalDesc = document.getElementById('cat-modal-desc');
+            const modalClose = document.getElementById('cat-modal-close');
+
+            function openCatModal(card) {
+                modalName.textContent = card.dataset.name;
+                modalDesc.textContent = card.dataset.description || 'No description available yet.';
+                modalOverlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeCatModal() {
+                modalOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            modalClose.addEventListener('click', closeCatModal);
+            modalOverlay.addEventListener('click', function (e) {
+                if (e.target === modalOverlay) closeCatModal();
             });
-        }
-
-        function applyDisplay() {
-            const activeFilter = document.querySelector('.filter-pill.active').getAttribute('data-filter');
-            const allCards = Array.from(document.querySelectorAll('.cat-card'));
-            const matching = allCards.filter(card =>
-                activeFilter === 'All' || card.getAttribute('data-category') === activeFilter
-            );
-
-            allCards.forEach(card => card.style.display = 'none');
-
-            const visibleCount = Math.min(parseInt(document.getElementById('cat-grid').dataset.visible || PAGE_SIZE), matching.length);
-            matching.slice(0, visibleCount).forEach(card => {
-                card.style.display = '';
-                initCard(card.querySelector('.pixelated-image-card'));
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeCatModal();
             });
 
-            document.getElementById('no-results').classList.toggle('hidden', matching.length > 0);
-            document.getElementById('see-more-btn').classList.toggle('hidden', visibleCount >= matching.length);
-        }
+            // Single-click vs double-click disambiguation per card
+            document.querySelectorAll('.pixelated-image-card').forEach(function (wrap) {
+                let clickTimer = null;
 
-        document.querySelectorAll('.filter-pill').forEach(function (pill) {
-            pill.addEventListener('click', function () {
-                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('cat-grid').dataset.visible = PAGE_SIZE;
+                wrap.addEventListener('click', function () {
+                    if (clickTimer) return;
+                    clickTimer = setTimeout(function () {
+                        openCatModal(wrap);
+                        clickTimer = null;
+                    }, 220);
+                });
+
+                wrap.addEventListener('dblclick', function () {
+                    clearTimeout(clickTimer);
+                    clickTimer = null;
+                });
+            });
+
+            function applyDisplay() {
+                const activeFilter = document.querySelector('.filter-pill.active').getAttribute('data-filter');
+                const allCards = Array.from(document.querySelectorAll('.cat-card'));
+                const matching = allCards.filter(card =>
+                    activeFilter === 'All' || card.getAttribute('data-category') === activeFilter
+                );
+
+                allCards.forEach(card => card.style.display = 'none');
+
+                const visibleCount = Math.min(parseInt(document.getElementById('cat-grid').dataset.visible || PAGE_SIZE), matching.length);
+                matching.slice(0, visibleCount).forEach(card => {
+                    card.style.display = '';
+                    initCard(card.querySelector('.pixelated-image-card'));
+                });
+
+                document.getElementById('no-results').classList.toggle('hidden', matching.length > 0);
+                document.getElementById('see-more-btn').classList.toggle('hidden', visibleCount >= matching.length);
+            }
+
+            document.querySelectorAll('.filter-pill').forEach(function (pill) {
+                pill.addEventListener('click', function () {
+                    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('cat-grid').dataset.visible = PAGE_SIZE;
+                    applyDisplay();
+                });
+            });
+
+            document.getElementById('see-more-btn').addEventListener('click', function () {
+                const grid = document.getElementById('cat-grid');
+                grid.dataset.visible = parseInt(grid.dataset.visible || PAGE_SIZE) + PAGE_SIZE;
                 applyDisplay();
             });
-        });
 
-        document.getElementById('see-more-btn').addEventListener('click', function () {
-            const grid = document.getElementById('cat-grid');
-            grid.dataset.visible = parseInt(grid.dataset.visible || PAGE_SIZE) + PAGE_SIZE;
+            document.getElementById('cat-grid').dataset.visible = PAGE_SIZE;
             applyDisplay();
-        });
 
-        document.getElementById('cat-grid').dataset.visible = PAGE_SIZE;
-        applyDisplay();
-    </script>
+                        // ---------- Continuous blur-pop heading text ----------
+            function initBlurText(el, options) {
+                if (!el) return;
+                const opts = Object.assign({ delay: 120 }, options || {});
+                const text = el.dataset.blurText || el.textContent.trim();
+                const words = text.split(' ');
+
+                el.textContent = '';
+                words.forEach(function (word, i) {
+                    const span = document.createElement('span');
+                    span.className = 'blur-word';
+                    span.textContent = word;
+                    span.style.animationDelay = (i * opts.delay) + 'ms';
+                    el.appendChild(span);
+                    if (i < words.length - 1) {
+                        el.appendChild(document.createTextNode('\u00A0'));
+                    }
+                });
+            }
+
+            initBlurText(document.getElementById('adopt-heading'), { delay: 120 });
+        </script>
 }

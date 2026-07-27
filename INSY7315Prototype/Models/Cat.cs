@@ -16,6 +16,9 @@ namespace INSY7315Prototype.Models
         public string? PhotoUrl { get; set; }
         public string AdoptionStatus { get; set; } = "Available";
 
+        //new variable for pop-up window
+        public string? Description { get; set; }
+
         [NotMapped]
         public List<string> Tags
         {
