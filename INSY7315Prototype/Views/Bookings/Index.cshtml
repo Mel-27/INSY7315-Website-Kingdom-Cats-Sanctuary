@@ -1,19 +1,180 @@
 ﻿@model INSY7315Prototype.Models.BookingPageViewModel
 @{
-    ViewData["Title"] = "Book a Session";
+    ViewData["Title"] = "Book a Session(Adopt or Relax)";
     var dayHeaders = new[] { "S", "M", "T", "W", "T", "F", "S" };
 }
 
+<style>
+    .flip-fade-text {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        perspective: 1000px;
+    }
+
+    .flip-fade-letter {
+        display: inline-block;
+        transform-style: preserve-3d;
+        opacity: 0;
+        transform: rotateX(90deg) translateY(20px);
+        filter: blur(8px);
+        animation: flipFadeIn 0.6s cubic-bezier(0.2, 0.65, 0.3, 0.9) forwards;
+    }
+
+    @@keyframes flipFadeIn {
+        to {
+            opacity: 1;
+            transform: rotateX(0deg) translateY(0);
+            filter: blur(0px);
+        }
+    }
+</style>
 <section class="max-w-4xl mx-auto px-6 md:px-12 py-10">
 
-    <h1 class="font-display text-3xl mb-2">
+    <h1 class="flip-fade-text font-display text-3xl mb-2">
         @(Model.CatId.HasValue ? $"Book a viewing with {Model.CatName}" : "Kitten Petting Sessions")
     </h1>
-    <p class="text-[var(--muted)] text-sm max-w-2xl mb-8">
-        @(Model.CatId.HasValue
-                ? "Meet the furry baby in person before deciding to adopt."
-                : "Experience the healing power of purrs. Book a private or group session with our sanctuary residents.")
-    </p>
+    
+
+    <!-- Image collage effect -->
+    <style>
+        .collage-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.75rem;
+            width: 100%;
+            min-height: 300px;
+            margin-bottom: 3rem;
+        }
+
+        .collage-stage {
+            position: relative;
+            height: 11rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .collage-img {
+            position: absolute;
+            width: 7.5rem;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            opacity: 0;
+            transform: scale(0.6) translate(0, 40px) rotate(0deg);
+            transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+            box-shadow: 0 12px 28px -8px rgba(0,0,0,0.28);
+            border: 3px solid var(--card, #fff);
+        }
+
+            /* staggered entrance delays */
+            .collage-img:nth-child(1) {
+                transition-delay: 0s;
+            }
+
+            .collage-img:nth-child(2) {
+                transition-delay: 0.1s;
+            }
+
+            .collage-img:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .collage-img:nth-child(4) {
+                transition-delay: 0.3s;
+            }
+
+            .collage-img:nth-child(5) {
+                transition-delay: 0.4s;
+            }
+
+        .collage-stage.is-loaded .collage-img {
+            opacity: 1;
+        }
+
+        /* gentle continuous float once settled, each on its own rhythm */
+        .collage-stage.is-floating .collage-img {
+            animation: catFloat 4.5s ease-in-out infinite;
+        }
+
+            .collage-stage.is-floating .collage-img:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .collage-stage.is-floating .collage-img:nth-child(2) {
+                animation-delay: 0.6s;
+            }
+
+            .collage-stage.is-floating .collage-img:nth-child(3) {
+                animation-delay: 1.2s;
+            }
+
+            .collage-stage.is-floating .collage-img:nth-child(4) {
+                animation-delay: 1.8s;
+            }
+
+            .collage-stage.is-floating .collage-img:nth-child(5) {
+                animation-delay: 2.4s;
+            }
+
+        @@keyframes catFloat {
+            0%, 100% {
+                translate: 0 0;
+            }
+
+            50% {
+                translate: 0 -8px;
+            }
+        }
+
+        .collage-caption {
+            text-align: center;
+            max-width: 34rem;
+        }
+
+            .collage-caption h2 {
+                font-family: var(--font-display, inherit);
+                font-size: 1.35rem;
+                margin-bottom: 0.5rem;
+                color: var(--ink, inherit);
+            }
+
+            .collage-caption p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                color: var(--muted);
+            }
+    </style>
+
+    <div class="collage-wrap" id="cat-collage">
+        <div class="collage-stage" id="collage-stage">
+            <img class="collage-img" data-x="-150" data-y="-12" data-rotate="-12"
+                 src="/images/catTwo.jpeg" alt="Sanctuary cat" />
+            <img class="collage-img" data-x="-75" data-y="18" data-rotate="8"
+                 src="/images/catSeven.jpeg" alt="Sanctuary cat" />
+            <img class="collage-img" data-x="0" data-y="-28" data-rotate="-4"
+                 src="/images/catThree.jpeg" alt="Sanctuary cat" />
+            <img class="collage-img" data-x="75" data-y="18" data-rotate="10"
+                 src="/images/catTen.jpeg" alt="Sanctuary cat" />
+            <img class="collage-img" data-x="150" data-y="-8" data-rotate="-8"
+                 src="/images/catNine.jpeg" alt="Sanctuary cat" />
+        </div>
+        <div class="collage-caption">
+            <h2>Meet your future best friend</h2>
+            <p>
+                Meet your furry baby in person before deciding to adopt.
+                Every one of our residents is looking for a lap to curl up in.
+                Book a kitten petting session to say hello, or schedule an
+                adoption viewing to spend real one-on-one time with a cat you've
+                fallen for. No pressure, just purrs!
+            </p>
+        </div>
+    </div>
+
 
     <div class="grid md:grid-cols-2 gap-8">
 
@@ -131,6 +292,60 @@
 </section>
 
 @section Scripts {
+
+
+    <!-- Flip Fade Text animation -->
+    <script>
+        function animateFlipFadeText(selector, staggerDelay = 0.04) {
+            document.querySelectorAll(selector).forEach(function (el) {
+                const text = el.textContent;
+                el.setAttribute('aria-label', text); // keep it accessible to screen readers
+                el.textContent = '';
+                [...text].forEach(function (char, i) {
+                    const span = document.createElement('span');
+                    span.className = 'flip-fade-letter';
+                    span.style.animationDelay = (i * staggerDelay) + 's';
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    el.appendChild(span);
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            animateFlipFadeText('.flip-fade-text');
+        });
+    </script>
+
+
+    <!-- Image animation effect -->
+    <script>
+        (function () {
+            const stage = document.getElementById('collage-stage');
+            if (!stage) return;
+
+            const imgs = stage.querySelectorAll('.collage-img');
+
+            function applyScatter() {
+                imgs.forEach(function (img) {
+                    const x = img.dataset.x + 'px';
+                    const y = img.dataset.y + 'px';
+                    const r = img.dataset.rotate + 'deg';
+                    img.style.transform = `scale(1) translate(${x}, ${y}) rotate(${r})`;
+                });
+            }
+
+            // Start the entrance animation immediately on load, no interaction needed
+            requestAnimationFrame(function () {
+                applyScatter();
+                stage.classList.add('is-loaded');
+            });
+
+            // Once the entrance transition settles, start the gentle idle float
+            setTimeout(function () {
+                stage.classList.add('is-floating');
+            }, 1200);
+        })();
+    </script>
+
     <script>
         const calendarContainer = document.getElementById('calendar-days');
         const month = parseInt(calendarContainer.dataset.month);
