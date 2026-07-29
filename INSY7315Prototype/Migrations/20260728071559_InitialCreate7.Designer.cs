@@ -4,6 +4,7 @@ using INSY7315Prototype.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INSY7315Prototype.Migrations
 {
     [DbContext(typeof(KingdomCatsDb))]
-    partial class KingdomCatsDbModelSnapshot : ModelSnapshot
+    [Migration("20260728071559_InitialCreate7")]
+    partial class InitialCreate7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace INSY7315Prototype.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Booking", b =>
+            modelBuilder.Entity("INSY7315Prototype.Models.Booking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,6 +38,9 @@ namespace INSY7315Prototype.Migrations
 
                     b.Property<int?>("CatId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("DonationAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ParticipantEmail")
                         .IsRequired()

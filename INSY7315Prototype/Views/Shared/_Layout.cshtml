@@ -270,7 +270,7 @@
     <!-- Overlay -->
     <div id="nav-overlay" class="nav-overlay"></div>
 
-    <!-- Sliding panel -->
+    <!-- Sliding panel(naviagtion panel) -->
     <nav id="nav-panel" class="nav-panel">
         <div class="line-sidebar line-sidebar--markers line-sidebar--scale-tick">
             <ul id="line-sidebar-list" class="line-sidebar__list">
@@ -295,6 +295,15 @@
                         <span>Cat Profile</span>
                     </a>
                 </li>
+                <li class="line-sidebar__item">
+                    <span class="line-sidebar__marker" aria-hidden="true"></span>
+                    <a asp-controller="Bookings" asp-action="Index" class="line-sidebar__label">
+                        <span class="line-sidebar__index">03</span>
+                        <span>Book A Session</span>
+                    </a>
+
+                </li>
+                
             </ul>
         </div>
     </nav>

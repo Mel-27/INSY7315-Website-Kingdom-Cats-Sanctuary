@@ -1,0 +1,40 @@
+﻿@model INSY7315Prototype.Models.Booking
+@{
+    ViewData["Title"] = "Booking Confirmed";
+}
+
+<section class="max-w-lg mx-auto px-6 py-16 text-center">
+    <div class="w-16 h-16 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+    </div>
+
+    <h1 class="font-display text-2xl mb-2">Booking confirmed!</h1>
+    <p class="text-[var(--muted)] text-sm mb-8">
+        A confirmation and reminder will be sent to <span class="font-medium text-[var(--ink)]">@Model.ParticipantEmail</span>.
+    </p>
+
+    <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6 text-left text-sm space-y-3">
+        <div class="flex justify-between">
+            <span class="text-[var(--muted)]">Session</span>
+            <span class="font-medium">
+                @(ViewBag.CatName != null ? $"Viewing — {ViewBag.CatName}" : Model.SessionType)
+            </span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-[var(--muted)]">Date</span>
+            <span class="font-medium">@Model.BookingDate.ToString("dddd, dd MMMM yyyy")</span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-[var(--muted)]">Time</span>
+            <span class="font-medium">@Model.TimeSlot</span>
+        </div>
+        
+    </div>
+
+    <a asp-controller="Home" asp-action="Index"
+       class="inline-block mt-8 btn-primary text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg px-6 py-3">
+        Back to home
+    </a>
+</section>

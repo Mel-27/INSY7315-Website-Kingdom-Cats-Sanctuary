@@ -12,6 +12,8 @@ namespace INSY7315Prototype.Data
 
         public DbSet<Cat> Cats { get; set; }
 
+        public DbSet<Booking> Bookings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

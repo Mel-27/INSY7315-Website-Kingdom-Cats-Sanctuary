@@ -14,7 +14,7 @@
             <span class="inline-block bg-[var(--red)] text-white text-[11px] tracking-[0.2em] uppercase px-3 py-1 rounded-full mb-4 shadow-lg">Non-kill rescue sanctuary</span>
 
             <h1 id="hero-heading" class="font-display text-3xl md:text-5xl text-white max-w-2xl leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-                Every life is worth a <span class="italic text-[var(--red)]">thousand</span> purrs.
+                Every Life Matters. <span class="italic text-[var(--red)]">Every Purr</span> Counts.
             </h1>
 
             <p class="text-white max-w-xl mt-4 drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
@@ -132,44 +132,54 @@
     <div class="flex items-end justify-between mb-6">
         <div>
             <h2 class="font-display text-2xl">Looking for a forever home</h2>
-            <p class="text-[var(--muted)] text-sm mt-1">A few of our residents waiting to meet you.</p>
+            <p class="text-[var(--muted)] text-sm mt-1">Kingdom Cats Sanctuary favourite residents.</p>
         </div>
         <a asp-controller="Cats" asp-action="Index" class="hidden md:inline text-sm font-semibold text-[var(--red)] hover:text-[var(--red-dark)]">View all &rarr;</a>
     </div>
 
     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
-            <div class="aspect-square bg-[var(--hairline)]/40 flex items-center justify-center">
-                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Cat photo</p>
-            </div>
-            <div class="p-4">
-                <h3 class="font-semibold">Oliver</h3>
-                <p class="text-xs text-[var(--muted)] mb-3">2 years &middot; Male</p>
-                <a asp-controller="Bookings" asp-action="Create" asp-route-catId="1"
-                   class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
-                    Book a viewing
-                </a>
-            </div>
-        </div>
 
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
-            <div class="aspect-square bg-[var(--hairline)]/40 flex items-center justify-center">
-                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Cat photo</p>
+            <!-- Featured Cats picture 1 -->
+            <div class="aspect-square bg-[var(--hairline)]/40 overflow-hidden">
+                <img src="~/images/FavOne.jpeg"
+                     alt="Featured Cat for KCS"
+                     class="w-full h-full object-cover animate-kenburns">
             </div>
             <div class="p-4">
                 <h3 class="font-semibold">Luna</h3>
                 <p class="text-xs text-[var(--muted)] mb-3">4 years &middot; Female</p>
-                <a asp-controller="Bookings" asp-action="Create" asp-route-catId="2"
+                <a asp-controller="Bookings" asp-action="Index" asp-route-catId="2"
                    class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
                     Book a viewing
                 </a>
             </div>
         </div>
 
+        <!-- Featured Cats picture 2 -->
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
-            <div class="aspect-square bg-[var(--hairline)]/40 flex items-center justify-center">
-                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Cat photo</p>
+            <div class="aspect-square bg-[var(--hairline)]/40 overflow-hidden">
+                <img src="~/images/catNine.jpeg"
+                     alt="Featured Cat for KCS"
+                     class="w-full h-full object-cover animate-kenburns">
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold">Luna</h3>
+                <p class="text-xs text-[var(--muted)] mb-3">4 years &middot; Female</p>
+                <a asp-controller="Bookings" asp-action="Index" asp-route-catId="2"
+                   class="block text-center btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2">
+                    Book a viewing
+                </a>
+            </div>
+        </div>
+
+        <!-- Featured Cats picture 3 -->
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-square bg-[var(--hairline)]/40 overflow-hidden">
+                <img src="~/images/FavTwo.jpeg"
+                     alt="Featured Cat for KCS"
+                     class="w-full h-full object-cover animate-kenburns">
             </div>
             <div class="p-4">
                 <h3 class="font-semibold">Mochi</h3>
@@ -245,7 +255,7 @@
 
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
             <div class="aspect-[4/3] w-full overflow-hidden">
-                <img src="~/images/catNine.jpeg" alt="Black cat during a purr-therapy session" class="w-full h-full object-cover">
+                <img src="~/images/catFive.jpeg" alt="Black cat during a purr-therapy session" class="w-full h-full object-cover">
             </div>
             <div class="p-6">
                 <h3 class="font-semibold mb-1">Book a session</h3>
