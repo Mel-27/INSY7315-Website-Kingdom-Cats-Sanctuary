@@ -14,9 +14,15 @@ namespace INSY7315Prototype.Data
 
         public DbSet<Booking> Bookings { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<Donation> Donations { get; set; }
+       protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Configured Donation.Amount precision
+            modelBuilder.Entity<Donation>()
+                .Property(d => d.Amount)
+                .HasPrecision(18, 2);
 
             var blobBase = "https://kingdomcatstorage.blob.core.windows.net/catprofile";
 

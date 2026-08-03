@@ -1,0 +1,84 @@
+﻿@model INSY7315Prototype.Models.Donation
+@{
+    ViewData["Title"] = "Thank You";
+}
+
+<style>
+    .flip-fade-text {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        perspective: 1000px;
+    }
+
+    .flip-fade-letter {
+        display: inline-block;
+        transform-style: preserve-3d;
+        opacity: 0;
+        transform: rotateX(90deg) translateY(20px);
+        filter: blur(8px);
+        animation: flipFadeIn 0.6s cubic-bezier(0.2, 0.65, 0.3, 0.9) forwards;
+    }
+
+    @@keyframes flipFadeIn {
+        to {
+            opacity: 1;
+            transform: rotateX(0deg) translateY(0);
+            filter: blur(0px);
+        }
+    }
+</style>
+
+<section class="max-w-lg mx-auto px-6 py-16 text-center">
+    <div class="w-16 h-16 rounded-full bg-[var(--red)]/10 text-[var(--red)] flex items-center justify-center mx-auto mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21l-7.682-8.318a4.5 4.5 0 010-6.364z" />
+        </svg>
+    </div>
+    <h1 class="flip-fade-text font-display text-2xl mb-2">Thank you!</h1>
+    <p class="text-[var(--muted)] text-sm mb-8">
+        We've recorded your pledge. A receipt will be sent to
+        <span class="font-medium text-[var(--ink)]">@Model.DonorEmail</span> once your
+        @Model.PaymentMethod payment is complete.
+    </p>
+    <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6 text-left text-sm space-y-3">
+        <div class="flex justify-between">
+            <span class="text-[var(--muted)]">Amount</span>
+            <span class="font-medium">
+                R@(Model.Amount.ToString("0.00"))
+            </span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-[var(--muted)]">Method</span>
+            <span class="font-medium">@Model.PaymentMethod</span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-[var(--muted)]">Status</span>
+            <span class="font-medium">@Model.Status</span>
+        </div>
+    </div>
+    <a asp-controller="Home" asp-action="Index"
+       class="inline-block mt-8 btn-primary text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg px-6 py-3">
+        Back to home
+    </a>
+</section>
+
+<script>
+    function animateFlipFadeText(selector, staggerDelay = 0.04) {
+        document.querySelectorAll(selector).forEach(function (el) {
+            const text = el.textContent;
+            el.setAttribute('aria-label', text);
+            el.textContent = '';
+            [...text].forEach(function (char, i) {
+                const span = document.createElement('span');
+                span.className = 'flip-fade-letter';
+                span.style.animationDelay = (i * staggerDelay) + 's';
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                el.appendChild(span);
+            });
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        animateFlipFadeText('.flip-fade-text');
+    });
+</script>

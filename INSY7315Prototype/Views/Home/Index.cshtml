@@ -32,6 +32,8 @@
     </div>
 </section>
 
+
+
 <!-- This section makes sure the Split Text animation is done -->
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
@@ -67,9 +69,8 @@
 }
 
 <!-- Promise + Stats -->
-<section class="max-w-6xl mx-auto px-6 md:px-12 -mt-1 py-12 grid md:grid-cols-3 gap-6">
-
-    <div class="relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center order-1 md:order-1">
+<section class="max-w-6xl mx-auto px-6 md:px-12 -mt-1 py-12 grid md:grid-cols-3 gap-6 reveal-up-wrap" data-reveal-group>
+    <div class="reveal-up relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center order-1 md:order-1">
         <img src="~/images/catWhite.jpeg" alt="Cat is multi colour" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10"></div>
         <div class="relative z-10">
@@ -79,7 +80,7 @@
         </div>
     </div>
 
-    <div class="md:col-span-2 bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-8 order-2 md:order-2">
+    <div class="reveal-up md:col-span-2 bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-8 order-2 md:order-2">
         <h2 class="font-display text-xl mb-3">Our no-kill promise</h2>
         <p class="text-[var(--muted)] text-sm leading-relaxed">
             At Kingdom Cats Sanctuary, "no-kill" isn't just a label — it's a sacred vow. We believe no cat should ever be euthanised due to lack of space or treatable medical conditions. We provide a lifetime commitment to every resident who enters our gates, ensuring they live with dignity, love, and professional care for as long as they need us.
@@ -97,6 +98,38 @@
         100% {
             transform: scale(1.12) translate(-1%, -1%);
         }
+    }
+
+    .reveal-up-wrap {
+        perspective: 1200px;
+    }
+
+    .reveal-up {
+        opacity: 0;
+        transform: perspective(1200px) rotateX(35deg) translateY(60px) scale(0.9);
+        transform-origin: center bottom;
+    }
+
+        .reveal-up.is-revealed {
+            animation: revealUp3D .9s cubic-bezier(.21,.61,.35,1) forwards;
+        }
+
+    @@keyframes revealUp3D {
+        to {
+            opacity: 1;
+            transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+        }
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .reveal-up {
+            opacity: 1;
+            transform: none;
+        }
+
+            .reveal-up.is-revealed {
+                animation: none !important;
+            }
     }
 
     .animate-kenburns {
@@ -137,10 +170,10 @@
         <a asp-controller="Cats" asp-action="Index" class="hidden md:inline text-sm font-semibold text-[var(--red)] hover:text-[var(--red-dark)]">View all &rarr;</a>
     </div>
 
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 reveal-up-wrap" data-reveal-group>
 
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
             <!-- Featured Cats picture 1 -->
             <div class="aspect-square bg-[var(--hairline)]/40 overflow-hidden">
                 <img src="~/images/FavOne.jpeg"
@@ -158,7 +191,7 @@
         </div>
 
         <!-- Featured Cats picture 2 -->
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
             <div class="aspect-square bg-[var(--hairline)]/40 overflow-hidden">
                 <img src="~/images/catNine.jpeg"
                      alt="Featured Cat for KCS"
@@ -175,7 +208,7 @@
         </div>
 
         <!-- Featured Cats picture 3 -->
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
             <div class="aspect-square bg-[var(--hairline)]/40 overflow-hidden">
                 <img src="~/images/FavTwo.jpeg"
                      alt="Featured Cat for KCS"
@@ -203,9 +236,9 @@
         The two people behind Kingdom Cats Sanctuary and the vow that keeps it running.
     </p>
 
-    <div class="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+    <div class="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto reveal-up-wrap" data-reveal-group>
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
             <div class="aspect-square w-full overflow-hidden">
                 <img src="~/images/GregTemp.jpeg" alt="Photo of founder Greg Bower" class="w-full h-full object-cover">
             </div>
@@ -220,7 +253,7 @@
             </div>
         </div>
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
             <div class="aspect-square w-full overflow-hidden">
                 <img src="~/images/jennyTemp.jpeg" alt="Photo of founder Jenny Bower" class="w-full h-full object-cover">
             </div>
@@ -241,9 +274,9 @@
 <!-- How You Can Help -->
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
     <h2 class="font-display text-2xl text-center mb-8">How you can help</h2>
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-3 gap-6 reveal-up-wrap" data-reveal-group>
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
             <div class="aspect-[4/3] w-full overflow-hidden">
                 <img src="~/images/catFood.jpeg" alt="Cat receiving care, representing donations" class="w-full h-full object-cover">
             </div>
@@ -253,7 +286,7 @@
             </div>
         </div>
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
             <div class="aspect-[4/3] w-full overflow-hidden">
                 <img src="~/images/catFive.jpeg" alt="Black cat during a purr-therapy session" class="w-full h-full object-cover">
             </div>
@@ -263,7 +296,7 @@
             </div>
         </div>
 
-        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
+        <div class="reveal-up bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden text-center">
             <div class="aspect-[4/3] w-full overflow-hidden">
                 <img src="~/images/catOrange.jpeg" alt="Cat available for adoption" class="w-full h-full object-cover">
             </div>
@@ -275,6 +308,41 @@
 
     </div>
 </section>
+
+<script>
+    (function () {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const groups = document.querySelectorAll('[data-reveal-group]');
+
+        if (prefersReduced) {
+            document.querySelectorAll('.reveal-up').forEach(function (el) {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+            return;
+        }
+
+        groups.forEach(function (group) {
+            const items = Array.from(group.querySelectorAll('.reveal-up'));
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        const idx = items.indexOf(entry.target);
+                        setTimeout(function () {
+                            entry.target.classList.add('is-revealed');
+                        }, idx * 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            items.forEach(function (item) {
+                observer.observe(item);
+            });
+        });
+    })();
+</script>
 
 <!-- Reviews -->
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-12">

@@ -1,0 +1,198 @@
+﻿@model INSY7315Prototype.Models.Donation
+@{
+    ViewData["Title"] = "Donate";
+}
+
+<style>
+    .flip-fade-text {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        perspective: 1000px;
+    }
+
+    .flip-fade-letter {
+        display: inline-block;
+        transform-style: preserve-3d;
+        opacity: 0;
+        transform: rotateX(90deg) translateY(20px);
+        filter: blur(8px);
+        animation: flipFadeIn 0.6s cubic-bezier(0.2, 0.65, 0.3, 0.9) forwards;
+    }
+
+    @@keyframes flipFadeIn {
+        to {
+            opacity: 1;
+            transform: rotateX(0deg) translateY(0);
+            filter: blur(0px);
+        }
+    }
+
+    .donation-method-card {
+        cursor: pointer;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+        .donation-method-card.selected {
+            border-color: var(--red);
+            background-color: color-mix(in srgb, var(--red) 6%, transparent);
+        }
+
+    .amount-chip {
+        cursor: pointer;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+        .amount-chip.selected {
+            border-color: var(--red);
+            background-color: color-mix(in srgb, var(--red) 8%, transparent);
+            color: var(--red);
+            font-weight: 600;
+        }
+</style>
+
+<section class="max-w-3xl mx-auto px-6 py-16">
+
+    <h1 class="flip-fade-text font-display text-3xl mb-2 text-center">Support the Sanctuary</h1>
+    <p class="text-[var(--muted)] text-sm max-w-xl mx-auto text-center mb-10">
+        Every donation helps feed, shelter, and care for our cats until they find their forever homes.
+        Choose whichever payment method suits you best.
+    </p>
+
+    @if (TempData["DonationError"] != null)
+    {
+        <div class="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-6">
+            @TempData["DonationError"]
+        </div>
+    }
+
+    <form id="donation-form" asp-controller="Donations" asp-action="Create" method="post" class="space-y-8">
+
+        <!-- Amount -->
+        <div>
+            <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">1. Choose an amount</h2>
+            <div class="flex flex-wrap gap-2" id="amount-chips">
+                <button type="button" class="amount-chip px-4 py-2 rounded-lg border border-[var(--hairline)] bg-[var(--card)] text-sm" data-amount="50">R50</button>
+                <button type="button" class="amount-chip px-4 py-2 rounded-lg border border-[var(--hairline)] bg-[var(--card)] text-sm" data-amount="100">R100</button>
+                <button type="button" class="amount-chip px-4 py-2 rounded-lg border border-[var(--hairline)] bg-[var(--card)] text-sm" data-amount="250">R250</button>
+                <button type="button" class="amount-chip px-4 py-2 rounded-lg border border-[var(--hairline)] bg-[var(--card)] text-sm" data-amount="500">R500</button>
+                <input type="number" min="10" step="1" id="custom-amount" placeholder="Custom amount"
+                       class="px-4 py-2 rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 text-sm w-36" />
+            </div>
+            <input type="hidden" name="Amount" id="input-amount" />
+        </div>
+
+        <!-- Payment method -->
+        <div>
+            <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">2. Choose a payment method</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+
+                <div class="donation-method-card border border-[var(--hairline)] bg-[var(--card)] rounded-2xl p-5" data-method="PayPal">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-medium">PayPal</span>
+                        <span class="text-[10px] uppercase tracking-wide text-[var(--muted)]">Card / PayPal balance</span>
+                    </div>
+                    <p class="text-xs text-[var(--muted)]">
+                        Pay securely using your PayPal account or any major card, no PayPal account required.
+                    </p>
+                </div>
+
+                <div class="donation-method-card border border-[var(--hairline)] bg-[var(--card)] rounded-2xl p-5" data-method="Ozow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-medium">Ozow</span>
+                        <span class="text-[10px] uppercase tracking-wide text-[var(--muted)]">Instant EFT</span>
+                    </div>
+                    <p class="text-xs text-[var(--muted)]">
+                        Pay directly from your South African bank account via secure instant EFT.
+                    </p>
+                </div>
+
+            </div>
+            <input type="hidden" name="PaymentMethod" id="input-method" />
+        </div>
+
+        <!-- Donor details -->
+        <div>
+            <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">3. Your details</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Full name</label>
+                    <input name="DonorName" type="text" required
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Email address</label>
+                    <input name="DonorEmail" type="email" required
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3">
+            Continue to donate
+        </button>
+
+    </form>
+</section>
+
+@section Scripts {
+    <script>
+        function animateFlipFadeText(selector, staggerDelay = 0.04) {
+            document.querySelectorAll(selector).forEach(function (el) {
+                const text = el.textContent;
+                el.setAttribute('aria-label', text);
+                el.textContent = '';
+                [...text].forEach(function (char, i) {
+                    const span = document.createElement('span');
+                    span.className = 'flip-fade-letter';
+                    span.style.animationDelay = (i * staggerDelay) + 's';
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    el.appendChild(span);
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            animateFlipFadeText('.flip-fade-text');
+        });
+    </script>
+
+    <script>
+        const amountInput = document.getElementById('input-amount');
+        const customAmount = document.getElementById('custom-amount');
+
+        document.querySelectorAll('.amount-chip').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                customAmount.value = '';
+                amountInput.value = this.getAttribute('data-amount');
+            });
+        });
+
+        customAmount.addEventListener('input', function () {
+            document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('selected'));
+            amountInput.value = this.value;
+        });
+
+        const methodInput = document.getElementById('input-method');
+        document.querySelectorAll('.donation-method-card').forEach(function (card) {
+            card.addEventListener('click', function () {
+                document.querySelectorAll('.donation-method-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                methodInput.value = this.getAttribute('data-method');
+            });
+        });
+
+        document.getElementById('donation-form').addEventListener('submit', function (e) {
+            if (!amountInput.value || Number(amountInput.value) <= 0) {
+                e.preventDefault();
+                alert('Please select or enter a donation amount.');
+                return;
+            }
+            if (!methodInput.value) {
+                e.preventDefault();
+                alert('Please choose a payment method.');
+            }
+        });
+    </script>
+}
