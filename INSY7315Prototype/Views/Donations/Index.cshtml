@@ -135,6 +135,60 @@
     </form>
 </section>
 
+<!-- Item donations -->
+<section class="max-w-5xl mx-auto px-6 pb-16">
+    <h2 class="font-display text-2xl text-center mb-2">Prefer to donate items?</h2>
+    <p class="text-[var(--muted)] text-sm max-w-xl mx-auto text-center mb-10">
+        Physical supplies keep the sanctuary running day to day. Here's what we always need — drop off at the sanctuary, or
+        <a asp-controller="Contact" asp-action="Index" class="text-[var(--red)] font-medium hover:text-[var(--red-dark)]">contact us</a>
+        to arrange collection.
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-video bg-[var(--hairline)]/40 flex items-center justify-center">
+                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Photo — equipment</p>
+            </div>
+            <div class="p-5">
+                <h3 class="font-semibold mb-1">Equipment</h3>
+                <p class="text-sm text-[var(--muted)]">Carriers, scratching posts, litter boxes, and general sanctuary equipment.</p>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-video bg-[var(--hairline)]/40 flex items-center justify-center">
+                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Photo — toys &amp; blankets</p>
+            </div>
+            <div class="p-5">
+                <h3 class="font-semibold mb-1">Toys &amp; blankets</h3>
+                <p class="text-sm text-[var(--muted)]">Soft blankets, cat toys, and scratching pads — comfort and play for our residents.</p>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-video overflow-hidden">
+                <img src="~/images/catFood.jpeg" alt="Cat food and litter donations" class="w-full h-full object-cover">
+            </div>
+            <div class="p-5">
+                <h3 class="font-semibold mb-1">Food &amp; litter</h3>
+                <p class="text-sm text-[var(--muted)]">Dry and wet cat food, plus clumping litter, to keep every resident fed and their spaces clean.</p>
+            </div>
+        </div>
+
+        <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] overflow-hidden">
+            <div class="aspect-video bg-[var(--hairline)]/40 flex items-center justify-center">
+                <p class="text-xs text-[var(--muted)] uppercase tracking-wide">Photo — cleaning supplies</p>
+            </div>
+            <div class="p-5">
+                <h3 class="font-semibold mb-1">Cleaning supplies</h3>
+                <p class="text-sm text-[var(--muted)]">Floor disinfectant, mops, buckets, and sponges to help keep the sanctuary spotless.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
 @section Scripts {
     <script>
         function animateFlipFadeText(selector, staggerDelay = 0.04) {
