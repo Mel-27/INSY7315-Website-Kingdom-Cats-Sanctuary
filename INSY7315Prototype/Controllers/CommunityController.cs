@@ -8,6 +8,7 @@ namespace INSY7315Prototype.Controllers
         // GET: /Community
         public IActionResult Index()
         {
+            // TODO: replace with real data from your DbContext
 
             var viewModel = new CommunityPageViewModel
             {
@@ -20,7 +21,7 @@ namespace INSY7315Prototype.Controllers
                         PetName = "Oliver",
                         StatusText = "Last seen in Oak Ridge",
                         TimeAgo = "Reported 2h ago",
-                        PhotoUrl = "/images/catFour.jpeg"
+                        PhotoUrl = "/images/FavTwo.jpeg"
                     },
                     new LostFoundAlert
                     {
@@ -29,7 +30,7 @@ namespace INSY7315Prototype.Controllers
                         PetName = "Luna",
                         StatusText = "Safe at Sanctuary",
                         TimeAgo = "Checking for chip...",
-                        PhotoUrl = "/images/catFive.jpeg"
+                        PhotoUrl = "/images/catSeven.jpeg"
                     }
                 },
                 Stories = new List<CommunityPost>
@@ -40,10 +41,16 @@ namespace INSY7315Prototype.Controllers
                         AuthorName = "Sarah Chen",
                         AuthorInitials = "SC",
                         PostedTimeAgo = "2 hours ago",
-                        PhotoUrl = "/images/mochi.jpeg",
+                        PhotoUrl = "/images/catFive.jpeg",
                         Caption = "Adopted Mochi today! He's already claiming the best spot on the sofa. Thank you Kingdom Cats Sanctuary!",
                         Tags = new List<string> { "#AdoptionSuccess", "#NewBeginnings" },
-                        Comments = 8
+                        Likes = 24,
+                        Dislikes = 1,
+                        Comments = new List<PostComment>
+                        {
+                            new PostComment { Id = 1, PostId = 1, AuthorName = "Priya N.", Text = "He's gorgeous! Congrats on the new family member.", TimeAgo = "1 hour ago" },
+                            new PostComment { Id = 2, PostId = 1, AuthorName = "Mark T.", Text = "That face! So happy for you both.", TimeAgo = "45 minutes ago" }
+                        }
                     },
                     new CommunityPost
                     {
@@ -51,10 +58,15 @@ namespace INSY7315Prototype.Controllers
                         AuthorName = "James Patel",
                         AuthorInitials = "JP",
                         PostedTimeAgo = "5 hours ago",
-                        PhotoUrl = "/images/zoomies.jpeg",
+                        PhotoUrl = "/images/catFour.jpeg",
                         Caption = "Morning zoomies in full effect! This is what 6 AM looks like now.",
                         Tags = new List<string>(),
-                        Comments = 4
+                        Likes = 41,
+                        Dislikes = 0,
+                        Comments = new List<PostComment>
+                        {
+                            new PostComment { Id = 3, PostId = 2, AuthorName = "Aisha K.", Text = "The zoomies are unstoppable at 6am, I feel this.", TimeAgo = "3 hours ago" }
+                        }
                     }
                 },
                 FeaturedTip = new ExpertTip
@@ -74,7 +86,7 @@ namespace INSY7315Prototype.Controllers
                         ReadTime = "5 min read",
                         Title = "How to Cat-Proof Your Modern Home Without Sacrificing Style",
                         Excerpt = "Protect your furniture and keep your cat safe with these designer-approved tips for a harmonious living space.",
-                        PhotoUrl = "/images/FavOne.jpeg",
+                        PhotoUrl = "/images/catTen.jpeg",
                         Url = "#"
                     },
                     new BlogArticle
@@ -84,7 +96,7 @@ namespace INSY7315Prototype.Controllers
                         ReadTime = "8 min read",
                         Title = "Decoding the Label: What Your Cat Really Needs to Eat",
                         Excerpt = "Learn how to spot high-quality ingredients and avoid common fillers in commercial cat food brands.",
-                        PhotoUrl = "/images/FavOne.jpeg",
+                        PhotoUrl = "/images/catNine.jpeg",
                         Url = "#"
                     }
                 }
@@ -114,8 +126,44 @@ namespace INSY7315Prototype.Controllers
                 .Take(2)
                 .Select(n => char.ToUpper(n[0])));
 
-
+         
             return RedirectToAction("Index");
+        }
+
+        // POST: /Community/AddComment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddComment(AddCommentRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.AuthorName) || string.IsNullOrWhiteSpace(request.Text))
+            {
+                TempData["PostError"] = "Please add your name and a comment before posting.";
+                return RedirectToAction("Index");
+            }
+
+          
+
+            // Redirect back with the relevant post's comments panel open
+            return Redirect(Url.Action("Index") + $"#comments-panel-{request.PostId}");
+        }
+
+        // POST: /Community/LikePost
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LikePost(VotePostRequest request)
+        {
+
+            return Redirect(Url.Action("Index") + $"#post-{request.PostId}");
+        }
+
+        // POST: /Community/DislikePost
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DislikePost(VotePostRequest request)
+        {
+            // TODO: replace with real persistence, same considerations as LikePost.
+
+            return Redirect(Url.Action("Index") + $"#post-{request.PostId}");
         }
     }
 }
