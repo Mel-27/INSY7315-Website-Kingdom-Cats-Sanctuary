@@ -1,0 +1,816 @@
+﻿@model INSY7315Prototype.Models.CommunityPageViewModel
+@{
+    ViewData["Title"] = "Community";
+}
+
+<style>
+    /* ---------- Lost & Found ---------- */
+    .alert-card {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        background: color-mix(in srgb, var(--red) 8%, var(--card));
+        border: 1px solid color-mix(in srgb, var(--red) 20%, transparent);
+        border-radius: 1rem;
+        padding: 0.9rem 1.1rem;
+    }
+
+    .alert-card__photo {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.65rem;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    .alert-card__status {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 0.2rem;
+    }
+
+        .alert-card__status.is-missing {
+            color: var(--red);
+        }
+
+        .alert-card__status.is-found {
+            color: var(--ink);
+        }
+
+    .alert-card__title {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .alert-card__time {
+        font-size: 12px;
+        color: var(--muted);
+    }
+
+    /* ---------- Community story card ---------- */
+    .story-card {
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 1.25rem;
+        overflow: hidden;
+    }
+
+    .story-card__header {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1rem 1.1rem;
+    }
+
+    .story-card__avatar {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 9999px;
+        background: color-mix(in srgb, var(--red) 12%, transparent);
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .story-card__author {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    .story-card__time {
+        font-size: 12px;
+        color: var(--muted);
+    }
+
+    .story-card__photo {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        display: block;
+    }
+
+    .story-card__body {
+        padding: 1rem 1.1rem;
+    }
+
+    .story-card__caption {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+    }
+
+    .story-card__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 0.9rem;
+    }
+
+    .story-card__tag {
+        background: color-mix(in srgb, var(--red) 10%, transparent);
+        color: var(--red);
+        font-size: 11px;
+        font-weight: 500;
+        padding: 0.25rem 0.6rem;
+        border-radius: 9999px;
+    }
+
+    .story-card__actions {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        border-top: 1px solid var(--hairline);
+        padding-top: 0.75rem;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+        .story-card__actions span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .story-card__actions svg {
+            width: 1.05rem;
+            height: 1.05rem;
+        }
+
+        .story-card__actions .share-icon {
+            margin-left: auto;
+        }
+
+    /* ---------- Expert tip ---------- */
+    .tip-card {
+        background: var(--ink);
+        color: white;
+        border-radius: 1.25rem;
+        padding: 1.75rem;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tip-card__badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.15);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.7rem;
+        border-radius: 9999px;
+        margin-bottom: 1rem;
+        width: fit-content;
+    }
+
+    .tip-card__title {
+        font-family: var(--font-display, inherit);
+        font-size: 1.35rem;
+        line-height: 1.3;
+        margin-bottom: 0.9rem;
+    }
+
+    .tip-card__excerpt {
+        font-size: 13.5px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.8);
+        margin-bottom: 1.5rem;
+    }
+
+    .tip-card__btn {
+        display: inline-block;
+        background: white;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0.65rem 1.25rem;
+        border-radius: 0.6rem;
+        width: fit-content;
+        margin-top: auto;
+    }
+
+    /* ---------- Blog ---------- */
+    .blog-card {
+        display: grid;
+        grid-template-columns: 9rem 1fr;
+        gap: 1.1rem;
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 1rem;
+        padding: 1rem;
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+        .blog-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+            transform: translateY(-1px);
+        }
+
+    .blog-card__img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 0.65rem;
+        display: block;
+    }
+
+    .blog-card__meta {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 0.4rem;
+    }
+
+    .blog-card__title {
+        font-family: var(--font-display, inherit);
+        font-size: 1.05rem;
+        line-height: 1.35;
+        margin-bottom: 0.4rem;
+    }
+
+    .blog-card__excerpt {
+        font-size: 13px;
+        line-height: 1.55;
+        color: var(--muted);
+    }
+
+    /* ================= RESPONSIVE BREAKPOINTS ================= */
+
+    @@media only screen and (max-width: 1024px) {
+        .story-card__photo {
+            aspect-ratio: 16 / 10;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .tip-card {
+            padding: 1.5rem;
+        }
+
+        .tip-card__title {
+            font-size: 1.2rem;
+        }
+
+        .blog-card {
+            grid-template-columns: 7rem 1fr;
+            gap: 0.85rem;
+        }
+
+        .blog-card__title {
+            font-size: 0.95rem;
+        }
+    }
+
+    @@media only screen and (max-width: 640px) {
+        .alert-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .blog-card {
+            grid-template-columns: 1fr;
+        }
+
+        .blog-card__img {
+            aspect-ratio: 16 / 9;
+        }
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .story-card__header {
+            padding: 0.85rem 0.9rem;
+        }
+
+        .story-card__body {
+            padding: 0.85rem 0.9rem;
+        }
+
+        .tip-card {
+            padding: 1.25rem;
+        }
+    }
+    /* ---------- Add post ---------- */
+    .fab-add-post {
+        position: fixed;
+        bottom: 1.75rem;
+        right: 1.75rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 9999px;
+        background: var(--red);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+        border: none;
+        cursor: pointer;
+        z-index: 40;
+        transition: transform .15s ease, background .15s ease;
+    }
+
+        .fab-add-post:hover {
+            transform: translateY(-2px);
+            background: var(--red-dark, var(--red));
+        }
+
+    .post-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(28,25,23,0.6);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .25s ease;
+    }
+
+        .post-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+    .post-modal {
+        background: var(--card);
+        border-radius: 1.25rem;
+        width: 100%;
+        max-width: 28rem;
+        padding: 1.75rem;
+        position: relative;
+        transform: translateY(24px) scale(0.96);
+        opacity: 0;
+        transition: transform .25s ease, opacity .25s ease;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+    }
+
+    .post-modal-overlay.open .post-modal {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    .post-modal-close {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 9999px;
+        border: none;
+        background: var(--hairline);
+        color: var(--ink);
+        font-size: 1.25rem;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .post-modal-overlay, .post-modal, .fab-add-post {
+            transition: none !important;
+        }
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .fab-add-post {
+            bottom: 1.25rem;
+            right: 1.25rem;
+            width: 3.15rem;
+            height: 3.15rem;
+        }
+    }
+
+    .vote-form {
+        display: inline-flex;
+    }
+
+    .vote-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        transition: color .15s ease, transform .1s ease;
+    }
+
+        .vote-btn:hover {
+            color: var(--red);
+        }
+
+        .vote-btn:active {
+            transform: scale(0.94);
+        }
+
+    .comment-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        transition: color .15s ease;
+    }
+
+        .comment-toggle:hover {
+            color: var(--red);
+        }
+
+    .comments-panel {
+        display: none;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--hairline);
+    }
+
+        .comments-panel.open {
+            display: block;
+        }
+
+    .comments-panel__list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .comments-panel__empty {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 1rem;
+    }
+
+    .comment-row__meta {
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-bottom: 0.15rem;
+    }
+
+    .comment-row__author {
+        font-weight: 600;
+        color: var(--ink);
+    }
+
+    .comment-row__text {
+        font-size: 13.5px;
+        line-height: 1.5;
+    }
+
+    .comment-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .comment-form__input {
+        border: 1px solid var(--hairline);
+        background: color-mix(in srgb, var(--cream) 40%, transparent);
+        border-radius: 0.6rem;
+        padding: 0.55rem 0.8rem;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+
+    .comment-form__input--name {
+        flex: 0 0 8rem;
+    }
+
+    .comment-form__input--text {
+        flex: 1 1 10rem;
+    }
+
+    .comment-form__submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4rem;
+        flex-shrink: 0;
+        background: var(--red);
+        color: white;
+        border: none;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        transition: background .15s ease;
+    }
+
+        .comment-form__submit:hover {
+            background: var(--red-dark, var(--red));
+        }
+
+    @@media only screen and (max-width: 480px) {
+        .comment-form__input--name {
+            flex: 1 1 100%;
+        }
+    }
+
+</style>
+
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-10">
+
+    @if (TempData["PostError"] != null)
+    {
+        <div class="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-6">
+            @TempData["PostError"]
+        </div>
+    }
+
+    <!-- Lost & Found -->
+    <div class="flex items-center justify-between mb-4">
+        <h1 class="font-display text-2xl">Lost &amp; Found</h1>
+        <a href="#" class="text-sm font-semibold text-[var(--red)] hover:text-[var(--red-dark,var(--red))]">View All Alerts</a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-12">
+        @foreach (var alert in Model.Alerts)
+        {
+            <div class="alert-card">
+                @if (!string.IsNullOrEmpty(alert.PhotoUrl))
+                {
+                    <img src="@alert.PhotoUrl" alt="@alert.PetName" class="alert-card__photo">
+                }
+                <div>
+                    <p class="alert-card__status @(alert.IsFound ? "is-found" : "is-missing")">
+                        @if (alert.IsFound)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            <text>Found: @alert.PetName</text>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.008v.008H12v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <text>Missing: @alert.PetName</text>
+                        }
+                    </p>
+                    <p class="alert-card__title">@alert.StatusText</p>
+                    <p class="alert-card__time">@alert.TimeAgo</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Community Stories -->
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="font-display text-2xl">Community Stories</h2>
+        <button type="button" onclick="openPostModal()" class="hidden sm:inline-block btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg px-4 py-2.5">
+            New post
+        </button>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-14 items-start">
+        <div class="md:col-span-2 space-y-6">
+            @foreach (var post in Model.Stories)
+            {
+                <div id="post-@post.Id" class="story-card">
+                    <div class="story-card__header">
+                        <div class="story-card__avatar">@post.AuthorInitials</div>
+                        <div>
+                            <p class="story-card__author">@post.AuthorName</p>
+                            <p class="story-card__time">@post.PostedTimeAgo</p>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(post.PhotoUrl))
+                    {
+                        <img src="@post.PhotoUrl" alt="@post.AuthorName's post" class="story-card__photo">
+                    }
+
+                    <div class="story-card__body">
+                        <p class="story-card__caption">@post.Caption</p>
+
+                        @if (post.Tags.Any())
+                        {
+                            <div class="story-card__tags">
+                                @foreach (var tag in post.Tags)
+                                {
+                                    <span class="story-card__tag">@tag</span>
+                                }
+                            </div>
+                        }
+
+                        <div class="story-card__actions">
+                            <form asp-controller="Community" asp-action="LikePost" method="post" class="vote-form">
+                                <input type="hidden" name="PostId" value="@post.Id" />
+                                <button type="submit" class="vote-btn" aria-label="Like this post">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.045 1.715.117 1.2-.075 2.472-.577 3.66-.663 1.575-1.673 2.845-2.923 3.723a.75.75 0 01-.415.127h-2.86m-8.3-9.75V16.5m-4.5 0v-9.75" />
+                                    </svg>
+                                    @post.Likes
+                                </button>
+                            </form>
+
+                            <form asp-controller="Community" asp-action="DislikePost" method="post" class="vote-form">
+                                <input type="hidden" name="PostId" value="@post.Id" />
+                                <button type="submit" class="vote-btn" aria-label="Dislike this post">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.367 13.5c-.806 0-1.533.446-2.031 1.08a9.041 9.041 0 01-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.498 4.498 0 00-.322 1.672V21a.75.75 0 01-.75.75 2.25 2.25 0 01-2.25-2.25c0-1.152.26-2.243.723-3.218.266-.558-.107-1.282-.725-1.282H4.372c-1.026 0-1.945-.694-2.045-1.715a9.03 9.03 0 01.577-3.66c.663-1.575 1.673-2.845 2.923-3.723a.75.75 0 01.415-.127h2.86m8.3 9.75V7.5m4.5 9V7.5" />
+                                    </svg>
+                                    @post.Dislikes
+                                </button>
+                            </form>
+
+                            <button type="button" class="comment-toggle" onclick="toggleComments(@post.Id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                                </svg>
+                                @post.Comments.Count
+                            </button>
+                            <span class="share-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                                </svg>
+                            </span>
+                        </div>
+
+                        <div id="comments-panel-@post.Id" class="comments-panel">
+                            @if (post.Comments.Any())
+                            {
+                                <div class="comments-panel__list">
+                                    @foreach (var comment in post.Comments)
+                                    {
+                                        <div class="comment-row">
+                                            <p class="comment-row__meta"><span class="comment-row__author">@comment.AuthorName</span> &middot; @comment.TimeAgo</p>
+                                            <p class="comment-row__text">@comment.Text</p>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="comments-panel__empty">No comments yet — be the first to say something.</p>
+                            }
+
+                            <form asp-controller="Community" asp-action="AddComment" method="post" class="comment-form">
+                                <input type="hidden" name="PostId" value="@post.Id" />
+                                <input name="AuthorName" type="text" placeholder="Your name" required
+                                       class="comment-form__input comment-form__input--name">
+                                <input name="Text" type="text" placeholder="Add a comment..." required
+                                       class="comment-form__input comment-form__input--text">
+                                <button type="submit" class="comment-form__submit" aria-label="Post comment">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <aside>
+            <div class="tip-card">
+                <span class="tip-card__badge">@Model.FeaturedTip.Badge</span>
+                <h3 class="tip-card__title">@Model.FeaturedTip.Title</h3>
+                <p class="tip-card__excerpt">@Model.FeaturedTip.Excerpt</p>
+                <a href="@Model.FeaturedTip.Url" class="tip-card__btn">@Model.FeaturedTip.LinkText</a>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Blog -->
+    <h2 class="font-display text-2xl mb-4">The Kingdom Cats Blog</h2>
+
+    <div class="space-y-4 mb-8">
+        @foreach (var article in Model.BlogArticles)
+        {
+            <a href="@article.Url" class="blog-card">
+                @if (!string.IsNullOrEmpty(article.PhotoUrl))
+                {
+                    <img src="~/images/FavOne.jpeg" alt="@article.Title" class="blog-card__img">
+                }
+                else
+                {
+                    <div class="blog-card__img flex items-center justify-center bg-[var(--hairline)]/40">
+                        <p class="text-[10px] text-[var(--muted)] uppercase tracking-wide text-center px-2">Photo</p>
+                    </div>
+                }
+                <div>
+                    <p class="blog-card__meta">@article.Category &middot; @article.ReadTime</p>
+                    <h3 class="blog-card__title">@article.Title</h3>
+                    <p class="blog-card__excerpt">@article.Excerpt</p>
+                </div>
+            </a>
+        }
+    </div>
+
+    <div class="text-center">
+        <a href="#" class="inline-block border border-[var(--hairline)] text-sm font-semibold uppercase tracking-wide px-8 py-3 rounded-lg hover:border-[var(--red)] hover:text-[var(--red)] transition-colors">
+            Explore All Articles
+        </a>
+    </div>
+</section>
+
+<!-- Floating add-post button -->
+<button type="button" class="fab-add-post" onclick="openPostModal()" aria-label="Add a post">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+</button>
+
+<!-- Add post modal -->
+<div id="post-modal-overlay" class="post-modal-overlay">
+    <div class="post-modal" role="dialog" aria-modal="true" aria-labelledby="post-modal-title">
+        <button type="button" class="post-modal-close" aria-label="Close" onclick="closePostModal()">&times;</button>
+        <h3 id="post-modal-title" class="font-display text-xl mb-5">Share a story</h3>
+
+        <form asp-controller="Community" asp-action="CreatePost" method="post" class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Your name</label>
+                <input name="AuthorName" type="text" required
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Caption</label>
+                <textarea name="Caption" rows="3" required
+                          class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm resize-none"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Photo URL <span class="text-[var(--muted)] normal-case font-normal">(optional)</span></label>
+                <input name="PhotoUrl" type="text" placeholder="/images/your-photo.jpeg"
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Tags <span class="text-[var(--muted)] normal-case font-normal">(comma separated, optional)</span></label>
+                <input name="TagsInput" type="text" placeholder="AdoptionSuccess, NewBeginnings"
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+            </div>
+
+            <button type="submit" class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3">
+                Post to community
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    <script>
+        function toggleComments(postId) {
+            document.getElementById('comments-panel-' + postId).classList.toggle('open');
+        }
+
+        // If we've just redirected back from adding a comment, open that post's panel
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hash.startsWith('#comments-panel-')) {
+                const panel = document.querySelector(window.location.hash);
+                if (panel) {
+                    panel.classList.add('open');
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        function openPostModal() {
+            document.getElementById('post-modal-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePostModal() {
+            document.getElementById('post-modal-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('post-modal-overlay').addEventListener('click', function (e) {
+            if (e.target === this) closePostModal();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closePostModal();
+        });
+</script>
+
+<!-- Footer -->
+<footer class="border-t border-[var(--hairline)] py-8">
+    <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
+        <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
+    </div>
+</footer>

@@ -1,0 +1,431 @@
+@model INSY7315Prototype.Models.EventsPageViewModel
+@{
+    ViewData["Title"] = "Events";
+}
+
+<style>
+    .flip-fade-text {
+        display: inline-flex;
+        flex-wrap: wrap;
+        perspective: 1000px;
+    }
+
+    .flip-fade-word {
+        display: inline-flex;
+    }
+
+    .flip-fade-letter {
+        display: inline-block;
+        transform-style: preserve-3d;
+        opacity: 0;
+        transform: rotateX(90deg) translateY(20px);
+        filter: blur(8px);
+        animation: flipFadeIn 0.6s cubic-bezier(0.2, 0.65, 0.3, 0.9) forwards;
+    }
+
+    @@keyframes flipFadeIn {
+        to {
+            opacity: 1;
+            transform: rotateX(0deg) translateY(0);
+            filter: blur(0px);
+        }
+    }
+
+    /* ---------- Hero ---------- */
+    .events-hero {
+        position: relative;
+        border-radius: 1.75rem;
+        min-height: 22rem;
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--hairline);
+    }
+
+    .events-hero__bg-wrap {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        overflow: hidden;
+    }
+
+    .events-hero__bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .events-hero__scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, var(--cream) 0%, color-mix(in srgb, var(--cream) 78%, transparent) 45%, transparent 85%);
+    }
+
+    .events-hero__content {
+        position: relative;
+        z-index: 2;
+        max-width: 30rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2.75rem;
+    }
+
+    .events-hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.15;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: color-mix(in srgb, var(--red) 12%, transparent);
+        color: var(--red-dark, var(--red));
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.4rem 0.9rem;
+        border-radius: 9999px;
+        margin-bottom: 1rem;
+    }
+
+    .btn-outline {
+        border: 1px solid var(--hairline);
+        background: var(--card);
+        color: var(--ink);
+        transition: border-color .15s ease, color .15s ease;
+    }
+
+        .btn-outline:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+    /* ---------- Event card ---------- */
+    .event-card {
+        display: grid;
+        grid-template-columns: 11rem 1fr;
+        gap: 1.25rem;
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 1.25rem;
+        padding: 1.25rem;
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+        .event-card:hover {
+            box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+    .event-card__img-wrap {
+        position: relative;
+        border-radius: 0.85rem;
+        overflow: hidden;
+        aspect-ratio: 4 / 5;
+    }
+
+        .event-card__img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+    .event-card__badge {
+        position: absolute;
+        top: 0.6rem;
+        left: 0.6rem;
+        background: var(--ink);
+        color: white;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.6rem;
+        border-radius: 9999px;
+    }
+
+    .event-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 12px;
+        color: var(--muted);
+    }
+
+    /* ================= RESPONSIVE BREAKPOINTS ================= */
+
+    /* Tablet and below */
+    @@media only screen and (max-width: 1024px) {
+        .events-hero h1 {
+            font-size: 2.1rem;
+        }
+
+        .events-hero__content {
+            padding: 2rem;
+        }
+
+        .event-card {
+            grid-template-columns: 9rem 1fr;
+        }
+    }
+
+    /* Small tablet / large phone */
+    @@media only screen and (max-width: 768px) {
+        .events-hero {
+            min-height: 0;
+            align-items: stretch;
+        }
+
+        .events-hero__scrim {
+            background: linear-gradient(180deg, color-mix(in srgb, var(--cream) 55%, transparent) 0%, var(--cream) 65%);
+        }
+
+        .events-hero__content {
+            max-width: 100%;
+            padding: 1.75rem;
+            padding-top: 8rem;
+        }
+
+        .events-hero h1 {
+            font-size: 1.9rem;
+        }
+
+        .hero-badge {
+            font-size: 10px;
+            padding: 0.35rem 0.8rem;
+        }
+
+        .impact-card {
+            padding: 1.75rem 1.5rem;
+        }
+
+        .impact-card__amount {
+            font-size: 2rem;
+        }
+    }
+
+    /* Phone */
+    @@media only screen and (max-width: 640px) {
+        .event-card {
+            grid-template-columns: 1fr;
+        }
+
+        .event-card__img-wrap {
+            aspect-ratio: 16 / 9;
+        }
+    }
+
+    /* Small phone */
+    @@media only screen and (max-width: 480px) {
+        .events-hero__content {
+            padding: 1.25rem;
+            padding-top: 6rem;
+        }
+
+        .events-hero h1 {
+            font-size: 1.6rem;
+        }
+
+        .hero-badge {
+            font-size: 9px;
+            padding: 0.3rem 0.7rem;
+        }
+
+        .impact-card {
+            padding: 1.5rem 1.25rem;
+        }
+
+        .impact-card__amount {
+            font-size: 1.85rem;
+        }
+    }
+
+    /* ---------- Impact sidebar ---------- */
+    .impact-card {
+        background: var(--ink);
+        color: white;
+        border-radius: 1.25rem;
+        padding: 2rem 1.75rem;
+        text-align: center;
+    }
+
+    .impact-card__icon {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto 1rem;
+        border-radius: 9999px;
+        background: rgba(255,255,255,0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .impact-card__amount {
+        font-family: var(--font-display, inherit);
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .impact-card__label {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 1.25rem;
+    }
+
+    .impact-card__desc {
+        font-size: 13px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.8);
+        border-top: 1px solid rgba(255,255,255,0.15);
+        padding-top: 1.25rem;
+    }
+</style>
+
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-10">
+
+    <!-- Hero -->
+    <div class="events-hero mb-12">
+        <div class="events-hero__bg-wrap">
+            <img src="~/images/FavOne.jpeg" alt="Cats relaxing in the sanctuary" class="events-hero__bg">
+            <div class="events-hero__scrim"></div>
+        </div>
+        <div class="events-hero__content">
+            <span class="hero-badge">Support Our Mission</span>
+            <h1 class="flip-fade-text font-display mb-4 leading-tight text-[var(--ink)]">
+                Gather for a cause, stay for the whiskers.
+            </h1>
+            <p class="text-sm text-[var(--muted)] mb-6">
+                Join us for our upcoming sanctuary events. Every ticket purchased and every
+                donation made goes directly to the medical care and comfort of our feline residents.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="#event-list" class="btn-primary text-white text-sm font-semibold tracking-wide uppercase rounded-lg px-5 py-3">
+                    View calendar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events + impact -->
+    <div id="event-list" class="grid md:grid-cols-3 gap-8 items-start">
+
+        <div class="md:col-span-2 space-y-5">
+            @if (!Model.Events.Any())
+            {
+                <p class="text-sm text-[var(--muted)]">No upcoming events right now — check back soon!</p>
+            }
+            @foreach (var evt in Model.Events)
+            {
+                <div class="event-card">
+                    <div class="event-card__img-wrap">
+                        @if (evt.IsMostPopular)
+                        {
+                            <span class="event-card__badge">Most popular</span>
+                        }
+                        @if (!string.IsNullOrEmpty(evt.PhotoUrl))
+                        {
+                            <img src="@evt.PhotoUrl" alt="@evt.Title">
+                        }
+                        else
+                        {
+                            <div class="w-full h-full flex items-center justify-center bg-[var(--hairline)]/40">
+                                <p class="text-[10px] text-[var(--muted)] uppercase tracking-wide px-2 text-center">Photo — @evt.Title</p>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="flex flex-col justify-center">
+                        <p class="text-xs text-[var(--muted)] mb-1">@evt.DateDisplay</p>
+                        <h3 class="font-display text-xl mb-2">@evt.Title</h3>
+                        <p class="text-sm text-[var(--muted)] mb-3 leading-relaxed">@evt.Description</p>
+
+                        <div class="space-y-1 mb-4">
+                            <p class="event-meta">@evt.Location</p>
+                            <p class="event-meta">Cause: @evt.Cause</p>
+                        </div>
+
+                        <div class="flex items-center justify-end">
+                            @if (evt.Price.HasValue)
+                            {
+                                <span class="font-semibold text-lg mr-auto">R@(evt.Price.Value.ToString("0.00"))</span>
+                            }
+                            <a asp-controller="Events" asp-action="Rsvp" asp-route-id="@evt.Id"
+                               class="btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg px-5 py-2.5">
+                                RSVP now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <aside>
+            <div class="impact-card">
+                <div class="impact-card__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+                    </svg>
+                </div>
+                <h3 class="font-display text-base mb-4">@Model.Impact.PeriodLabel</h3>
+                <p class="impact-card__amount">R@(Model.Impact.AmountRaised.ToString("N0"))</p>
+                <p class="impact-card__label">Raised through events</p>
+                <p class="impact-card__desc">@Model.Impact.Description</p>
+            </div>
+        </aside>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function animateFlipFadeText(selector, staggerDelay = 0.03) {
+            document.querySelectorAll(selector).forEach(function (el) {
+                const text = el.textContent.trim();
+                el.setAttribute('aria-label', text);
+                el.textContent = '';
+
+                const words = text.split(' ');
+                let charIndex = 0;
+
+                words.forEach(function (word, wordIndex) {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'flip-fade-word';
+
+                    [...word].forEach(function (char) {
+                        const letterSpan = document.createElement('span');
+                        letterSpan.className = 'flip-fade-letter';
+                        letterSpan.style.animationDelay = (charIndex * staggerDelay) + 's';
+                        letterSpan.textContent = char;
+                        wordSpan.appendChild(letterSpan);
+                        charIndex++;
+                    });
+
+                    el.appendChild(wordSpan);
+
+                    if (wordIndex < words.length - 1) {
+                        const spaceSpan = document.createElement('span');
+                        spaceSpan.className = 'flip-fade-letter';
+                        spaceSpan.style.animationDelay = (charIndex * staggerDelay) + 's';
+                        spaceSpan.textContent = '\u00A0';
+                        el.appendChild(spaceSpan);
+                        charIndex++;
+                    }
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            animateFlipFadeText('.flip-fade-text');
+        });
+    </script>
+}
+<!-- Footer -->
+<footer class="border-t border-[var(--hairline)] py-8">
+    <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
+        <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
+    </div>
+</footer>
