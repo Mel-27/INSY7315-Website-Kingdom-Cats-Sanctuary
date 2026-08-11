@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - Kingdom Cats Sanctuary</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --cream: #F7F3EA;
@@ -23,7 +27,7 @@
         }
 
         body {
-            font-family: 'Inter',sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--cream);
             color: var(--ink);
             background-image: radial-gradient(circle at 8px 8px, rgba(193,39,45,0.05) 2px, transparent 2.5px), radial-gradient(circle at 22px 6px, rgba(193,39,45,0.05) 2px, transparent 2.5px), radial-gradient(circle at 15px 18px, rgba(193,39,45,0.05) 2px, transparent 2.5px);
@@ -48,49 +52,18 @@
                 transform: scale(0.99);
             }
 
-        input:focus {
+        input:focus,
+        select:focus {
             outline: none;
             border-color: var(--red) !important;
             box-shadow: 0 0 0 3px rgba(193,39,45,0.12);
         }
 
-        .tab-btn {
-            position: relative;
-            color: var(--muted);
-            transition: color .15s ease;
-        }
 
-            .tab-btn.active {
-                color: var(--ink);
-            }
+        /* =========================================================
+                   PAGE TRANSITION
+                ========================================================= */
 
-        .tab-underline {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -1px;
-            height: 2px;
-            background-color: var(--red);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform .25s ease;
-        }
-
-        .tab-btn.active .tab-underline {
-            transform: scaleX(1);
-        }
-
-        .field-panel {
-            transition: opacity .2s ease;
-        }
-
-        @@media (prefers-reduced-motion: reduce) {
-            .btn-primary, .tab-underline, .field-panel {
-                transition: none !important;
-            }
-        }
-
-        /* ---------- Page load transition ---------- */
         .page-transition {
             position: fixed;
             inset: 0;
@@ -110,6 +83,8 @@
             opacity: 0;
             transform: translateY(10px);
             transition: opacity .4s ease .15s, transform .4s ease .15s;
+            text-align: center;
+            padding: 0 1.5rem;
         }
 
         .page-transition.is-visible .page-transition__mark {
@@ -125,13 +100,11 @@
             display: none;
         }
 
-        @@media (prefers-reduced-motion: reduce) {
-            .page-transition {
-                transition: none !important;
-            }
-        }
 
-        /* ---------- Hamburger button ---------- */
+        /* =========================================================
+                   HAMBURGER
+                ========================================================= */
+
         .hamburger-btn {
             position: fixed;
             top: 1.25rem;
@@ -170,7 +143,11 @@
                 transform: translateY(-7px) rotate(-45deg);
             }
 
-        /* ---------- Overlay + panel ---------- */
+
+        /* =========================================================
+                   OVERLAY + NAVIGATION PANEL
+                ========================================================= */
+
         .nav-overlay {
             position: fixed;
             inset: 0;
@@ -191,34 +168,39 @@
             top: 0;
             left: 0;
             bottom: 0;
-            width: 320px;
-            max-width: 80vw;
+            width: 360px;
+            max-width: 88vw;
             background-color: var(--ink);
             z-index: 55;
             transform: translateX(-100%);
             transition: transform .3s ease;
-            padding: 6rem 2.5rem 2rem;
+            padding: 5.5rem 2.5rem 2rem;
+            overflow-y: auto;
         }
 
             .nav-panel.open {
                 transform: translateX(0);
             }
 
-        /* ---------- LineSidebar (adapted) ---------- */
+
+        /* =========================================================
+                   LINE SIDEBAR
+                ========================================================= */
+
         .line-sidebar {
             --accent-color: #C1272D;
             --text-color: #c4c4c4;
             --marker-color: #6c6c6c;
-            --marker-length: 60px;
+            --marker-length: 50px;
             --marker-gap: 0px;
             --tick-scale: 0.5;
-            --max-shift: 30px;
-            --item-gap: 28px;
-            --font-size: 1.4rem;
+            --max-shift: 25px;
+            --item-gap: 22px;
+            --font-size: 1.15rem;
             --smoothing: 100ms;
             position: relative;
-            display: flex;
-            justify-content: flex-start;
+            display: block;
+            width: 100%;
         }
 
         .line-sidebar--markers {
@@ -228,10 +210,11 @@
         .line-sidebar__list {
             list-style: none;
             margin: 0;
-            padding: 1rem 0;
+            padding: .5rem 0 0;
             display: flex;
             flex-direction: column;
             gap: var(--item-gap);
+            width: 100%;
         }
 
         .line-sidebar__item {
@@ -242,7 +225,7 @@
             .line-sidebar__item::before {
                 content: '';
                 position: absolute;
-                inset: -6px -48px;
+                inset: -5px -40px;
             }
 
         .line-sidebar__label {
@@ -253,15 +236,16 @@
             font-family: 'Playfair Display', serif;
             line-height: 1.2;
             text-decoration: none;
-            color: color-mix(in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--text-color));
-            transform: translateX(calc(var(--effect, 0) * var(--max-shift)));
+            color: color-mix( in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--text-color) );
+            transform: translateX( calc(var(--effect, 0) * var(--max-shift)) );
+            transition: color .15s ease;
         }
 
         .line-sidebar__index {
             font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            margin-right: 0.6rem;
-            font-size: 0.85em;
-            opacity: calc(0.55 + var(--effect, 0) * 0.45);
+            margin-right: .55rem;
+            font-size: .72em;
+            opacity: calc(.55 + var(--effect, 0) * .45);
         }
 
         .line-sidebar__marker {
@@ -270,12 +254,13 @@
             left: calc(-1 * var(--marker-length) - var(--marker-gap));
             height: 1px;
             width: var(--marker-length);
-            background-color: color-mix(in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--marker-color));
+            background-color: color-mix( in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--marker-color) );
             transform-origin: left center;
-            transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.5));
+            transform: translateY(-50%) scaleX( calc(.7 + var(--effect, 0) * .5) );
         }
 
-        .line-sidebar--markers .line-sidebar__item:not(:last-child)::after {
+        .line-sidebar--markers
+        .line-sidebar__item:not(:last-child)::after {
             content: '';
             position: absolute;
             top: calc(100% + var(--item-gap) / 2);
@@ -283,229 +268,1352 @@
             height: 1px;
             width: calc(var(--marker-length) * var(--tick-scale));
             background-color: var(--marker-color);
-            opacity: 0.5;
+            opacity: .5;
             transform: translateY(-50%);
         }
 
-        .line-sidebar--scale-tick .line-sidebar__item:not(:last-child)::after {
-            transform-origin: left center;
-            transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.6));
+
+        /* =========================================================
+                   PREFERENCES
+                   ========================================================= */
+
+        .preference-area {
+            margin-top: 2rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid rgba(255,255,255,.12);
+            width: 100%;
         }
 
+        .preference-heading {
+            margin: 0 0 1rem 0;
+            font-family: 'Playfair Display', serif;
+            font-size: .95rem;
+            color: rgba(255,255,255,.65);
+            letter-spacing: .04em;
+        }
+
+        .preference-group {
+            margin-bottom: 1rem;
+        }
+
+        .preference-label {
+            display: block;
+            font-size: .68rem;
+            font-weight: 600;
+            color: rgba(255,255,255,.45);
+            margin-bottom: .4rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .preference-select {
+            width: 100%;
+            appearance: none;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 6px;
+            background-color: rgba(255,255,255,.055);
+            color: #fff;
+            padding: .6rem 2.4rem .6rem .75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: .72rem;
+            cursor: pointer;
+            background-image: linear-gradient(45deg, transparent 50%, #aaa 50%), linear-gradient(135deg, #aaa 50%, transparent 50%);
+            background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%;
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+            transition: border-color .15s ease, background-color .15s ease;
+        }
+
+            .preference-select:hover {
+                border-color: rgba(255,255,255,.3);
+                background-color: rgba(255,255,255,.08);
+            }
+
+            .preference-select option {
+                background-color: var(--ink);
+                color: #fff;
+            }
+
+        .preference-note {
+            font-size: .58rem;
+            color: rgba(255,255,255,.28);
+            line-height: 1.5;
+            margin: .45rem 0 0;
+        }
+
+
+        /* =========================================================
+                   RESPONSIVE
+                ========================================================= */
+
+        @@media (max-width: 400px) {
+
+            .nav-panel {
+                width: 320px;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+
+            .line-sidebar {
+                --font-size: 1.05rem;
+                --item-gap: 19px;
+                --marker-length: 42px;
+            }
+
+            .preference-select {
+                font-size: .68rem;
+            }
+        }
+
+
         @@media (prefers-reduced-motion: reduce) {
-            .line-sidebar__label, .line-sidebar__marker, .hamburger-btn span, .nav-panel, .nav-overlay {
+
+            .page-transition,
+            .line-sidebar__label,
+            .line-sidebar__marker,
+            .hamburger-btn span,
+            .nav-panel,
+            .nav-overlay {
                 transition: none !important;
             }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Page load transition -->
-    <div id="page-transition" class="page-transition" aria-hidden="true">
-        <span class="page-transition__mark">Welcome to Kingdom Cats Sanctuary</span>
+    <div id="page-transition"
+         class="page-transition"
+         aria-hidden="true">
+
+        <span class="page-transition__mark">
+            Welcome to Kingdom Cats Sanctuary
+        </span>
+
     </div>
 
-    <!-- Hamburger trigger -->
-    <button id="nav-toggle" class="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+
+    <!-- Hamburger -->
+    <button id="nav-toggle"
+            class="hamburger-btn"
+            aria-label="Toggle navigation"
+            aria-expanded="false">
+
         <span></span>
         <span></span>
         <span></span>
+
     </button>
 
+
     <!-- Overlay -->
-    <div id="nav-overlay" class="nav-overlay"></div>
+    <div id="nav-overlay"
+         class="nav-overlay">
+    </div>
 
-    <!-- Sliding panel(naviagtion panel) -->
-    <nav id="nav-panel" class="nav-panel">
-        <div class="line-sidebar line-sidebar--markers line-sidebar--scale-tick">
-            <ul id="line-sidebar-list" class="line-sidebar__list">
+
+    <!-- Navigation -->
+    <nav id="nav-panel"
+         class="nav-panel">
+
+        <div class="line-sidebar line-sidebar--markers">
+
+            <ul id="line-sidebar-list"
+                class="line-sidebar__list">
+
+
+                <!-- 01 HOME -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Home" asp-action="Index" class="line-sidebar__label">
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
                         <span class="line-sidebar__index">01</span>
-                        <span>Home</span>
+
+                        <span data-i18n="home">
+                            Home
+                        </span>
+
                     </a>
+
                 </li>
+
+
+                <!-- 02 LOGIN -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Account" asp-action="Login" class="line-sidebar__label">
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       class="line-sidebar__label">
+
                         <span class="line-sidebar__index">02</span>
-                        <span>Login</span>
+
+                        <span data-i18n="login">
+                            Login
+                        </span>
+
                     </a>
+
                 </li>
+
+
+                <!-- 03 CATS -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Cats" asp-action="Index" class="line-sidebar__label">
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Cats"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
                         <span class="line-sidebar__index">03</span>
-                        <span>Cat Profile</span>
-                    </a>
-                </li>
-                <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Bookings" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">03</span>
-                        <span>Book A Session</span>
+
+                        <span data-i18n="cats">
+                            Cat Profiles
+                        </span>
+
                     </a>
 
                 </li>
+
+
+                <!-- 04 BOOKINGS -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Donations" asp-action="Index" class="line-sidebar__label">
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Bookings"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
                         <span class="line-sidebar__index">04</span>
-                        <span>Donate</span>
+
+                        <span data-i18n="book">
+                            Book a Session
+                        </span>
+
                     </a>
 
                 </li>
+
+
+                <!-- 05 DONATIONS -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Events" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">04</span>
-                        <span>Events</span>
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Donations"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
+                        <span class="line-sidebar__index">05</span>
+
+                        <span data-i18n="donate">
+                            Donate
+                        </span>
+
                     </a>
 
                 </li>
+
+
+                <!-- 06 EVENTS -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Community" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">04</span>
-                        <span>Community Blog</span>
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Events"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
+                        <span class="line-sidebar__index">06</span>
+
+                        <span data-i18n="events">
+                            Events
+                        </span>
+
                     </a>
 
                 </li>
+
+
+                <!-- 07 COMMUNITY -->
                 <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Merch" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">04</span>
-                        <span>Merch</span>
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Community"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
+                        <span class="line-sidebar__index">07</span>
+
+                        <span data-i18n="community">
+                            Community Blog
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <!-- 08 MERCH -->
+                <li class="line-sidebar__item">
+
+                    <span class="line-sidebar__marker"
+                          aria-hidden="true">
+                    </span>
+
+                    <a asp-controller="Merch"
+                       asp-action="Index"
+                       class="line-sidebar__label">
+
+                        <span class="line-sidebar__index">08</span>
+
+                        <span data-i18n="merch">
+                            Merch
+                        </span>
+
                     </a>
 
                 </li>
 
             </ul>
+
+
+            <!-- =====================================================
+                 LANGUAGE + CURRENCY
+                 These are now BELOW the navigation items.
+            ====================================================== -->
+
+            <div class="preference-area">
+
+                <p class="preference-heading">
+                    Preferences
+                </p>
+
+
+                <!-- LANGUAGE -->
+
+                <div class="preference-group">
+
+                    <label for="language-selector"
+                           class="preference-label"
+                           data-i18n="language">
+
+                        Language
+
+                    </label>
+
+                    <select id="language-selector"
+                            class="preference-select"
+                            aria-label="Select language">
+
+                        <option value="en">English</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="zu">isiZulu</option>
+                        <option value="xh">isiXhosa</option>
+                        <option value="st">Sesotho</option>
+                        <option value="tn">Setswana</option>
+                        <option value="nso">Sepedi</option>
+                        <option value="sw">Kiswahili</option>
+
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                        <option value="pt">Português</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                        <option value="nl">Nederlands</option>
+                        <option value="pl">Polski</option>
+                        <option value="tr">Türkçe</option>
+
+                        <option value="ar">العربية</option>
+                        <option value="he">עברית</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="ur">اردو</option>
+
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="th">ไทย</option>
+                        <option value="vi">Tiếng Việt</option>
+
+                        <option value="id">Bahasa Indonesia</option>
+                        <option value="ms">Bahasa Melayu</option>
+                        <option value="fil">Filipino</option>
+
+                        <option value="ru">Русский</option>
+                        <option value="uk">Українська</option>
+                        <option value="el">Ελληνικά</option>
+
+                        <option value="sv">Svenska</option>
+                        <option value="da">Dansk</option>
+                        <option value="no">Norsk</option>
+                        <option value="fi">Suomi</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- COUNTRY + CURRENCY -->
+
+                <div class="preference-group">
+
+                    <label for="currency-selector"
+                           class="preference-label"
+                           data-i18n="currency">
+
+                        Country & Currency
+
+                    </label>
+
+                    <select id="currency-selector"
+                            class="preference-select"
+                            aria-label="Select country and currency">
+
+                        <option value="ZAR"
+                                data-country="South Africa"
+                                data-rate="1">
+                            🇿🇦 South Africa — ZAR (R)
+                        </option>
+
+                        <option value="USD"
+                                data-country="United States"
+                                data-rate="0.055">
+                            🇺🇸 United States — USD ($)
+                        </option>
+
+                        <option value="GBP"
+                                data-country="United Kingdom"
+                                data-rate="0.043">
+                            🇬🇧 United Kingdom — GBP (£)
+                        </option>
+
+                        <option value="EUR"
+                                data-country="European Union"
+                                data-rate="0.050">
+                            🇪🇺 Europe — EUR (€)
+                        </option>
+
+                        <option value="AUD"
+                                data-country="Australia"
+                                data-rate="0.084">
+                            🇦🇺 Australia — AUD ($)
+                        </option>
+
+                        <option value="CAD"
+                                data-country="Canada"
+                                data-rate="0.075">
+                            🇨🇦 Canada — CAD ($)
+                        </option>
+
+                        <option value="NZD"
+                                data-country="New Zealand"
+                                data-rate="0.092">
+                            🇳🇿 New Zealand — NZD ($)
+                        </option>
+
+                        <option value="INR"
+                                data-country="India"
+                                data-rate="4.75">
+                            🇮🇳 India — INR (₹)
+                        </option>
+
+                        <option value="AED"
+                                data-country="United Arab Emirates"
+                                data-rate="0.20">
+                            🇦🇪 UAE — AED (د.إ)
+                        </option>
+
+                        <option value="SAR"
+                                data-country="Saudi Arabia"
+                                data-rate="0.21">
+                            🇸🇦 Saudi Arabia — SAR (﷼)
+                        </option>
+
+                        <option value="JPY"
+                                data-country="Japan"
+                                data-rate="8.10">
+                            🇯🇵 Japan — JPY (¥)
+                        </option>
+
+                        <option value="CNY"
+                                data-country="China"
+                                data-rate="0.40">
+                            🇨🇳 China — CNY (¥)
+                        </option>
+
+                        <option value="SGD"
+                                data-country="Singapore"
+                                data-rate="0.070">
+                            🇸🇬 Singapore — SGD ($)
+                        </option>
+
+                        <option value="BRL"
+                                data-country="Brazil"
+                                data-rate="0.30">
+                            🇧🇷 Brazil — BRL (R$)
+                        </option>
+
+                        <option value="MXN"
+                                data-country="Mexico"
+                                data-rate="1.05">
+                            🇲🇽 Mexico — MXN ($)
+                        </option>
+
+                        <option value="CHF"
+                                data-country="Switzerland"
+                                data-rate="0.047">
+                            🇨🇭 Switzerland — CHF (Fr)
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
         </div>
+
     </nav>
 
+
     @RenderBody()
+
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
-        (function () {
-            const toggleBtn = document.getElementById('nav-toggle');
-            const overlay = document.getElementById('nav-overlay');
-            const panel = document.getElementById('nav-panel');
-            const list = document.getElementById('line-sidebar-list');
-            const items = Array.from(list.querySelectorAll('.line-sidebar__item'));
 
-            // ---- open/close ----
+    <!-- =============================================================
+         NAVIGATION + LANGUAGE + CURRENCY
+    ============================================================= -->
+
+    <script>
+
+        (function () {
+
+            const toggleBtn =
+                document.getElementById('nav-toggle');
+
+            const overlay =
+                document.getElementById('nav-overlay');
+
+            const panel =
+                document.getElementById('nav-panel');
+
+            const list =
+                document.getElementById('line-sidebar-list');
+
+            const items =
+                Array.from(
+                    list.querySelectorAll('.line-sidebar__item')
+                );
+
+
+            /* =====================================================
+               NAVIGATION
+            ===================================================== */
+
             function openNav() {
+
                 panel.classList.add('open');
                 overlay.classList.add('open');
                 toggleBtn.classList.add('open');
-                toggleBtn.setAttribute('aria-expanded', 'true');
+
+                toggleBtn.setAttribute(
+                    'aria-expanded',
+                    'true'
+                );
+
             }
+
+
             function closeNav() {
+
                 panel.classList.remove('open');
                 overlay.classList.remove('open');
                 toggleBtn.classList.remove('open');
-                toggleBtn.setAttribute('aria-expanded', 'false');
-            }
-            toggleBtn.addEventListener('click', function () {
-                panel.classList.contains('open') ? closeNav() : openNav();
-            });
-            overlay.addEventListener('click', closeNav);
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') closeNav();
-            });
 
-            // ---- proximity effect  ----
+                toggleBtn.setAttribute(
+                    'aria-expanded',
+                    'false'
+                );
+
+            }
+
+
+            toggleBtn.addEventListener(
+                'click',
+                function () {
+
+                    panel.classList.contains('open')
+                        ? closeNav()
+                        : openNav();
+
+                }
+            );
+
+
+            overlay.addEventListener(
+                'click',
+                closeNav
+            );
+
+
+            document.addEventListener(
+                'keydown',
+                function (e) {
+
+                    if (e.key === 'Escape') {
+                        closeNav();
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               MENU PROXIMITY EFFECT
+            ===================================================== */
+
             const proximityRadius = 100;
             const smoothing = 100;
-            const falloff = p => p * p * (3 - 2 * p); // "smooth" curve
 
-            let targets = items.map(() => 0);
-            let current = items.map(() => 0);
+            const falloff = p =>
+                p * p * (3 - 2 * p);
+
+
+            let targets =
+                items.map(() => 0);
+
+            let current =
+                items.map(() => 0);
+
             let rafId = null;
             let last = 0;
 
+
             function runFrame(now) {
-                const dt = Math.min((now - last) / 1000, 0.05);
+
+                const dt =
+                    Math.min(
+                        (now - last) / 1000,
+                        0.05
+                    );
+
                 last = now;
-                const tau = Math.max(smoothing, 1) / 1000;
-                const k = 1 - Math.exp(-dt / tau);
+
+                const tau =
+                    Math.max(
+                        smoothing,
+                        1
+                    ) / 1000;
+
+                const k =
+                    1 - Math.exp(
+                        -dt / tau
+                    );
 
                 let moving = false;
-                items.forEach((el, i) => {
-                    const target = targets[i] || 0;
-                    const cur = current[i] || 0;
-                    const next = cur + (target - cur) * k;
-                    const settled = Math.abs(target - next) < 0.0015;
-                    const value = settled ? target : next;
-                    current[i] = value;
-                    el.style.setProperty('--effect', value.toFixed(4));
-                    if (!settled) moving = true;
-                });
 
-                rafId = moving ? requestAnimationFrame(runFrame) : null;
+
+                items.forEach(
+                    function (el, i) {
+
+                        const target =
+                            targets[i] || 0;
+
+                        const cur =
+                            current[i] || 0;
+
+                        const next =
+                            cur +
+                            (target - cur) * k;
+
+                        const settled =
+                            Math.abs(
+                                target - next
+                            ) < 0.0015;
+
+                        const value =
+                            settled
+                                ? target
+                                : next;
+
+                        current[i] = value;
+
+                        el.style.setProperty(
+                            '--effect',
+                            value.toFixed(4)
+                        );
+
+                        if (!settled) {
+                            moving = true;
+                        }
+
+                    }
+                );
+
+
+                rafId =
+                    moving
+                        ? requestAnimationFrame(runFrame)
+                        : null;
+
             }
+
 
             function startLoop() {
-                if (rafId != null) return;
-                last = performance.now();
-                rafId = requestAnimationFrame(runFrame);
+
+                if (rafId !== null) {
+                    return;
+                }
+
+                last =
+                    performance.now();
+
+                rafId =
+                    requestAnimationFrame(
+                        runFrame
+                    );
+
             }
 
-            list.addEventListener('pointermove', function (e) {
-                const rect = list.getBoundingClientRect();
-                const pointerY = e.clientY - rect.top;
-                items.forEach((el, i) => {
-                    const center = el.offsetTop + el.offsetHeight / 2;
-                    const distance = Math.abs(pointerY - center);
-                    targets[i] = falloff(Math.max(0, 1 - distance / proximityRadius));
-                });
-                startLoop();
-            });
 
-            list.addEventListener('pointerleave', function () {
-                targets = targets.map(() => 0);
-                startLoop();
-            });
+            list.addEventListener(
+                'pointermove',
+                function (e) {
+
+                    const rect =
+                        list.getBoundingClientRect();
+
+                    const pointerY =
+                        e.clientY -
+                        rect.top;
+
+
+                    items.forEach(
+                        function (el, i) {
+
+                            const center =
+                                el.offsetTop +
+                                el.offsetHeight / 2;
+
+                            const distance =
+                                Math.abs(
+                                    pointerY - center
+                                );
+
+                            targets[i] =
+                                falloff(
+                                    Math.max(
+                                        0,
+                                        1 -
+                                        distance /
+                                        proximityRadius
+                                    )
+                                );
+
+                        }
+                    );
+
+
+                    startLoop();
+
+                }
+            );
+
+
+            list.addEventListener(
+                'pointerleave',
+                function () {
+
+                    targets =
+                        targets.map(() => 0);
+
+                    startLoop();
+
+                }
+            );
+
+
+            /* =====================================================
+               LANGUAGE
+            ===================================================== */
+
+            const languageSelector =
+                document.getElementById(
+                    'language-selector'
+                );
+
+
+            const translations = {
+
+                en: {
+                    home: "Home",
+                    login: "Login",
+                    cats: "Cat Profiles",
+                    book: "Book a Session",
+                    donate: "Donate",
+                    events: "Events",
+                    community: "Community Blog",
+                    merch: "Merch",
+                    language: "Language",
+                    currency: "Country & Currency"
+                },
+
+                af: {
+                    home: "Tuis",
+                    login: "Aanmelding",
+                    cats: "Katprofiele",
+                    book: "Bespreek 'n sessie",
+                    donate: "Skenk",
+                    events: "Gebeurtenisse",
+                    community: "Gemeenskapsblog",
+                    merch: "Handelsware",
+                    language: "Taal",
+                    currency: "Land & Geldeenheid"
+                },
+
+                zu: {
+                    home: "Ikhaya",
+                    login: "Ngena",
+                    cats: "Amaphrofayili Ekati",
+                    book: "Bhukha Isikhathi",
+                    donate: "Nikela",
+                    events: "Imicimbi",
+                    community: "Ibhulogi Yomphakathi",
+                    merch: "Impahla",
+                    language: "Ulimi",
+                    currency: "Izwe Nemali"
+                },
+
+                xh: {
+                    home: "Ikhaya",
+                    login: "Ngena",
+                    cats: "Iiprofayili zeekati",
+                    book: "Bhukisha iseshoni",
+                    donate: "Nikela",
+                    events: "Imisitho",
+                    community: "Ibhlogi yoluntu",
+                    merch: "Ivenkile",
+                    language: "Ulwimi",
+                    currency: "Ilizwe nemali"
+                },
+
+                fr: {
+                    home: "Accueil",
+                    login: "Connexion",
+                    cats: "Profils des chats",
+                    book: "Réserver une session",
+                    donate: "Faire un don",
+                    events: "Événements",
+                    community: "Blog communautaire",
+                    merch: "Boutique",
+                    language: "Langue",
+                    currency: "Pays et devise"
+                },
+
+                es: {
+                    home: "Inicio",
+                    login: "Iniciar sesión",
+                    cats: "Perfiles de gatos",
+                    book: "Reservar una sesión",
+                    donate: "Donar",
+                    events: "Eventos",
+                    community: "Blog comunitario",
+                    merch: "Tienda",
+                    language: "Idioma",
+                    currency: "País y moneda"
+                },
+
+                de: {
+                    home: "Startseite",
+                    login: "Anmelden",
+                    cats: "Katzenprofile",
+                    book: "Sitzung buchen",
+                    donate: "Spenden",
+                    events: "Veranstaltungen",
+                    community: "Community-Blog",
+                    merch: "Shop",
+                    language: "Sprache",
+                    currency: "Land & Währung"
+                },
+
+                pt: {
+                    home: "Início",
+                    login: "Entrar",
+                    cats: "Perfis dos gatos",
+                    book: "Reservar sessão",
+                    donate: "Doar",
+                    events: "Eventos",
+                    community: "Blog da comunidade",
+                    merch: "Loja",
+                    language: "Idioma",
+                    currency: "País e moeda"
+                },
+
+                it: {
+                    home: "Home",
+                    login: "Accedi",
+                    cats: "Profili dei gatti",
+                    book: "Prenota una sessione",
+                    donate: "Dona",
+                    events: "Eventi",
+                    community: "Blog della comunità",
+                    merch: "Negozio",
+                    language: "Lingua",
+                    currency: "Paese e valuta"
+                },
+
+                nl: {
+                    home: "Home",
+                    login: "Inloggen",
+                    cats: "Kattenprofielen",
+                    book: "Sessie boeken",
+                    donate: "Doneren",
+                    events: "Evenementen",
+                    community: "Communityblog",
+                    merch: "Winkel",
+                    language: "Taal",
+                    currency: "Land & valuta"
+                },
+
+                hi: {
+                    home: "होम",
+                    login: "लॉग इन",
+                    cats: "बिल्ली प्रोफ़ाइल",
+                    book: "सत्र बुक करें",
+                    donate: "दान करें",
+                    events: "कार्यक्रम",
+                    community: "समुदाय ब्लॉग",
+                    merch: "स्टोर",
+                    language: "भाषा",
+                    currency: "देश और मुद्रा"
+                },
+
+                ar: {
+                    home: "الرئيسية",
+                    login: "تسجيل الدخول",
+                    cats: "ملفات القطط",
+                    book: "احجز جلسة",
+                    donate: "تبرع",
+                    events: "الفعاليات",
+                    community: "مدونة المجتمع",
+                    merch: "المتجر",
+                    language: "اللغة",
+                    currency: "الدولة والعملة"
+                },
+
+                zh: {
+                    home: "首页",
+                    login: "登录",
+                    cats: "猫咪档案",
+                    book: "预约",
+                    donate: "捐赠",
+                    events: "活动",
+                    community: "社区博客",
+                    merch: "商店",
+                    language: "语言",
+                    currency: "国家和货币"
+                },
+
+                ja: {
+                    home: "ホーム",
+                    login: "ログイン",
+                    cats: "猫のプロフィール",
+                    book: "セッションを予約",
+                    donate: "寄付",
+                    events: "イベント",
+                    community: "コミュニティブログ",
+                    merch: "ショップ",
+                    language: "言語",
+                    currency: "国と通貨"
+                },
+
+                ko: {
+                    home: "홈",
+                    login: "로그인",
+                    cats: "고양이 프로필",
+                    book: "세션 예약",
+                    donate: "기부",
+                    events: "이벤트",
+                    community: "커뮤니티 블로그",
+                    merch: "스토어",
+                    language: "언어",
+                    currency: "국가 및 통화"
+                }
+
+            };
+
+
+            function applyLanguage(language) {
+
+                const dictionary =
+                    translations[language] ||
+                    translations.en;
+
+
+                document
+                    .querySelectorAll('[data-i18n]')
+                    .forEach(
+                        function (element) {
+
+                            const key =
+                                element.getAttribute(
+                                    'data-i18n'
+                                );
+
+                            if (dictionary[key]) {
+
+                                element.textContent =
+                                    dictionary[key];
+
+                            }
+
+                        }
+                    );
+
+
+                document.documentElement.lang =
+                    language;
+
+
+                localStorage.setItem(
+                    'kks-language',
+                    language
+                );
+
+            }
+
+
+            languageSelector.addEventListener(
+                'change',
+                function () {
+
+                    applyLanguage(
+                        languageSelector.value
+                    );
+
+                }
+            );
+
+
+            /* =====================================================
+               CURRENCY
+            ===================================================== */
+
+            const currencySelector =
+                document.getElementById(
+                    'currency-selector'
+                );
+
+
+            const currencySymbols = {
+
+                ZAR: "R",
+                USD: "$",
+                GBP: "£",
+                EUR: "€",
+                AUD: "$",
+                CAD: "$",
+                NZD: "$",
+                INR: "₹",
+                AED: "د.إ",
+                SAR: "﷼",
+                JPY: "¥",
+                CNY: "¥",
+                SGD: "$",
+                BRL: "R$",
+                MXN: "$",
+                CHF: "Fr"
+
+            };
+
+
+            function applyCurrency(currency) {
+
+                const option =
+                    currencySelector.querySelector(
+                        `option[value="${currency}"]`
+                    );
+
+
+                if (!option) {
+                    return;
+                }
+
+
+                const country =
+                    option.dataset.country;
+
+                const rate =
+                    parseFloat(
+                        option.dataset.rate
+                    );
+
+                const symbol =
+                    currencySymbols[currency] ||
+                    currency;
+
+
+                /*
+                 * Store the selected currency globally.
+                 */
+
+                window.KKSCurrency = {
+
+                    code: currency,
+                    symbol: symbol,
+                    country: country,
+                    rate: rate
+
+                };
+
+
+                /*
+                 * Convert every element that
+                 * contains data-price.
+                 */
+
+                document
+                    .querySelectorAll('[data-price]')
+                    .forEach(
+                        function (element) {
+
+                            const basePrice =
+                                parseFloat(
+                                    element.dataset.price
+                                );
+
+
+                            if (isNaN(basePrice)) {
+                                return;
+                            }
+
+
+                            const converted =
+                                basePrice * rate;
+
+
+                            element.textContent =
+                                `${symbol}${converted.toFixed(2)}`;
+
+                        }
+                    );
+
+
+                localStorage.setItem(
+                    'kks-currency',
+                    currency
+                );
+
+
+                /*
+                 * Tell the rest of the website
+                 * that the currency changed.
+                 */
+
+                window.dispatchEvent(
+                    new CustomEvent(
+                        'currencyChanged',
+                        {
+                            detail:
+                                window.KKSCurrency
+                        }
+                    )
+                );
+
+            }
+
+
+            currencySelector.addEventListener(
+                'change',
+                function () {
+
+                    applyCurrency(
+                        currencySelector.value
+                    );
+
+                }
+            );
+
+
+            /* =====================================================
+               RESTORE SAVED LANGUAGE
+            ===================================================== */
+
+            const savedLanguage =
+                localStorage.getItem(
+                    'kks-language'
+                );
+
+
+            if (
+                savedLanguage &&
+                languageSelector.querySelector(
+                    `option[value="${savedLanguage}"]`
+                )
+            ) {
+
+                languageSelector.value =
+                    savedLanguage;
+
+            }
+
+
+            /* =====================================================
+               RESTORE SAVED CURRENCY
+            ===================================================== */
+
+            const savedCurrency =
+                localStorage.getItem(
+                    'kks-currency'
+                );
+
+
+            if (
+                savedCurrency &&
+                currencySelector.querySelector(
+                    `option[value="${savedCurrency}"]`
+                )
+            ) {
+
+                currencySelector.value =
+                    savedCurrency;
+
+            }
+
+
+            /* =====================================================
+               INITIALISE
+            ===================================================== */
+
+            applyLanguage(
+                languageSelector.value
+            );
+
+
+            applyCurrency(
+                currencySelector.value
+            );
+
         })();
+
     </script>
-   
+
+
+    <!-- =============================================================
+         PAGE TRANSITION
+    ============================================================= -->
+
     <script>
+
         (function () {
-            const overlay = document.getElementById('page-transition');
-            if (!overlay) return;
 
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const overlay =
+                document.getElementById(
+                    'page-transition'
+                );
 
-            if (prefersReduced) {
-                overlay.classList.add('is-done');
+
+            if (!overlay) {
                 return;
             }
 
-            requestAnimationFrame(function () {
-                overlay.classList.add('is-visible');
-            });
 
-            setTimeout(function () {
-                overlay.classList.add('is-leaving');
-                overlay.addEventListener('transitionend', function handler(e) {
-                    // Only react to the OVERLAY's own transform transition.
-                    // Without this check, the child .page-transition__mark's
-                    // transform transition (which ends at ~0.55s, almost the
-                    // same instant this listener gets attached) bubbles up
-                    // and closes the overlay instantly instead of letting the
-                    // 0.7s slide-up actually play.
-                    if (e.target !== overlay || e.propertyName !== 'transform') return;
-                    overlay.classList.add('is-done');
-                    overlay.removeEventListener('transitionend', handler);
-                });
-            }, 550);
+            const prefersReduced =
+                window.matchMedia(
+                    '(prefers-reduced-motion: reduce)'
+                ).matches;
+
+
+            if (prefersReduced) {
+
+                overlay.classList.add(
+                    'is-done'
+                );
+
+                return;
+
+            }
+
+
+            requestAnimationFrame(
+                function () {
+
+                    overlay.classList.add(
+                        'is-visible'
+                    );
+
+                }
+            );
+
+
+            setTimeout(
+                function () {
+
+                    overlay.classList.add(
+                        'is-leaving'
+                    );
+
+
+                    overlay.addEventListener(
+                        'transitionend',
+                        function handler(e) {
+
+                            if (
+                                e.target !== overlay ||
+                                e.propertyName !== 'transform'
+                            ) {
+                                return;
+                            }
+
+
+                            overlay.classList.add(
+                                'is-done'
+                            );
+
+
+                            overlay.removeEventListener(
+                                'transitionend',
+                                handler
+                            );
+
+                        }
+                    );
+
+                },
+                550
+            );
+
         })();
+
     </script>
 
+
     @await Html.PartialAsync("_Footer")
+
 </body>
 </html>

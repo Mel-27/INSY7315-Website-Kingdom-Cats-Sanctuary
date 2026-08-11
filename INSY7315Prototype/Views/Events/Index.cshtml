@@ -154,6 +154,43 @@
         color: var(--muted);
     }
 
+    /* ---------- Filter pills ---------- */
+    .filter-pill {
+        background-color: var(--card);
+        border: 1px solid var(--hairline);
+        color: var(--muted);
+        transition: background-color .15s ease, color .15s ease;
+    }
+
+        .filter-pill.active {
+            background-color: var(--ink);
+            color: white;
+            border-color: var(--ink);
+        }
+
+    .month-filter-select {
+        background-color: var(--card);
+        border: 1px solid var(--hairline);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        padding: 0.5rem 2rem 0.5rem 1rem;
+        border-radius: 9999px;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2378716C'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 12px;
+    }
+
+        .month-filter-select:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+
     /* ================= RESPONSIVE BREAKPOINTS ================= */
 
     /* Tablet and below */
@@ -312,6 +349,48 @@
     </div>
 
     <!-- Events + impact -->
+    @{
+        var causes = Model.Events
+        .Select(e => e.Cause)
+        .Where(c => !string.IsNullOrEmpty(c))
+        .Distinct()
+        .ToList();
+
+        var months = Model.Events
+        .Select(e => new { Key = e.EventDate.ToString("yyyy-MM"), Label = e.EventDate.ToString("MMMM yyyy") })
+        .Distinct()
+        .OrderBy(m => m.Key)
+        .ToList();
+    }
+
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+        @if (causes.Count > 1)
+        {
+            <div id="filter-pills" class="flex flex-wrap gap-2">
+                <button data-filter="All" class="filter-pill active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
+                    All events
+                </button>
+                @foreach (var cause in causes)
+                {
+                    <button data-filter="@cause" class="filter-pill px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide">
+                        @cause
+                    </button>
+                }
+            </div>
+        }
+
+        @if (months.Count > 1)
+        {
+            <select id="month-filter" class="month-filter-select">
+                <option value="All">All months</option>
+                @foreach (var month in months)
+                {
+                    <option value="@month.Key">@month.Label</option>
+                }
+            </select>
+        }
+    </div>
+
     <div id="event-list" class="grid md:grid-cols-3 gap-8 items-start">
 
         <div class="md:col-span-2 space-y-5">
@@ -321,7 +400,7 @@
             }
             @foreach (var evt in Model.Events)
             {
-                <div class="event-card">
+                <div class="event-card" data-category="@evt.Cause" data-month="@evt.EventDate.ToString("yyyy-MM")">
                     <div class="event-card__img-wrap">
                         @if (evt.IsMostPopular)
                         {
@@ -362,6 +441,10 @@
                     </div>
                 </div>
             }
+
+            <p id="no-results" class="hidden text-sm text-[var(--muted)]">
+                No events match this filter right now — check back soon!
+            </p>
         </div>
 
         <aside>
@@ -375,7 +458,6 @@
                 <h3 class="font-display text-base mb-4">@Model.Impact.PeriodLabel</h3>
                 <p class="impact-card__amount">R@(Model.Impact.AmountRaised.ToString("N0"))</p>
                 <p class="impact-card__label">Raised through events</p>
-                <p class="impact-card__desc">@Model.Impact.Description</p>
             </div>
         </aside>
     </div>
@@ -422,10 +504,46 @@
             animateFlipFadeText('.flip-fade-text');
         });
     </script>
+
+    <script>
+        let activeCause = 'All';
+        let activeMonth = 'All';
+
+        function applyEventFilters() {
+            const cards = document.querySelectorAll('.event-card');
+            let visibleCount = 0;
+
+            cards.forEach(function (card) {
+                const causeMatches = activeCause === 'All' || card.getAttribute('data-category') === activeCause;
+                const monthMatches = activeMonth === 'All' || card.getAttribute('data-month') === activeMonth;
+                const matches = causeMatches && monthMatches;
+
+                card.style.display = matches ? '' : 'none';
+                if (matches) visibleCount++;
+            });
+
+            const noResults = document.getElementById('no-results');
+            if (noResults) {
+                noResults.classList.toggle('hidden', visibleCount > 0);
+            }
+        }
+
+        document.querySelectorAll('.filter-pill').forEach(function (pill) {
+            pill.addEventListener('click', function () {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                activeCause = this.getAttribute('data-filter');
+                applyEventFilters();
+            });
+        });
+
+        const monthFilter = document.getElementById('month-filter');
+        if (monthFilter) {
+            monthFilter.addEventListener('change', function () {
+                activeMonth = this.value;
+                applyEventFilters();
+            });
+        }
+    </script>
 }
-<!-- Footer -->
-<footer class="border-t border-[var(--hairline)] py-8">
-    <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
-        <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
-    </div>
-</footer>
+
