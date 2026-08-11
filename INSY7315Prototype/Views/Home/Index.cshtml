@@ -2,6 +2,81 @@
     ViewData["Title"] = "Home";
 }
 
+<!-- Page load transition (Home only) -->
+<div id="page-transition" class="page-transition" aria-hidden="true">
+    <span class="page-transition__mark">Welcome to Kingdom Cats Sanctuary</span>
+</div>
+
+<style>
+    .page-transition {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background-color: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform .7s cubic-bezier(.65,0,.35,1);
+    }
+
+    .page-transition__mark {
+        font-family: 'Playfair Display', serif;
+        color: #fff;
+        font-size: 1.25rem;
+        letter-spacing: .08em;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .4s ease .15s, transform .4s ease .15s;
+    }
+
+    .page-transition.is-visible .page-transition__mark {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .page-transition.is-leaving {
+        transform: translateY(-100%);
+    }
+
+    .page-transition.is-done {
+        display: none;
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .page-transition {
+            transition: none !important;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        const overlay = document.getElementById('page-transition');
+        if (!overlay) return;
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReduced) {
+            overlay.classList.add('is-done');
+            return;
+        }
+
+        requestAnimationFrame(function () {
+            overlay.classList.add('is-visible');
+        });
+
+        setTimeout(function () {
+            overlay.classList.add('is-leaving');
+            overlay.addEventListener('transitionend', function handler(e) {
+                if (e.target !== overlay || e.propertyName !== 'transform') return;
+                overlay.classList.add('is-done');
+                overlay.removeEventListener('transitionend', handler);
+            });
+        }, 550);
+    })();
+</script>
+
+
 <!-- Hero Section -->
 <section class="relative">
     <div class="bg-[var(--ink)] aspect-[4/3] md:aspect-[16/9] min-h-[420px] md:min-h-[560px] w-full relative overflow-hidden">
