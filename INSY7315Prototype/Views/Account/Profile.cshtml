@@ -1,0 +1,1080 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="min-h-screen py-10 md:py-14">
+
+    ```
+    <main class="max-w-6xl mx-auto px-6 md:px-12">
+
+        <!-- Page heading -->
+        <div class="mb-10">
+            <p class="text-[11px] tracking-[0.2em] uppercase text-[var(--red)] mb-2">
+                Sanctuary community
+            </p>
+
+            <h1 class="font-display text-3xl md:text-4xl">
+                My Account
+            </h1>
+
+            <p class="text-sm text-[var(--muted)] mt-2 max-w-xl">
+                Keep track of your sanctuary journey, bookings, and support for Kingdom Cats Sanctuary.
+            </p>
+        </div>
+
+
+        <!-- Profile Header -->
+        <section class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6 md:p-8 mb-8">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+                <div class="flex items-center gap-5">
+
+                    <!-- Profile initials -->
+                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[var(--ink)] text-white flex items-center justify-center shrink-0">
+                        <span class="font-display text-3xl">
+                            G
+                        </span>
+                    </div>
+
+                    <div>
+                        <p class="text-[10px] tracking-[0.18em] uppercase text-[var(--muted)] mb-1">
+                            Sanctuary member
+                        </p>
+
+                        <h2 class="font-display text-2xl">
+                            Gia Gounden
+                        </h2>
+
+                        <p class="text-sm text-[var(--muted)] mt-1">
+                            gia@example.com
+                        </p>
+
+                        <p class="text-xs text-[var(--muted)] mt-2">
+                            Member since August 2026
+                        </p>
+                    </div>
+
+                </div>
+
+                <button type="button"
+                        onclick="openEditProfile()"
+                        class="border border-[var(--hairline)] bg-[var(--cream)] hover:border-[var(--red)] hover:text-[var(--red)] transition-colors text-xs font-semibold tracking-[0.12em] uppercase rounded-lg px-5 py-2.5">
+                    Edit profile
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Quick Actions -->
+        <section class="grid sm:grid-cols-3 gap-4 mb-8">
+
+            <!-- Donate -->
+            <a asp-controller="Donations"
+               asp-action="Index"
+               class="group bg-[var(--ink)] text-white rounded-2xl p-6 hover:-translate-y-1 transition-transform">
+
+                <div class="flex items-start justify-between mb-8">
+                    <span class="text-2xl">♥</span>
+
+                    <span class="text-white/40 group-hover:text-[var(--red)] transition-colors">
+                        &rarr;
+                    </span>
+                </div>
+
+                <h3 class="font-display text-xl">
+                    Make a donation
+                </h3>
+
+                <p class="text-xs text-white/60 mt-2 leading-relaxed">
+                    Help provide food, medical care, and a safe home for our cats.
+                </p>
+
+            </a>
+
+
+            <!-- Cats -->
+            <a asp-controller="Cats"
+               asp-action="Index"
+               class="group bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6 hover:-translate-y-1 hover:border-[var(--red)] transition-all">
+
+                <div class="flex items-start justify-between mb-8">
+                    <span class="text-2xl">🐾</span>
+
+                    <span class="text-[var(--muted)] group-hover:text-[var(--red)] transition-colors">
+                        &rarr;
+                    </span>
+                </div>
+
+                <h3 class="font-display text-xl">
+                    Meet the cats
+                </h3>
+
+                <p class="text-xs text-[var(--muted)] mt-2 leading-relaxed">
+                    Browse our residents and learn more about the cats looking for loving homes.
+                </p>
+
+            </a>
+
+
+            <!-- Book -->
+            <a asp-controller="Bookings"
+               asp-action="Index"
+               class="group bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6 hover:-translate-y-1 hover:border-[var(--red)] transition-all">
+
+                <div class="flex items-start justify-between mb-8">
+                    <span class="text-2xl">◷</span>
+
+                    <span class="text-[var(--muted)] group-hover:text-[var(--red)] transition-colors">
+                        &rarr;
+                    </span>
+                </div>
+
+                <h3 class="font-display text-xl">
+                    Book a session
+                </h3>
+
+                <p class="text-xs text-[var(--muted)] mt-2 leading-relaxed">
+                    Arrange an adoption viewing or spend some time with our cats.
+                </p>
+
+            </a>
+
+        </section>
+
+
+        <!-- Main Account Grid -->
+        <div class="grid lg:grid-cols-3 gap-8">
+
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- Adoption Journey -->
+                <section class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl overflow-hidden">
+
+                    <div class="p-6 md:p-8 border-b border-[var(--hairline)]">
+
+                        <div class="flex items-center justify-between gap-4">
+
+                            <div>
+                                <p class="text-[10px] tracking-[0.18em] uppercase text-[var(--red)] mb-1">
+                                    Your journey
+                                </p>
+
+                                <h2 class="font-display text-2xl">
+                                    Adoption journey
+                                </h2>
+                            </div>
+
+                            <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-[var(--red)]/10 text-[var(--red)]">
+                                In progress
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-6 md:p-8">
+
+                        <!-- Progress -->
+                        <div class="flex items-center mb-8">
+
+                            <div class="flex items-center w-full">
+
+                                <div class="w-9 h-9 rounded-full bg-[var(--red)] text-white flex items-center justify-center text-xs font-bold">
+                                    ✓
+                                </div>
+
+                                <div class="h-px bg-[var(--red)] flex-1"></div>
+
+                                <div class="w-9 h-9 rounded-full bg-[var(--red)] text-white flex items-center justify-center text-xs font-bold">
+                                    2
+                                </div>
+
+                                <div class="h-px bg-[var(--hairline)] flex-1"></div>
+
+                                <div class="w-9 h-9 rounded-full border border-[var(--hairline)] bg-[var(--cream)] text-[var(--muted)] flex items-center justify-center text-xs font-bold">
+                                    3
+                                </div>
+
+                                <div class="h-px bg-[var(--hairline)] flex-1"></div>
+
+                                <div class="w-9 h-9 rounded-full border border-[var(--hairline)] bg-[var(--cream)] text-[var(--muted)] flex items-center justify-center text-xs font-bold">
+                                    4
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Progress Labels -->
+                        <div class="grid grid-cols-4 gap-2 text-[10px] uppercase tracking-wide text-center">
+
+                            <div class="text-[var(--red)] font-semibold">
+                                Application
+                            </div>
+
+                            <div class="text-[var(--red)] font-semibold">
+                                Viewing
+                            </div>
+
+                            <div class="text-[var(--muted)]">
+                                Approval
+                            </div>
+
+                            <div class="text-[var(--muted)]">
+                                Homecoming
+                            </div>
+
+                        </div>
+
+
+                        <!-- Next Step -->
+                        <div class="mt-8 bg-[var(--cream)] rounded-xl p-5">
+
+                            <div class="flex items-start gap-4">
+
+                                <div class="w-10 h-10 rounded-full bg-[var(--card)] flex items-center justify-center shrink-0">
+                                    🐱
+                                </div>
+
+                                <div>
+
+                                    <h3 class="font-semibold text-sm">
+                                        Your next step
+                                    </h3>
+
+                                    <p class="text-xs text-[var(--muted)] mt-1 leading-relaxed">
+                                        Your adoption journey is currently at the viewing stage.
+                                        Spend some time with the cat you're interested in before
+                                        making your final decision.
+                                    </p>
+
+                                    <a asp-controller="Bookings"
+                                       asp-action="Index"
+                                       class="inline-block text-xs font-semibold text-[var(--red)] mt-3 hover:text-[var(--red-dark)]">
+                                        View bookings &rarr;
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Upcoming Bookings -->
+                <section class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl">
+
+                    <div class="p-6 md:p-8 border-b border-[var(--hairline)] flex items-center justify-between">
+
+                        <div>
+
+                            <p class="text-[10px] tracking-[0.18em] uppercase text-[var(--red)] mb-1">
+                                Upcoming
+                            </p>
+
+                            <h2 class="font-display text-2xl">
+                                My bookings
+                            </h2>
+
+                        </div>
+
+                        <a asp-controller="Bookings"
+                           asp-action="Index"
+                           class="text-xs font-semibold text-[var(--red)] hover:text-[var(--red-dark)]">
+                            Book another &rarr;
+                        </a>
+
+                    </div>
+
+
+                    <div class="p-6 md:p-8">
+
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+                            <div class="flex items-center gap-4">
+
+                                <div class="w-14 h-14 rounded-xl bg-[var(--cream)] flex flex-col items-center justify-center">
+
+                                    <span class="text-[10px] uppercase text-[var(--muted)]">
+                                        Sep
+                                    </span>
+
+                                    <span class="font-display text-xl">
+                                        12
+                                    </span>
+
+                                </div>
+
+                                <div>
+
+                                    <h3 class="font-semibold text-sm">
+                                        Adoption viewing
+                                    </h3>
+
+                                    <p class="text-xs text-[var(--muted)] mt-1">
+                                        With Luna &middot; 10:00 AM – 11:00 AM
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <span class="text-[10px] font-semibold uppercase tracking-wide px-3 py-1.5 rounded-full bg-[var(--red)]/10 text-[var(--red)]">
+                                Confirmed
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Donation Summary -->
+                <section class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl">
+
+                    <div class="p-6 md:p-8 border-b border-[var(--hairline)]">
+
+                        <p class="text-[10px] tracking-[0.18em] uppercase text-[var(--red)] mb-1">
+                            Your support
+                        </p>
+
+                        <h2 class="font-display text-2xl">
+                            Donations
+                        </h2>
+
+                    </div>
+
+
+                    <div class="p-6 md:p-8">
+
+                        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+
+                            <div class="bg-[var(--cream)] rounded-xl p-5">
+
+                                <p class="text-[10px] uppercase tracking-wide text-[var(--muted)]">
+                                    Total donated
+                                </p>
+
+                                <p class="font-display text-3xl mt-2">
+                                    R750
+                                </p>
+
+                            </div>
+
+
+                            <div class="bg-[var(--cream)] rounded-xl p-5">
+
+                                <p class="text-[10px] uppercase tracking-wide text-[var(--muted)]">
+                                    Donations made
+                                </p>
+
+                                <p class="font-display text-3xl mt-2">
+                                    4
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Recent Donations -->
+                        <div class="space-y-4">
+
+                            <div class="flex items-center justify-between py-3 border-b border-[var(--hairline)]">
+
+                                <div>
+
+                                    <p class="text-sm font-medium">
+                                        General sanctuary fund
+                                    </p>
+
+                                    <p class="text-xs text-[var(--muted)] mt-1">
+                                        02 August 2026
+                                    </p>
+
+                                </div>
+
+                                <p class="font-semibold text-sm">
+                                    R250
+                                </p>
+
+                            </div>
+
+
+                            <div class="flex items-center justify-between py-3 border-b border-[var(--hairline)]">
+
+                                <div>
+
+                                    <p class="text-sm font-medium">
+                                        Medical care fund
+                                    </p>
+
+                                    <p class="text-xs text-[var(--muted)] mt-1">
+                                        14 July 2026
+                                    </p>
+
+                                </div>
+
+                                <p class="font-semibold text-sm">
+                                    R200
+                                </p>
+
+                            </div>
+
+
+                            <div class="flex items-center justify-between py-3">
+
+                                <div>
+
+                                    <p class="text-sm font-medium">
+                                        Food fund
+                                    </p>
+
+                                    <p class="text-xs text-[var(--muted)] mt-1">
+                                        22 June 2026
+                                    </p>
+
+                                </div>
+
+                                <p class="font-semibold text-sm">
+                                    R150
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Donation History Button -->
+                        <button type="button"
+                                onclick="openDonationHistory()"
+                                class="w-full border border-[var(--hairline)] hover:border-[var(--red)] hover:text-[var(--red)] transition-colors text-xs font-semibold tracking-[0.12em] uppercase rounded-lg py-3 mt-6">
+                            View donation history
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- Sidebar -->
+            <aside class="space-y-8">
+
+                <!-- Profile Details -->
+                <section class="bg-[var(--ink)] text-white rounded-2xl p-6 md:p-7">
+
+                    <p class="text-[10px] tracking-[0.18em] uppercase text-white/50 mb-2">
+                        About you
+                    </p>
+
+                    <h2 class="font-display text-xl mb-5">
+                        Profile details
+                    </h2>
+
+                    <div class="space-y-4">
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wide text-white/40">
+                                Full name
+                            </p>
+
+                            <p class="text-sm mt-1">
+                                Gia Gounden
+                            </p>
+                        </div>
+
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wide text-white/40">
+                                Email
+                            </p>
+
+                            <p class="text-sm mt-1 break-all">
+                                gia@example.com
+                            </p>
+                        </div>
+
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wide text-white/40">
+                                Phone
+                            </p>
+
+                            <p class="text-sm mt-1">
+                                +27 82 000 0000
+                            </p>
+                        </div>
+
+
+                        <div>
+                            <p class="text-[10px] uppercase tracking-wide text-white/40">
+                                Location
+                            </p>
+
+                            <p class="text-sm mt-1">
+                                Durban, South Africa
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <button type="button"
+                            onclick="openEditProfile()"
+                            class="w-full border border-white/20 hover:border-white/50 text-white text-xs font-semibold tracking-wide uppercase rounded-lg py-2.5 mt-7 transition-colors">
+                        Edit details
+                    </button>
+
+                </section>
+
+
+                <!-- Community -->
+                <section class="bg-[var(--cream)] border border-[var(--hairline)] rounded-2xl p-6">
+
+                    <span class="text-2xl">
+                        🐾
+                    </span>
+
+                    <h2 class="font-display text-xl mt-4">
+                        Part of the community
+                    </h2>
+
+                    <p class="text-xs text-[var(--muted)] leading-relaxed mt-2">
+                        Stay connected with Kingdom Cats Sanctuary, follow adoption
+                        stories, and see how your support makes a difference.
+                    </p>
+
+                    <a asp-controller="Community"
+                       asp-action="Index"
+                       class="inline-block text-xs font-semibold text-[var(--red)] mt-4 hover:text-[var(--red-dark)]">
+                        Visit community &rarr;
+                    </a>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+
+        <!-- Closing Message -->
+        <section class="text-center py-14 md:py-16">
+
+            <div class="flex items-center justify-center gap-3 mb-4">
+
+                <span class="h-px w-12 bg-[var(--hairline)]"></span>
+
+                <span class="text-[var(--red)]">
+                    ♥
+                </span>
+
+                <span class="h-px w-12 bg-[var(--hairline)]"></span>
+
+            </div>
+
+            <h2 class="font-display text-2xl">
+                Thank you for being part of their story.
+            </h2>
+
+            <p class="text-sm text-[var(--muted)] max-w-lg mx-auto mt-2 leading-relaxed">
+                Every visit, donation, adoption, and act of kindness helps give our
+                cats the safe and loving future they deserve.
+            </p>
+
+        </section>
+
+    </main>
+    ```
+
+</div>
+
+<!-- ========================= -->
+<!-- EDIT PROFILE MODAL -->
+<!-- ========================= -->
+
+<div id="editProfileModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center p-6">
+
+    ```
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"
+         onclick="closeEditProfile()">
+    </div>
+
+
+    <!-- Modal -->
+    <div class="relative w-full max-w-lg bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--hairline)] p-6 md:p-8">
+
+        <div class="flex items-start justify-between mb-7">
+
+            <div>
+
+                <p class="text-[10px] tracking-[0.18em] uppercase text-[var(--red)] mb-1">
+                    Your details
+                </p>
+
+                <h2 class="font-display text-2xl">
+                    Edit profile
+                </h2>
+
+                <p class="text-xs text-[var(--muted)] mt-1">
+                    Update your personal information.
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    onclick="closeEditProfile()"
+                    class="w-8 h-8 rounded-full hover:bg-[var(--cream)] text-[var(--muted)] hover:text-[var(--ink)] transition-colors">
+                &times;
+            </button>
+
+        </div>
+
+
+        <form onsubmit="saveProfile(event)" class="space-y-5">
+
+            <!-- Full Name -->
+            <div>
+
+                <label for="editFullName"
+                       class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
+                    Full name
+                </label>
+
+                <input id="editFullName"
+                       type="text"
+                       value="Gia Gounden"
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
+            </div>
+
+
+            <!-- Email -->
+            <div>
+
+                <label for="editEmail"
+                       class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
+                    Email address
+                </label>
+
+                <input id="editEmail"
+                       type="email"
+                       value="gia@example.com"
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
+            </div>
+
+
+            <!-- Phone -->
+            <div>
+
+                <label for="editPhone"
+                       class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
+                    Phone number
+                </label>
+
+                <input id="editPhone"
+                       type="tel"
+                       value="+27 82 000 0000"
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
+            </div>
+
+
+            <!-- Location -->
+            <div>
+
+                <label for="editLocation"
+                       class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
+                    Location
+                </label>
+
+                <input id="editLocation"
+                       type="text"
+                       value="Durban, South Africa"
+                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+
+                <button type="button"
+                        onclick="closeEditProfile()"
+                        class="flex-1 border border-[var(--hairline)] hover:border-[var(--red)] hover:text-[var(--red)] transition-colors text-xs font-semibold tracking-[0.12em] uppercase rounded-lg py-3">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="flex-1 btn-primary text-white text-xs font-semibold tracking-[0.12em] uppercase rounded-lg py-3">
+                    Save changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+    ```
+
+</div>
+
+<!-- ========================= -->
+<!-- DONATION HISTORY MODAL -->
+<!-- ========================= -->
+
+<div id="donationHistoryModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center p-6">
+
+    ```
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"
+         onclick="closeDonationHistory()">
+    </div>
+
+
+    <!-- Modal -->
+    <div class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--hairline)]">
+
+        <!-- Header -->
+        <div class="p-6 md:p-8 border-b border-[var(--hairline)] flex items-start justify-between">
+
+            <div>
+
+                <p class="text-[10px] tracking-[0.18em] uppercase text-[var(--red)] mb-1">
+                    Your support
+                </p>
+
+                <h2 class="font-display text-2xl">
+                    Donation history
+                </h2>
+
+                <p class="text-xs text-[var(--muted)] mt-1">
+                    A record of your contributions to Kingdom Cats Sanctuary.
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    onclick="closeDonationHistory()"
+                    class="w-8 h-8 rounded-full hover:bg-[var(--cream)] text-[var(--muted)] hover:text-[var(--ink)] transition-colors">
+                &times;
+            </button>
+
+        </div>
+
+
+        <!-- Summary -->
+        <div class="p-6 md:p-8">
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-7">
+
+                <div class="bg-[var(--cream)] rounded-xl p-5">
+
+                    <p class="text-[10px] uppercase tracking-wide text-[var(--muted)]">
+                        Total donated
+                    </p>
+
+                    <p class="font-display text-3xl mt-2">
+                        R750
+                    </p>
+
+                </div>
+
+
+                <div class="bg-[var(--cream)] rounded-xl p-5">
+
+                    <p class="text-[10px] uppercase tracking-wide text-[var(--muted)]">
+                        Donations made
+                    </p>
+
+                    <p class="font-display text-3xl mt-2">
+                        4
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Donation List -->
+            <div class="space-y-0">
+
+                <div class="flex items-center justify-between gap-4 py-5 border-b border-[var(--hairline)]">
+
+                    <div>
+
+                        <p class="text-sm font-semibold">
+                            General sanctuary fund
+                        </p>
+
+                        <p class="text-xs text-[var(--muted)] mt-1">
+                            02 August 2026
+                        </p>
+
+                    </div>
+
+                    <p class="font-semibold">
+                        R250
+                    </p>
+
+                </div>
+
+
+                <div class="flex items-center justify-between gap-4 py-5 border-b border-[var(--hairline)]">
+
+                    <div>
+
+                        <p class="text-sm font-semibold">
+                            Medical care fund
+                        </p>
+
+                        <p class="text-xs text-[var(--muted)] mt-1">
+                            14 July 2026
+                        </p>
+
+                    </div>
+
+                    <p class="font-semibold">
+                        R200
+                    </p>
+
+                </div>
+
+
+                <div class="flex items-center justify-between gap-4 py-5 border-b border-[var(--hairline)]">
+
+                    <div>
+
+                        <p class="text-sm font-semibold">
+                            Food fund
+                        </p>
+
+                        <p class="text-xs text-[var(--muted)] mt-1">
+                            22 June 2026
+                        </p>
+
+                    </div>
+
+                    <p class="font-semibold">
+                        R150
+                    </p>
+
+                </div>
+
+
+                <div class="flex items-center justify-between gap-4 py-5">
+
+                    <div>
+
+                        <p class="text-sm font-semibold">
+                            General sanctuary fund
+                        </p>
+
+                        <p class="text-xs text-[var(--muted)] mt-1">
+                            10 June 2026
+                        </p>
+
+                    </div>
+
+                    <p class="font-semibold">
+                        R150
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="px-6 md:px-8 py-5 border-t border-[var(--hairline)] bg-[var(--cream)]/50">
+
+            <button type="button"
+                    onclick="closeDonationHistory()"
+                    class="w-full border border-[var(--hairline)] hover:border-[var(--red)] hover:text-[var(--red)] transition-colors text-xs font-semibold tracking-[0.12em] uppercase rounded-lg py-3">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+    ```
+
+</div>
+
+@section Scripts {
+
+    ```
+    <script>
+
+        /* =========================
+           EDIT PROFILE
+        ========================= */
+
+        function openEditProfile() {
+
+            const modal = document.getElementById('editProfileModal');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            document.body.classList.add('overflow-hidden');
+        }
+
+
+        function closeEditProfile() {
+
+            const modal = document.getElementById('editProfileModal');
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            document.body.classList.remove('overflow-hidden');
+        }
+
+
+        function saveProfile(event) {
+
+            event.preventDefault();
+
+            const name = document.getElementById('editFullName').value;
+            const email = document.getElementById('editEmail').value;
+
+            /*
+             * Demo only:
+             * Update the visible profile information without
+             * sending anything to the database.
+             */
+
+            const profileNameElements =
+                document.querySelectorAll('.profile-name');
+
+            profileNameElements.forEach(function (element) {
+                element.textContent = name;
+            });
+
+            const profileEmailElements =
+                document.querySelectorAll('.profile-email');
+
+            profileEmailElements.forEach(function (element) {
+                element.textContent = email;
+            });
+
+            closeEditProfile();
+        }
+
+
+        /* =========================
+           DONATION HISTORY
+        ========================= */
+
+        function openDonationHistory() {
+
+            const modal = document.getElementById('donationHistoryModal');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            document.body.classList.add('overflow-hidden');
+        }
+
+
+        function closeDonationHistory() {
+
+            const modal = document.getElementById('donationHistoryModal');
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            document.body.classList.remove('overflow-hidden');
+        }
+
+
+        /* =========================
+           ESCAPE KEY
+        ========================= */
+
+        document.addEventListener('keydown', function (event) {
+
+            if (event.key === 'Escape') {
+
+                closeEditProfile();
+                closeDonationHistory();
+
+            }
+
+        });
+
+
+        /* =========================
+           PAGE ANIMATION
+        ========================= */
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const cards = document.querySelectorAll(
+                'section, aside > section'
+            );
+
+            const prefersReduced =
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (prefersReduced) {
+                return;
+            }
+
+            cards.forEach(function (card, index) {
+
+                card.style.opacity = '0';
+
+                card.style.transform =
+                    'translateY(20px)';
+
+                card.style.transition =
+                    'opacity .6s ease, transform .6s cubic-bezier(.21,.61,.35,1)';
+
+                card.style.transitionDelay =
+                    Math.min(index * 0.04, 0.3) + 's';
+
+            });
+
+
+            requestAnimationFrame(function () {
+
+                cards.forEach(function (card) {
+
+                    card.style.opacity = '1';
+
+                    card.style.transform =
+                        'translateY(0)';
+
+                });
+
+            });
+
+        });
+
+    </script>
+    ```
+
+}
+

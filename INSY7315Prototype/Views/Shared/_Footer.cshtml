@@ -1,0 +1,81 @@
+﻿<!-- Site Footer -->
+<footer class="bg-[var(--ink)] text-white mt-4">
+    <div class="max-w-6xl mx-auto px-6 md:px-12 py-16 grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+
+        <!-- Brand -->
+        <div class="sm:col-span-2 md:col-span-1">
+            <a asp-controller="Home" asp-action="Index" class="font-display text-xl text-white inline-block mb-3">
+                Kingdom Cats <span class="text-[var(--red)]">Sanctuary</span>
+            </a>
+            <p class="text-sm text-white/60 leading-relaxed max-w-xs">
+                A dedicated no-kill haven giving abandoned and abused cats a second chance at life.
+            </p>
+            <div class="flex gap-3 mt-5">
+                <a href="https://facebook.com/kingdomcatssanctuary" target="_blank" rel="noopener noreferrer"
+                   aria-label="Kingdom Cats Sanctuary on Facebook"
+                   class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[var(--red)] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-4 h-4">
+                        <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9v-2.89h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12Z"></path>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/kingdomcatssanctuary" target="_blank" rel="noopener noreferrer"
+                   aria-label="Kingdom Cats Sanctuary on Instagram"
+                   class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[var(--red)] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div>
+            <h3 class="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-4">Contact</h3>
+            <address class="not-italic text-sm text-white/70 leading-relaxed">
+                37 Jeanne Howes Place<br>
+                Waterfall, Durban<br>
+                South Africa
+            </address>
+            <p class="text-sm text-white/70 mt-3 leading-relaxed">
+                <a href="tel:+27829020383" class="hover:text-[var(--red)] transition-colors">+27 82 902 0383</a><br>
+                <a href="mailto:kingdomcatssanctuary01@gmail.com" class="hover:text-[var(--red)] transition-colors break-all">kingdomcatssanctuary01@gmail.com</a>
+            </p>
+        </div>
+
+        <!-- Join the community -->
+        <div>
+            <h3 class="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-4">Join us</h3>
+            <p class="text-sm text-white/70 leading-relaxed mb-4">
+                Follow adoption stories, share cat tips, and help reunite lost cats with their families.
+            </p>
+            <a asp-controller="Community" asp-action="Index"
+               class="inline-block btn-primary text-white text-xs font-semibold tracking-[0.1em] uppercase rounded-lg px-5 py-2.5">
+                Community feed
+            </a>
+        </div>
+
+        <!-- Payments accepted -->
+        <div>
+            <h3 class="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-4">We accept</h3>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-xs font-semibold bg-white/10 text-white/80 rounded-md px-3 py-1.5">PayPal</span>
+                <span class="text-xs font-semibold bg-white/10 text-white/80 rounded-md px-3 py-1.5">Ozow</span>
+                <span class="text-xs font-semibold bg-white/10 text-white/80 rounded-md px-3 py-1.5">EFT</span>
+                <span class="text-xs font-semibold bg-white/10 text-white/80 rounded-md px-3 py-1.5">Card</span>
+            </div>
+            <p class="text-xs text-white/40 mt-4 leading-relaxed">
+                All donations are processed securely.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
+            <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
+            <p>@@kingdomcatssanctuary</p>
+        </div>
+    </div>
+</footer>
