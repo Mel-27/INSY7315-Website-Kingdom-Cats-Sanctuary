@@ -2,15 +2,89 @@
     ViewData["Title"] = "Home";
 }
 
-<!-- Hero Section -->
+<!-- Page load transition -->
+<div id="page-transition" class="page-transition" aria-hidden="true">
+    <span class="page-transition__mark">Welcome to Kingdom Cats Sanctuary</span>
+</div>
 
+<style>
+    .page-transition {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background-color: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform .7s cubic-bezier(.65,0,.35,1);
+    }
+
+    .page-transition__mark {
+        font-family: 'Playfair Display', serif;
+        color: #fff;
+        font-size: 1.25rem;
+        letter-spacing: .08em;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .4s ease .15s, transform .4s ease .15s;
+    }
+
+    .page-transition.is-visible .page-transition__mark {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .page-transition.is-leaving {
+        transform: translateY(-100%);
+    }
+
+    .page-transition.is-done {
+        display: none;
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .page-transition {
+            transition: none !important;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        const overlay = document.getElementById('page-transition');
+        if (!overlay) return;
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReduced) {
+            overlay.classList.add('is-done');
+            return;
+        }
+
+        requestAnimationFrame(function () {
+            overlay.classList.add('is-visible');
+        });
+
+        setTimeout(function () {
+            overlay.classList.add('is-leaving');
+            overlay.addEventListener('transitionend', function handler(e) {
+                if (e.target !== overlay || e.propertyName !== 'transform') return;
+                overlay.classList.add('is-done');
+                overlay.removeEventListener('transitionend', handler);
+            });
+        }, 550);
+    })();
+</script>
+
+
+<!-- Hero Section -->
 <section class="relative">
     <div class="bg-[var(--ink)] aspect-[4/3] md:aspect-[16/9] min-h-[420px] md:min-h-[560px] w-full relative overflow-hidden">
         <img src="~/images/catFour.jpeg"
              alt="Main Cat for KCS"
              class="absolute inset-0 w-full h-full object-cover animate-kenburns">
 
-        ```
+        
         <div class="absolute inset-0 opacity-20"
              style="background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 2px, transparent 2.5px), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 2px, transparent 2.5px); background-size: 50px 50px;">
         </div>
@@ -51,7 +125,7 @@
 
         </div>
     </div>
-    ```
+    
 
 </section>
 
@@ -59,7 +133,7 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 
-    ```
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             gsap.registerPlugin(SplitText);
@@ -89,7 +163,7 @@
             });
         });
     </script>
-    ```
+    
 
 }
 
@@ -98,7 +172,7 @@
 <section class="max-w-6xl mx-auto px-6 md:px-12 -mt-1 py-12 grid md:grid-cols-3 gap-6 reveal-up-wrap"
          data-reveal-group>
 
-    ```
+    
     <div class="reveal-up relative overflow-hidden bg-[var(--ink)] text-white rounded-2xl p-8 flex flex-col justify-center items-center text-center order-1 md:order-1">
 
         <img src="~/images/catWhite.jpeg"
@@ -137,7 +211,7 @@
         </p>
 
     </div>
-    ```
+    
 
 </section>
 
@@ -216,7 +290,7 @@
 
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-8">
 
-    ```
+   
     <div class="flex items-end justify-between mb-6">
         <div>
             <h2 class="font-display text-2xl">
@@ -283,7 +357,7 @@
                 </h3>
 
                 <p class="text-xs text-[var(--muted)] mb-3">
-                    4 years &middot; Female
+                    4 years &middot; Male
                 </p>
 
                 <a asp-controller="Bookings"
@@ -312,7 +386,7 @@
                 </h3>
 
                 <p class="text-xs text-[var(--muted)] mb-3">
-                    6 months &middot; Female
+                    6 months &middot; Male
                 </p>
 
                 <a asp-controller="Bookings"
@@ -332,7 +406,7 @@
        class="md:hidden block text-center text-sm font-semibold text-[var(--red)] mt-6">
         View all cats &rarr;
     </a>
-    ```
+   
 
 </section>
 
@@ -340,7 +414,7 @@
 
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
 
-    ```
+    
     <h2 class="font-display text-2xl text-center mb-2">
         Meet the founders of KCS
     </h2>
@@ -416,7 +490,7 @@
         </div>
 
     </div>
-    ```
+    
 
 </section>
 
@@ -424,7 +498,7 @@
 
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
 
-    ```
+    
     <h2 class="font-display text-2xl text-center mb-8">
         How you can help
     </h2>
@@ -447,7 +521,7 @@
                 </h3>
 
                 <p class="text-sm text-[var(--muted)]">
-                    Give toward food, medical care, or a specific fundraiser event.
+                    Donate toward food, medical care, equipment or maintenance.
                 </p>
             </div>
 
@@ -498,7 +572,7 @@
         </div>
 
     </div>
-    ```
+   
 
 </section>
 
@@ -564,7 +638,6 @@
 
 <section class="max-w-6xl mx-auto px-6 md:px-12 py-12">
 
-    ```
     <h2 class="font-display text-2xl text-center mb-2">
         Check Out Our Reviews!
     </h2>
@@ -577,142 +650,83 @@
 
         <!-- Review 1 -->
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
-
-            <div class="flex gap-1 text-[var(--red)] mb-3"
-                 aria-label="5 out of 5 stars">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
-
             <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                 "An amazing place to visit, if you looking to adopt, it's a must"
             </p>
-
-            <p class="text-sm font-semibold">
-                — Wouter Geldenhuys
-            </p>
-
-            <p class="text-sm font-semibold">
-                February 15, 2020
-            </p>
-
+            <p class="text-sm font-semibold">— Wouter Geldenhuys</p>
+            <p class="text-sm font-semibold">February 15, 2020</p>
         </div>
-
 
         <!-- Review 2 -->
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
-
-            <div class="flex gap-1 text-[var(--red)] mb-3"
-                 aria-label="5 out of 5 stars">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
-
             <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                 "Animal loving people who give of their time and from their hearts. Bless you"
             </p>
-
-            <p class="text-sm font-semibold">
-                — Pamiann Mac Gregor
-            </p>
-
-            <p class="text-sm font-semibold">
-                October 26, 2019
-            </p>
-
+            <p class="text-sm font-semibold">— Pamiann Mac Gregor</p>
+            <p class="text-sm font-semibold">October 26, 2019</p>
         </div>
-
 
         <!-- Review 3 -->
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
-
-            <div class="flex gap-1 text-[var(--red)] mb-3"
-                 aria-label="5 out of 5 stars">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
-
             <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                 "Homing a furbaby who doesn't expect anything more than love, food and a safe place to be is the best thing I have ever done ...
                 I so admire Greg and your team xxx"
             </p>
-
-            <p class="text-sm font-semibold">
-                — Shirley Lyle Gould
-            </p>
-
-            <p class="text-sm font-semibold">
-                May 16, 2019
-            </p>
-
+            <p class="text-sm font-semibold">— Shirley Lyle Gould</p>
+            <p class="text-sm font-semibold">May 16, 2019</p>
         </div>
 
+    </div>
+
+    <!-- Extra reviews (hidden by default) -->
+    <div id="extra-reviews" class="grid md:grid-cols-3 gap-6 mt-6 hidden">
 
         <!-- Review 4 -->
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
-
-            <div class="flex gap-1 text-[var(--red)] mb-3"
-                 aria-label="5 out of 5 stars">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
-
             <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                 "What a wonderful initiative & what lovely people that run it!
                 I am blown away by their love for their animals xxx Thank you Jenny & Greg from the bottom of my heart! Take care!"
             </p>
-
-            <p class="text-sm font-semibold">
-                — Shanna Stokes
-            </p>
-
-            <p class="text-sm font-semibold">
-                May 25, 2018
-            </p>
-
+            <p class="text-sm font-semibold">— Shanna Stokes</p>
+            <p class="text-sm font-semibold">May 25, 2018</p>
         </div>
-
 
         <!-- Review 5 -->
         <div class="bg-[var(--card)] rounded-2xl border border-[var(--hairline)] p-6 review-card">
-
-            <div class="flex gap-1 text-[var(--red)] mb-3"
-                 aria-label="5 out of 5 stars">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
+            <div class="flex gap-1 text-[var(--red)] mb-3" aria-label="5 out of 5 stars">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
-
             <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                 "Most amazing place in the world, the cats are all so happy and well looked after."
             </p>
-
-            <p class="text-sm font-semibold">
-                — Jay Jamieson
-            </p>
-
-            <p class="text-sm font-semibold">
-                August 9, 2017
-            </p>
-
+            <p class="text-sm font-semibold">— Jay Jamieson</p>
+            <p class="text-sm font-semibold">August 9, 2017</p>
         </div>
 
     </div>
-    ```
+
+    <!-- See more toggle -->
+    <div class="text-center mt-8">
+        <button id="see-more-reviews-btn"
+                type="button"
+                class="text-sm font-semibold text-[var(--red)] hover:underline"
+                onclick="document.getElementById('extra-reviews').classList.remove('hidden');
+                         this.classList.add('hidden');">
+            See more reviews
+        </button>
+    </div>
 
 </section>
 

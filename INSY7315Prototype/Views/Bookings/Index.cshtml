@@ -28,13 +28,186 @@
             filter: blur(0px);
         }
     }
-</style>
-<section class="max-w-4xl mx-auto px-6 md:px-12 py-10">
 
-    <h1 class="flip-fade-text font-display text-3xl mb-2">
-        @(Model.CatId.HasValue ? $"Book a viewing with {Model.CatName}" : "Kitten Petting Sessions")
-    </h1>
+    /* Header / hero */
+    .booking-hero {
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 1.5rem;
+        overflow: hidden;
+    }
+
+    .booking-hero-img {
+        width: 100%;
+        height: 100%;
+        min-height: 16rem;
+        object-fit: cover;
+    }
+
+    .booking-hero-benefit-icon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--cream);
+        flex-shrink: 0;
+    }
+
+    /* Stats strip */
+    .stat-card {
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 1rem;
+        padding: 1.25rem 1rem;
+        text-align: center;
+    }
+
+        .stat-card .stat-number {
+            font-family: var(--font-display, inherit);
+            color: var(--red);
+            font-size: 1.75rem;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+    /* Booking sidebar */
+    .booking-sidebar {
+        position: relative;
+        border-radius: 1.25rem;
+        overflow: hidden;
+        min-height: 22rem;
+        display: flex;
+        align-items: flex-end;
+        border: 1px solid var(--hairline);
+    }
+
+    .booking-sidebar-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        filter: blur(2px) saturate(1.05);
+        transform: scale(1.08);
+    }
+
+    .booking-sidebar-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%);
+    }
+
+    .booking-sidebar-content {
+        position: relative;
+        padding: 1.5rem;
+        color: #fff;
+        width: 100%;
+    }
+
+    /* Softer treatment for the "no specific cat" case */
+    .booking-sidebar-generic .booking-sidebar-bg {
+        filter: blur(6px) saturate(1.05) brightness(0.95);
+        transform: scale(1.15);
+    }
+</style>
+
+<section class="max-w-6xl mx-auto px-6 md:px-12 py-10">
+
+    <!-- Header / hero section -->
+    <header class="mb-10">
+        <h1 class="flip-fade-text font-display text-3xl mb-2">
+            @(Model.CatId.HasValue ? $"Book a viewing with {Model.CatName}" : "Kitten Petting Sessions")
+        </h1>
+        <p class="text-[var(--muted)] text-sm text-center max-w-xl mx-auto mb-8">
+            @(Model.CatId.HasValue
+                        ? "Spend real one-on-one time together before you decide — every visit brings a cat closer to a forever home."
+                        : "Experience the healing power of purrs. Book a private or group session with our sanctuary residents and support their journey to a forever home.")
+        </p>
+
+        <div class="booking-hero grid md:grid-cols-2 gap-0 p-3 md:p-4">
+            <div class="rounded-[1.1rem] overflow-hidden">
+                <img class="booking-hero-img"
+                     src="~/images/bookingcat.jpeg"
+                     alt="@(Model.CatId.HasValue? Model.CatName: "Sanctuary kitten")">
+            </div>
+            <div class="p-6 md:p-8 flex flex-col justify-center">
+                <h2 class="font-display text-xl text-[var(--red)] mb-4">The magic of &lsquo;purr-therapy&rsquo;</h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <span class="booking-hero-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--ink)" class="w-4 h-4">
+                                <path d="M12 21s-6.7-4.35-9.3-8.1C.9 10.1 1.6 6.6 4.6 5.2c2-1 4.4-.4 5.9 1.3.5.6 1.1 1.5 1.5 2.1.4-.6 1-1.5 1.5-2.1 1.5-1.7 3.9-2.3 5.9-1.3 3 1.4 3.7 4.9 1.9 7.7C18.7 16.65 12 21 12 21Z" />
+                            </svg>
+                        </span>
+                        <p class="text-sm text-[var(--muted)] leading-relaxed">
+                            <span class="font-semibold text-[var(--ink)]">Reduces stress:</span> studies show a cat's purr lowers cortisol levels in humans.
+                        </p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="booking-hero-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                            </svg>
+                        </span>
+                        <p class="text-sm text-[var(--muted)] leading-relaxed">
+                            <span class="font-semibold text-[var(--ink)]">Lowers blood pressure:</span> the rhythmic vibration helps regulate your nervous system.
+                        </p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="booking-hero-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                                <line x1="9" y1="9" x2="9.01" y2="9" />
+                                <line x1="15" y1="9" x2="15.01" y2="9" />
+                            </svg>
+                        </span>
+                        <p class="text-sm text-[var(--muted)] leading-relaxed">
+                            <span class="font-semibold text-[var(--ink)]">Boosts mood:</span> oxytocin is released during tactile interaction with our residents.
+                        </p>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="booking-hero-benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                            </svg>
+                        </span>
+                        <p class="text-sm text-[var(--muted)] leading-relaxed">
+                            <span class="font-semibold text-[var(--ink)]">Helps them find a home:</span> every viewing gives a resident a real shot at adoption.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats strip -->
+    <!-- TODO: replace these static placeholders with real figures — e.g. add
+         TotalBookings, TotalAdoptions, AdoptionRate, ReturnedToShelterRate
+         properties to BookingPageViewModel and populate them from the DB
+         in BookingsController.Index() -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div class="stat-card">
+            <p class="stat-number">1,240+</p>
+            <p class="text-xs uppercase tracking-wide text-[var(--muted)]">Cats adopted</p>
+        </div>
+        <div class="stat-card">
+            <p class="stat-number">3,800+</p>
+            <p class="text-xs uppercase tracking-wide text-[var(--muted)]">Sessions booked</p>
+        </div>
+        <div class="stat-card">
+            <p class="stat-number">68%</p>
+            <p class="text-xs uppercase tracking-wide text-[var(--muted)]">Viewings that lead to adoption</p>
+        </div>
+        <div class="stat-card">
+            <p class="stat-number">100%</p>
+            <p class="text-xs uppercase tracking-wide text-[var(--muted)]">No-kill promise</p>
+        </div>
+    </section>
+
     
+
 
     <!-- Image collage effect -->
     <style>
@@ -175,119 +348,128 @@
         </div>
     </div>
 
+    <div class="flex justify-center items-center min-h-[70vh]">
 
-    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Main booking flow -->
+        <div class="w-full max-w-5xl space-y-8">
 
-        <!-- Calendar -->
-        <div>
-            <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">1. Select a date</h2>
-            <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-4">
+            <div class="grid md:grid-cols-2 gap-8">
 
-                <div class="flex items-center justify-between mb-3">
-                    @if (Model.CanGoPrev)
-                    {
-                        <a asp-action="Index" asp-route-catId="@Model.CatId" asp-route-month="@Model.PrevMonth" asp-route-year="@Model.PrevYear" class="text-sm px-2">&larr;</a>
-                    }
-                    else
-                    {
-                        <span class="text-sm px-2 opacity-30">&larr;</span>
-                    }
-                    <p class="font-display text-lg">@Model.MonthName</p>
-                    <a asp-action="Index" asp-route-catId="@Model.CatId" asp-route-month="@Model.NextMonth" asp-route-year="@Model.NextYear" class="text-sm px-2">&rarr;</a>
-                </div>
+                <!-- Calendar -->
+                <div>
+                    <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">1. Select a date</h2>
+                    <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-4">
 
-                <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-[var(--muted)] uppercase mb-2">
-                    @foreach (var h in dayHeaders)
-                    {
-                        <span>@h</span>
-                    }
-                </div>
-
-                <div id="calendar-days" class="grid grid-cols-7 gap-1" data-month="@Model.Month" data-year="@Model.Year">
-                    @foreach (var week in Model.CalendarWeeks)
-                    {
-                        foreach (var day in week)
-                        {
-                            if (day.HasValue)
+                        <div class="flex items-center justify-between mb-3">
+                            @if (Model.CanGoPrev)
                             {
-                                var isPast = new DateTime(Model.Year, Model.Month, day.Value) < DateTime.Today;
-                                <button type="button"
-                                        class="calendar-day text-sm rounded-lg py-2 @(isPast ? "opacity-30 cursor-not-allowed" : "hover:bg-[var(--hairline)]/50")"
-                                        data-day="@day"
-                                        @(isPast ? "disabled" : "")>
-                                    @day
-                                </button>
+                                <a asp-action="Index" asp-route-catId="@Model.CatId" asp-route-month="@Model.PrevMonth" asp-route-year="@Model.PrevYear" class="text-sm px-2">&larr;</a>
                             }
                             else
                             {
-                                <span></span>
+                                <span class="text-sm px-2 opacity-30">&larr;</span>
                             }
+                            <p class="font-display text-lg">@Model.MonthName</p>
+                            <a asp-action="Index" asp-route-catId="@Model.CatId" asp-route-month="@Model.NextMonth" asp-route-year="@Model.NextYear" class="text-sm px-2">&rarr;</a>
+                        </div>
+
+                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-[var(--muted)] uppercase mb-2">
+                            @foreach (var h in dayHeaders)
+                            {
+                                <span>@h</span>
+                            }
+                        </div>
+
+                        <div id="calendar-days" class="grid grid-cols-7 gap-1" data-month="@Model.Month" data-year="@Model.Year">
+                            @foreach (var week in Model.CalendarWeeks)
+                            {
+                                foreach (var day in week)
+                                {
+                                    if (day.HasValue)
+                                    {
+                                        var isPast = new DateTime(Model.Year, Model.Month, day.Value) < DateTime.Today;
+                                        <button type="button"
+                                                class="calendar-day text-sm rounded-lg py-2 @(isPast ? "opacity-30 cursor-not-allowed" : "hover:bg-[var(--hairline)]/50")"
+                                                data-day="@day"
+                                                @(isPast ? "disabled" : "")>
+                                            @day
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <span></span>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time slots -->
+                <div>
+                    <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">2. Choose a time</h2>
+                    <div class="space-y-2">
+                        @foreach (var slot in Model.TimeSlots)
+                        {
+                            <button type="button"
+                                    class="time-slot w-full flex items-center justify-between px-4 py-3 rounded-lg border border-[var(--hairline)] bg-[var(--card)] text-sm @(slot.IsFullyBooked ? "opacity-40 cursor-not-allowed" : "hover:border-[var(--red)]")"
+                                    data-label="@slot.Label"
+                                    data-range="@slot.TimeRange"
+                                    @(slot.IsFullyBooked ? "disabled" : "")>
+                                <span class="font-medium">@slot.Label</span>
+                                <span class="text-[var(--muted)]">@slot.TimeRange</span>
+                            </button>
                         }
-                    }
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Time slots -->
-        <div>
-            <h2 class="font-semibold text-sm uppercase tracking-wide mb-3">2. Choose a time</h2>
-            <div class="space-y-2">
-                @foreach (var slot in Model.TimeSlots)
-                {
-                    <button type="button"
-                            class="time-slot w-full flex items-center justify-between px-4 py-3 rounded-lg border border-[var(--hairline)] bg-[var(--card)] text-sm @(slot.IsFullyBooked ? "opacity-40 cursor-not-allowed" : "hover:border-[var(--red)]")"
-                            data-label="@slot.Label"
-                            data-range="@slot.TimeRange"
-                            @(slot.IsFullyBooked ? "disabled" : "")>
-                        <span class="font-medium">@slot.Label</span>
-                        <span class="text-[var(--muted)]">@slot.TimeRange</span>
+            <!-- Review + confirm -->
+            <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6">
+                <h2 class="font-semibold text-sm uppercase tracking-wide mb-4">3. Review your booking</h2>
+
+                <div class="grid sm:grid-cols-3 gap-4 mb-6 text-sm">
+                    <div>
+                        <p class="text-[10px] uppercase text-[var(--muted)] mb-1">Session type</p>
+                        <p class="font-medium">@(Model.CatId.HasValue ? $"Viewing — {Model.CatName}" : "Kitten petting session")</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] uppercase text-[var(--muted)] mb-1">Date &amp; time</p>
+                        <p id="review-datetime" class="font-medium text-[var(--muted)]">Not selected yet</p>
+                    </div>
+
+                </div>
+
+                <form id="booking-form" asp-controller="Bookings" asp-action="Create" method="post" class="space-y-4">
+                    <input type="hidden" name="CatId" value="@Model.CatId" />
+                    <input type="hidden" name="BookingDate" id="input-date" />
+                    <input type="hidden" name="TimeSlot" id="input-timeslot" />
+                    <input type="hidden" name="DonationAmount" value="25" />
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Your full name</label>
+                            <input name="ParticipantName" type="text" required
+                                   class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Email address</label>
+                            <input name="ParticipantEmail" type="email" required
+                                   class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3">
+                        Confirm &amp; book
                     </button>
-                }
+
+
+                </form>
             </div>
         </div>
-    </div>
 
-    <!-- Review + confirm -->
-    <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl p-6 mt-8">
-        <h2 class="font-semibold text-sm uppercase tracking-wide mb-4">3. Review your booking</h2>
+       
 
-        <div class="grid sm:grid-cols-3 gap-4 mb-6 text-sm">
-            <div>
-                <p class="text-[10px] uppercase text-[var(--muted)] mb-1">Session type</p>
-                <p class="font-medium">@(Model.CatId.HasValue ? $"Viewing — {Model.CatName}" : "Kitten petting session")</p>
-            </div>
-            <div>
-                <p class="text-[10px] uppercase text-[var(--muted)] mb-1">Date &amp; time</p>
-                <p id="review-datetime" class="font-medium text-[var(--muted)]">Not selected yet</p>
-            </div>
-            
-        </div>
-
-        <form id="booking-form" asp-controller="Bookings" asp-action="Create" method="post" class="space-y-4">
-            <input type="hidden" name="CatId" value="@Model.CatId" />
-            <input type="hidden" name="BookingDate" id="input-date" />
-            <input type="hidden" name="TimeSlot" id="input-timeslot" />
-            <input type="hidden" name="DonationAmount" value="25" />
-
-            <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Your full name</label>
-                    <input name="ParticipantName" type="text" required
-                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Email address</label>
-                    <input name="ParticipantEmail" type="email" required
-                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
-                </div>
-            </div>
-
-            <button type="submit" class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3">
-                Confirm &amp; book
-            </button>
-
-          
-        </form>
     </div>
 </section>
 

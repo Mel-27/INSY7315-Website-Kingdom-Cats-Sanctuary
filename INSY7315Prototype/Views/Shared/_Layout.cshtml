@@ -60,50 +60,11 @@
         }
 
 
-        /* =========================================================
-                   PAGE TRANSITION
-                ========================================================= */
-
-        .page-transition {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background-color: var(--ink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform .7s cubic-bezier(.65,0,.35,1);
-        }
-
-        .page-transition__mark {
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 1.25rem;
-            letter-spacing: .08em;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity .4s ease .15s, transform .4s ease .15s;
-            text-align: center;
-            padding: 0 1.5rem;
-        }
-
-        .page-transition.is-visible .page-transition__mark {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .page-transition.is-leaving {
-            transform: translateY(-100%);
-        }
-
-        .page-transition.is-done {
-            display: none;
-        }
-
+       
 
         /* =========================================================
-                   HAMBURGER
-                ========================================================= */
+                           HAMBURGER
+                        ========================================================= */
 
         .hamburger-btn {
             position: fixed;
@@ -145,8 +106,8 @@
 
 
         /* =========================================================
-                   OVERLAY + NAVIGATION PANEL
-                ========================================================= */
+                           OVERLAY + NAVIGATION PANEL
+                        ========================================================= */
 
         .nav-overlay {
             position: fixed;
@@ -184,8 +145,8 @@
 
 
         /* =========================================================
-                   LINE SIDEBAR
-                ========================================================= */
+                           LINE SIDEBAR
+                        ========================================================= */
 
         .line-sidebar {
             --accent-color: #C1272D;
@@ -274,8 +235,8 @@
 
 
         /* =========================================================
-                   PREFERENCES
-                   ========================================================= */
+                           PREFERENCES
+                           ========================================================= */
 
         .preference-area {
             margin-top: 2rem;
@@ -343,8 +304,8 @@
 
 
         /* =========================================================
-                   RESPONSIVE
-                ========================================================= */
+                           RESPONSIVE
+                        ========================================================= */
 
         @@media (max-width: 400px) {
 
@@ -382,16 +343,7 @@
 
 <body>
 
-    <!-- Page load transition -->
-    <div id="page-transition"
-         class="page-transition"
-         aria-hidden="true">
-
-        <span class="page-transition__mark">
-            Welcome to Kingdom Cats Sanctuary
-        </span>
-
-    </div>
+  
 
 
     <!-- Hamburger -->
@@ -479,22 +431,11 @@
                        class="line-sidebar__label">
 
                         <span class="line-sidebar__index">03</span>
-<<<<<<< HEAD
-                        <span>Cat Profile</span>
-                    </a>
-                </li>
-                <li class="line-sidebar__item">
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Bookings" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">04</span>
-                        <span>Book A Session</span>
-=======
 
                         <span data-i18n="cats">
                             Cat Profiles
                         </span>
 
->>>>>>> c79498d7b28a80a242cbc213dc81bbf651a87dc4
                     </a>
 
                 </li>
@@ -502,12 +443,6 @@
 
                 <!-- 04 BOOKINGS -->
                 <li class="line-sidebar__item">
-<<<<<<< HEAD
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Donations" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">05</span>
-                        <span>Donate</span>
-=======
 
                     <span class="line-sidebar__marker"
                           aria-hidden="true">
@@ -523,7 +458,6 @@
                             Book a Session
                         </span>
 
->>>>>>> c79498d7b28a80a242cbc213dc81bbf651a87dc4
                     </a>
 
                 </li>
@@ -531,12 +465,6 @@
 
                 <!-- 05 DONATIONS -->
                 <li class="line-sidebar__item">
-<<<<<<< HEAD
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Events" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">06</span>
-                        <span>Events</span>
-=======
 
                     <span class="line-sidebar__marker"
                           aria-hidden="true">
@@ -552,7 +480,6 @@
                             Donate
                         </span>
 
->>>>>>> c79498d7b28a80a242cbc213dc81bbf651a87dc4
                     </a>
 
                 </li>
@@ -560,12 +487,6 @@
 
                 <!-- 06 EVENTS -->
                 <li class="line-sidebar__item">
-<<<<<<< HEAD
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Community" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">07</span>
-                        <span>Community Blog</span>
-=======
 
                     <span class="line-sidebar__marker"
                           aria-hidden="true">
@@ -581,7 +502,6 @@
                             Events
                         </span>
 
->>>>>>> c79498d7b28a80a242cbc213dc81bbf651a87dc4
                     </a>
 
                 </li>
@@ -589,12 +509,6 @@
 
                 <!-- 07 COMMUNITY -->
                 <li class="line-sidebar__item">
-<<<<<<< HEAD
-                    <span class="line-sidebar__marker" aria-hidden="true"></span>
-                    <a asp-controller="Merch" asp-action="Index" class="line-sidebar__label">
-                        <span class="line-sidebar__index">08</span>
-                        <span>KCS Merch</span>
-=======
 
                     <span class="line-sidebar__marker"
                           aria-hidden="true">
@@ -632,7 +546,6 @@
                             Merch
                         </span>
 
->>>>>>> c79498d7b28a80a242cbc213dc81bbf651a87dc4
                     </a>
 
                 </li>
@@ -1562,94 +1475,6 @@
 
     </script>
 
-
-    <!-- =============================================================
-         PAGE TRANSITION
-    ============================================================= -->
-
-    <script>
-
-        (function () {
-
-            const overlay =
-                document.getElementById(
-                    'page-transition'
-                );
-
-
-            if (!overlay) {
-                return;
-            }
-
-
-            const prefersReduced =
-                window.matchMedia(
-                    '(prefers-reduced-motion: reduce)'
-                ).matches;
-
-
-            if (prefersReduced) {
-
-                overlay.classList.add(
-                    'is-done'
-                );
-
-                return;
-
-            }
-
-
-            requestAnimationFrame(
-                function () {
-
-                    overlay.classList.add(
-                        'is-visible'
-                    );
-
-                }
-            );
-
-
-            setTimeout(
-                function () {
-
-                    overlay.classList.add(
-                        'is-leaving'
-                    );
-
-
-                    overlay.addEventListener(
-                        'transitionend',
-                        function handler(e) {
-
-                            if (
-                                e.target !== overlay ||
-                                e.propertyName !== 'transform'
-                            ) {
-                                return;
-                            }
-
-
-                            overlay.classList.add(
-                                'is-done'
-                            );
-
-
-                            overlay.removeEventListener(
-                                'transitionend',
-                                handler
-                            );
-
-                        }
-                    );
-
-                },
-                550
-            );
-
-        })();
-
-    </script>
 
 
     @await Html.PartialAsync("_Footer")
