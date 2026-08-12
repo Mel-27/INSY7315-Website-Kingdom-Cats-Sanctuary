@@ -328,65 +328,8 @@
             background: var(--red-dark, var(--red));
         }
 
-    .post-modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(28,25,23,0.6);
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity .25s ease;
-    }
-
-        .post-modal-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-    .post-modal {
-        background: var(--card);
-        border-radius: 1.25rem;
-        width: 100%;
-        max-width: 28rem;
-        padding: 1.75rem;
-        position: relative;
-        transform: translateY(24px) scale(0.96);
-        opacity: 0;
-        transition: transform .25s ease, opacity .25s ease;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-sizing: border-box;
-    }
-
-    .post-modal-overlay.open .post-modal {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-
-    .post-modal-close {
-        position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
-        width: 32px;
-        height: 32px;
-        border-radius: 9999px;
-        border: none;
-        background: var(--hairline);
-        color: var(--ink);
-        font-size: 1.25rem;
-        line-height: 1;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     @@media (prefers-reduced-motion: reduce) {
-        .post-modal-overlay, .post-modal, .fab-add-post {
+        .fab-add-post {
             transition: none !important;
         }
     }
@@ -581,9 +524,6 @@
     <!-- Community Stories -->
     <div class="flex items-center justify-between mb-4">
         <h2 class="font-display text-2xl">Community Stories</h2>
-        <button type="button" onclick="openPostModal()" class="hidden sm:inline-block btn-primary text-white text-xs font-semibold tracking-wide uppercase rounded-lg px-4 py-2.5">
-            New post
-        </button>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6 mb-14 items-start">
@@ -731,86 +671,25 @@
 </section>
 
 <!-- Floating add-post button -->
-<button type="button" class="fab-add-post" onclick="openPostModal()" aria-label="Add a post">
+<a asp-controller="Community" asp-action="CreatePost" class="fab-add-post" aria-label="Share a story">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
     </svg>
-</button>
-
-<!-- Add post modal -->
-<div id="post-modal-overlay" class="post-modal-overlay">
-    <div class="post-modal" role="dialog" aria-modal="true" aria-labelledby="post-modal-title">
-        <button type="button" class="post-modal-close" aria-label="Close" onclick="closePostModal()">&times;</button>
-        <h3 id="post-modal-title" class="font-display text-xl mb-5">Share a story</h3>
-
-        <form asp-controller="Community" asp-action="CreatePost" method="post" class="space-y-4">
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Your name</label>
-                <input name="AuthorName" type="text" required
-                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Caption</label>
-                <textarea name="Caption" rows="3" required
-                          class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm resize-none"></textarea>
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Photo URL <span class="text-[var(--muted)] normal-case font-normal">(optional)</span></label>
-                <input name="PhotoUrl" type="text" placeholder="/images/your-photo.jpeg"
-                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wide mb-1.5">Tags <span class="text-[var(--muted)] normal-case font-normal">(comma separated, optional)</span></label>
-                <input name="TagsInput" type="text" placeholder="AdoptionSuccess, NewBeginnings"
-                       class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
-            </div>
-
-            <button type="submit" class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3">
-                Post to community
-            </button>
-        </form>
-    </div>
-</div>
+</a>
 
 <script>
-    <script>
-        function toggleComments(postId) {
-            document.getElementById('comments-panel-' + postId).classList.toggle('open');
-        }
+    function toggleComments(postId) {
+        document.getElementById('comments-panel-' + postId).classList.toggle('open');
+    }
 
-        // If we've just redirected back from adding a comment, open that post's panel
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.location.hash.startsWith('#comments-panel-')) {
-                const panel = document.querySelector(window.location.hash);
-                if (panel) {
-                    panel.classList.add('open');
-                    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+    // If we've just redirected back from adding a comment, open that post's panel
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.location.hash.startsWith('#comments-panel-')) {
+            const panel = document.querySelector(window.location.hash);
+            if (panel) {
+                panel.classList.add('open');
+                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-        });
-
-        function openPostModal() {
-            document.getElementById('post-modal-overlay').classList.add('open');
-            document.body.style.overflow = 'hidden';
         }
-        function closePostModal() {
-            document.getElementById('post-modal-overlay').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-        document.getElementById('post-modal-overlay').addEventListener('click', function (e) {
-            if (e.target === this) closePostModal();
-        });
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closePostModal();
-        });
+    });
 </script>
-
-<!-- Footer -->
-<footer class="border-t border-[var(--hairline)] py-8">
-    <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
-        <p>&copy; @DateTime.Now.Year Kingdom Cats Sanctuary. All rights reserved.</p>
-    </div>
-</footer>

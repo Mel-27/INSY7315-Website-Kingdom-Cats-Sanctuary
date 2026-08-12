@@ -10,6 +10,11 @@ namespace INSY7315Prototype.Controllers
             return View();
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
         //[HttpGet]
         //public IActionResult Register()
         //{

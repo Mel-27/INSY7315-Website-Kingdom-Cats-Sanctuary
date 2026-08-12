@@ -165,5 +165,10 @@ namespace INSY7315Prototype.Controllers
 
             return Redirect(Url.Action("Index") + $"#post-{request.PostId}");
         }
+
+        public IActionResult CreatePost()
+        {
+            return View();
+        }
     }
 }
