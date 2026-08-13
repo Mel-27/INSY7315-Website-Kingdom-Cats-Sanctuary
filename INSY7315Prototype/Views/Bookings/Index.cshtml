@@ -31,16 +31,16 @@
 
     /* Header / hero */
     .booking-hero {
-        background: var(--card);
-        border: 1px solid var(--hairline);
+        background: var(--ink);
+        border: 1px solid rgba(255,255,255,0.08);
         border-radius: 1.5rem;
         overflow: hidden;
     }
 
     .booking-hero-img {
-        width: 100%;
+        width: 80%;
         height: 100%;
-        min-height: 16rem;
+        min-height: 20rem;
         object-fit: cover;
     }
 
@@ -51,7 +51,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--cream);
+        background: rgba(255,255,255,0.1);
         flex-shrink: 0;
     }
 
@@ -119,11 +119,7 @@
         <h1 class="flip-fade-text font-display text-3xl mb-2">
             @(Model.CatId.HasValue ? $"Book a viewing with {Model.CatName}" : "Kitten Petting Sessions")
         </h1>
-        <p class="text-[var(--muted)] text-sm text-center max-w-xl mx-auto mb-8">
-            @(Model.CatId.HasValue
-                        ? "Spend real one-on-one time together before you decide — every visit brings a cat closer to a forever home."
-                        : "Experience the healing power of purrs. Book a private or group session with our sanctuary residents and support their journey to a forever home.")
-        </p>
+
 
         <div class="booking-hero grid md:grid-cols-2 gap-0 p-3 md:p-4">
             <div class="rounded-[1.1rem] overflow-hidden">
@@ -136,45 +132,45 @@
                 <ul class="space-y-4">
                     <li class="flex items-start gap-3">
                         <span class="booking-hero-benefit-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--ink)" class="w-4 h-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" class="w-4 h-4">
                                 <path d="M12 21s-6.7-4.35-9.3-8.1C.9 10.1 1.6 6.6 4.6 5.2c2-1 4.4-.4 5.9 1.3.5.6 1.1 1.5 1.5 2.1.4-.6 1-1.5 1.5-2.1 1.5-1.7 3.9-2.3 5.9-1.3 3 1.4 3.7 4.9 1.9 7.7C18.7 16.65 12 21 12 21Z" />
                             </svg>
                         </span>
-                        <p class="text-sm text-[var(--muted)] leading-relaxed">
-                            <span class="font-semibold text-[var(--ink)]">Reduces stress:</span> studies show a cat's purr lowers cortisol levels in humans.
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            <span class="font-semibold text-white">Reduces stress:</span> studies show a cat's purr lowers cortisol levels in humans.
                         </p>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="booking-hero-benefit-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                             </svg>
                         </span>
-                        <p class="text-sm text-[var(--muted)] leading-relaxed">
-                            <span class="font-semibold text-[var(--ink)]">Lowers blood pressure:</span> the rhythmic vibration helps regulate your nervous system.
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            <span class="font-semibold text-white">Lowers blood pressure:</span> the rhythmic vibration helps regulate your nervous system.
                         </p>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="booking-hero-benefit-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="M8 14s1.5 2 4 2 4-2 4-2" />
                                 <line x1="9" y1="9" x2="9.01" y2="9" />
                                 <line x1="15" y1="9" x2="15.01" y2="9" />
                             </svg>
                         </span>
-                        <p class="text-sm text-[var(--muted)] leading-relaxed">
-                            <span class="font-semibold text-[var(--ink)]">Boosts mood:</span> oxytocin is released during tactile interaction with our residents.
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            <span class="font-semibold text-white">Boosts mood:</span> oxytocin is released during tactile interaction with our residents.
                         </p>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="booking-hero-benefit-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
                             </svg>
                         </span>
-                        <p class="text-sm text-[var(--muted)] leading-relaxed">
-                            <span class="font-semibold text-[var(--ink)]">Helps them find a home:</span> every viewing gives a resident a real shot at adoption.
+                        <p class="text-sm text-white/70 leading-relaxed">
+                            <span class="font-semibold text-white">Helps them find a home:</span> every viewing gives a resident a real shot at adoption.
                         </p>
                     </li>
                 </ul>
@@ -206,7 +202,7 @@
         </div>
     </section>
 
-    
+
 
 
     <!-- Image collage effect -->
@@ -468,7 +464,6 @@
             </div>
         </div>
 
-       
 
     </div>
 </section>

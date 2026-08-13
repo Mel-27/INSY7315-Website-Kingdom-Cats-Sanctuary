@@ -2,11 +2,19 @@
     ViewData["Title"] = "Sign in";
 }
 
-<div class="min-h-screen flex items-center justify-center p-6">
-    <main class="w-full max-w-md">
-        <div class="bg-[var(--card)] rounded-2xl shadow-xl border border-[var(--hairline)] px-8 py-10 sm:px-10">
+<div class="relative min-h-screen flex items-center justify-center p-6 overflow-hidden">
 
-            
+    <!-- Blurred background photo -->
+    <div class="absolute inset-0 -z-50">
+        <img src="~/images/backgroundlogin02.jpeg"
+             alt=""
+             class="w-full h-full object-cover scale-110 blur-md">
+        <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <main class="w-full max-w-md">
+        <div class="bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--hairline)] px-8 py-10 sm:px-10">
+
             <!-- Logo + wordmark -->
             <div class="flex flex-col items-center text-center mb-8">
                 <img src="~/images/KKS logo.jpeg"
@@ -48,87 +56,67 @@
                 Sign in to manage your donations, bookings, and adoption journey.
             </p>
 
-
             <!-- Form -->
             <form id="account-form" class="space-y-5">
 
                 <!-- Full name -->
                 <div id="field-name" class="field-panel hidden">
-
                     <label for="fullname"
                            class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
                         Full name
                     </label>
-
                     <input id="fullname"
                            name="FullName"
                            type="text"
                            placeholder="Kingdom Cat"
                            class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
-
                 </div>
-
 
                 <!-- Email -->
                 <div>
-
                     <label for="email"
                            class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
                         Email address
                     </label>
-
                     <input id="email"
                            name="Email"
                            type="email"
                            placeholder="KCS@example.com"
                            class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
-
                 </div>
-
 
                 <!-- Password -->
                 <div>
-
                     <div class="flex items-center justify-between mb-1.5">
-
                         <label for="password"
                                class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)]">
                             Password
                         </label>
-
                         <a id="forgot-link"
                            href="#"
                            class="text-xs font-medium text-[var(--red)] hover:text-[var(--red-dark)]">
                             Forgot?
                         </a>
-
                     </div>
-
                     <input id="password"
                            name="Password"
                            type="password"
                            placeholder="••••••••"
                            class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
-
                 </div>
-
 
                 <!-- Confirm password -->
                 <div id="field-confirm" class="field-panel hidden">
-
                     <label for="confirm"
                            class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
                         Confirm password
                     </label>
-
                     <input id="confirm"
                            name="ConfirmPassword"
                            type="password"
                            placeholder="••••••••"
                            class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
-
                 </div>
-
 
                 <!-- Demo button -->
                 <a id="submit-btn"
@@ -140,94 +128,55 @@
 
             </form>
 
-
             <p class="text-center text-sm text-[var(--muted)] mt-6">
-
                 <span id="switch-text">
                     Don't have an account?
                 </span>
-
                 <button type="button"
                         onclick="setMode(currentMode === 'login' ? 'register' : 'login')"
                         class="font-semibold text-[var(--ink)] hover:text-[var(--red)] underline underline-offset-2">
-
                     <span id="switch-action">
                         Sign up
                     </span>
-
                 </button>
-
             </p>
 
         </div>
     </main>
-    
 
 </div>
 
 @section Scripts {
-
-    
     <script>
-
         let currentMode = 'login';
 
         function setMode(mode) {
-
             currentMode = mode;
-
             const isLogin = mode === 'login';
 
-            document.getElementById('tab-login')
-                .classList.toggle('active', isLogin);
+            document.getElementById('tab-login').classList.toggle('active', isLogin);
+            document.getElementById('tab-login').setAttribute('aria-selected', isLogin);
+            document.getElementById('tab-register').classList.toggle('active', !isLogin);
+            document.getElementById('tab-register').setAttribute('aria-selected', !isLogin);
 
-            document.getElementById('tab-login')
-                .setAttribute('aria-selected', isLogin);
-
-            document.getElementById('tab-register')
-                .classList.toggle('active', !isLogin);
-
-            document.getElementById('tab-register')
-                .setAttribute('aria-selected', !isLogin);
-
-
-            document.getElementById('field-name')
-                .classList.toggle('hidden', isLogin);
-
-            document.getElementById('field-confirm')
-                .classList.toggle('hidden', isLogin);
-
-            document.getElementById('forgot-link')
-                .classList.toggle('hidden', !isLogin);
-
+            document.getElementById('field-name').classList.toggle('hidden', isLogin);
+            document.getElementById('field-confirm').classList.toggle('hidden', isLogin);
+            document.getElementById('forgot-link').classList.toggle('hidden', !isLogin);
 
             const submitButton = document.getElementById('submit-btn');
-
-            submitButton.textContent = isLogin
-                ? 'Sign in'
-                : 'Create account';
-
+            submitButton.textContent = isLogin ? 'Sign in' : 'Create account';
 
             document.getElementById('mode-subtext').textContent = isLogin
                 ? 'Sign in to manage your donations, bookings, and adoption journey.'
                 : 'Join the sanctuary community — donate, adopt, and follow our cats.';
 
+            document.getElementById('switch-text').textContent = isLogin
+                ? "Don't have an account?"
+                : 'Already have an account?';
 
-            document.getElementById('switch-text').textContent =
-                isLogin
-                    ? "Don't have an account?"
-                    : 'Already have an account?';
-
-
-            document.getElementById('switch-action').textContent =
-                isLogin
-                    ? 'Sign up'
-                    : 'Sign in';
-
+            document.getElementById('switch-action').textContent = isLogin
+                ? 'Sign up'
+                : 'Sign in';
         }
-
     </script>
-    
-
 }
-
