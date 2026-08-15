@@ -15,6 +15,7 @@ namespace INSY7315Prototype.Controllers
             return View();
         }
 
+
         //[HttpGet]
         //public IActionResult Register()
         //{

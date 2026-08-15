@@ -4,19 +4,22 @@
 
 <div class="relative min-h-screen flex items-center justify-center p-6 overflow-hidden">
 
-    <!-- Blurred background photo -->
+    <!-- Background -->
     <div class="absolute inset-0 -z-50">
         <img src="~/images/backgroundlogin02.jpeg"
              alt=""
              class="w-full h-full object-cover scale-110 blur-md">
+
         <div class="absolute inset-0 bg-black/50"></div>
     </div>
 
     <main class="w-full max-w-md">
+
         <div class="bg-[var(--card)] rounded-2xl shadow-2xl border border-[var(--hairline)] px-8 py-10 sm:px-10">
 
-            <!-- Logo + wordmark -->
+            <!-- Logo -->
             <div class="flex flex-col items-center text-center mb-8">
+
                 <img src="~/images/KKS logo.jpeg"
                      alt="Kingdom Cats Sanctuary logo"
                      class="w-16 h-16 object-contain mb-4">
@@ -28,25 +31,26 @@
                 <h1 class="font-display italic text-2xl text-[var(--red)]">
                     Kingdom Cats Sanctuary
                 </h1>
+
             </div>
 
             <!-- Tabs -->
-            <div class="flex border-b border-[var(--hairline)] mb-7" role="tablist">
+            <div class="flex border-b border-[var(--hairline)] mb-7">
 
                 <button id="tab-login"
+                        type="button"
                         class="tab-btn active flex-1 pb-3 text-sm font-semibold tracking-wide uppercase"
-                        role="tab"
-                        aria-selected="true"
                         onclick="setMode('login')">
-                    Login<span class="tab-underline"></span>
+                    Login
+                    <span class="tab-underline"></span>
                 </button>
 
                 <button id="tab-register"
+                        type="button"
                         class="tab-btn flex-1 pb-3 text-sm font-semibold tracking-wide uppercase"
-                        role="tab"
-                        aria-selected="false"
                         onclick="setMode('register')">
-                    Register<span class="tab-underline"></span>
+                    Register
+                    <span class="tab-underline"></span>
                 </button>
 
             </div>
@@ -56,127 +60,297 @@
                 Sign in to manage your donations, bookings, and adoption journey.
             </p>
 
-            <!-- Form -->
-            <form id="account-form" class="space-y-5">
+            <!-- Login / Register -->
+            <form id="account-form"
+                  class="space-y-5"
+                  onsubmit="handleLogin(event)">
 
                 <!-- Full name -->
-                <div id="field-name" class="field-panel hidden">
+                <div id="field-name" class="hidden">
+
                     <label for="fullname"
                            class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
                         Full name
                     </label>
+
                     <input id="fullname"
-                           name="FullName"
                            type="text"
                            placeholder="Kingdom Cat"
-                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
                 </div>
 
-                <!-- Email -->
+                <!-- Username -->
                 <div>
+
                     <label for="email"
                            class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
-                        Email address
+                        Username / Email
                     </label>
+
                     <input id="email"
-                           name="Email"
-                           type="email"
-                           placeholder="KCS@example.com"
+                           type="text"
+                           required
+                           placeholder="admin or client"
                            class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+
                 </div>
 
                 <!-- Password -->
                 <div>
+
                     <div class="flex items-center justify-between mb-1.5">
+
                         <label for="password"
                                class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)]">
                             Password
                         </label>
+
                         <a id="forgot-link"
                            href="#"
                            class="text-xs font-medium text-[var(--red)] hover:text-[var(--red-dark)]">
                             Forgot?
                         </a>
+
                     </div>
+
                     <input id="password"
-                           name="Password"
                            type="password"
+                           required
                            placeholder="••••••••"
-                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
                 </div>
 
                 <!-- Confirm password -->
-                <div id="field-confirm" class="field-panel hidden">
+                <div id="field-confirm" class="hidden">
+
                     <label for="confirm"
                            class="block text-xs font-semibold tracking-wide uppercase text-[var(--ink)] mb-1.5">
                         Confirm password
                     </label>
+
                     <input id="confirm"
-                           name="ConfirmPassword"
                            type="password"
                            placeholder="••••••••"
-                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm placeholder:text-[var(--muted)]">
+                           class="w-full rounded-lg border border-[var(--hairline)] bg-[var(--cream)]/40 px-4 py-2.5 text-sm">
+
                 </div>
 
-                <!-- Demo button -->
-                <a id="submit-btn"
-                   asp-controller="Account"
-                   asp-action="Profile"
-                   class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3 mt-2 text-center block">
+                <!-- Error -->
+                <div id="login-error"
+                     class="hidden bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+                </div>
+
+                <!-- Submit -->
+                <button id="submit-btn"
+                        type="submit"
+                        class="btn-primary w-full text-white text-sm font-semibold tracking-[0.15em] uppercase rounded-lg py-3 mt-2">
                     Sign in
-                </a>
+                </button>
 
             </form>
 
+            <!-- Switch -->
             <p class="text-center text-sm text-[var(--muted)] mt-6">
+
                 <span id="switch-text">
                     Don't have an account?
                 </span>
+
                 <button type="button"
                         onclick="setMode(currentMode === 'login' ? 'register' : 'login')"
                         class="font-semibold text-[var(--ink)] hover:text-[var(--red)] underline underline-offset-2">
+
                     <span id="switch-action">
                         Sign up
                     </span>
+
                 </button>
+
             </p>
 
+            <!-- Prototype credentials -->
+            <div id="demo-info"
+                 class="mt-7 bg-[var(--cream)] rounded-xl p-4 text-center">
+
+                <p class="text-[10px] uppercase tracking-[0.15em] text-[var(--muted)] mb-2">
+                    Prototype login
+                </p>
+
+                <p class="text-xs text-[var(--muted)]">
+                    Admin: <strong class="text-[var(--ink)]">admin / admin</strong>
+                </p>
+
+                <p class="text-xs text-[var(--muted)] mt-1">
+                    Client: <strong class="text-[var(--ink)]">client / client</strong>
+                </p>
+
+            </div>
+
         </div>
+
     </main>
 
 </div>
 
 @section Scripts {
+
     <script>
-        let currentMode = 'login';
+
+        let currentMode = "login";
 
         function setMode(mode) {
+
             currentMode = mode;
-            const isLogin = mode === 'login';
 
-            document.getElementById('tab-login').classList.toggle('active', isLogin);
-            document.getElementById('tab-login').setAttribute('aria-selected', isLogin);
-            document.getElementById('tab-register').classList.toggle('active', !isLogin);
-            document.getElementById('tab-register').setAttribute('aria-selected', !isLogin);
+            const isLogin = mode === "login";
 
-            document.getElementById('field-name').classList.toggle('hidden', isLogin);
-            document.getElementById('field-confirm').classList.toggle('hidden', isLogin);
-            document.getElementById('forgot-link').classList.toggle('hidden', !isLogin);
+            document
+                .getElementById("tab-login")
+                .classList.toggle("active", isLogin);
 
-            const submitButton = document.getElementById('submit-btn');
-            submitButton.textContent = isLogin ? 'Sign in' : 'Create account';
+            document
+                .getElementById("tab-register")
+                .classList.toggle("active", !isLogin);
 
-            document.getElementById('mode-subtext').textContent = isLogin
-                ? 'Sign in to manage your donations, bookings, and adoption journey.'
-                : 'Join the sanctuary community — donate, adopt, and follow our cats.';
+            document
+                .getElementById("field-name")
+                .classList.toggle("hidden", isLogin);
 
-            document.getElementById('switch-text').textContent = isLogin
-                ? "Don't have an account?"
-                : 'Already have an account?';
+            document
+                .getElementById("field-confirm")
+                .classList.toggle("hidden", isLogin);
 
-            document.getElementById('switch-action').textContent = isLogin
-                ? 'Sign up'
-                : 'Sign in';
+            document
+                .getElementById("forgot-link")
+                .classList.toggle("hidden", !isLogin);
+
+            document.getElementById("submit-btn").textContent =
+                isLogin ? "Sign in" : "Create account";
+
+            document.getElementById("mode-subtext").textContent =
+                isLogin
+                    ? "Sign in to manage your donations, bookings, and adoption journey."
+                    : "Join the sanctuary community — donate, adopt, and follow our cats.";
+
+            document.getElementById("switch-text").textContent =
+                isLogin
+                    ? "Don't have an account?"
+                    : "Already have an account?";
+
+            document.getElementById("switch-action").textContent =
+                isLogin
+                    ? "Sign up"
+                    : "Sign in";
+
+            document
+                .getElementById("login-error")
+                .classList.add("hidden");
         }
+
+
+        function handleLogin(event) {
+
+            event.preventDefault();
+
+            if (currentMode !== "login") {
+
+                alert("Mock registration complete!");
+
+                setMode("login");
+
+                return;
+            }
+
+            const username =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value
+                    .trim();
+
+            const error =
+                document.getElementById("login-error");
+
+
+            error.classList.add("hidden");
+
+
+            /*
+                MOCK LOGIN
+
+                ADMIN
+                username: admin
+                password: admin
+
+                CLIENT
+                username: client
+                password: client
+            */
+
+
+            if (username === "admin" && password === "admin") {
+
+                window.location.href =
+                    '@Url.Action("Dashboard", "Admin")';
+
+                return;
+            }
+
+
+            if (username === "client" && password === "client") {
+
+                window.location.href =
+                    '@Url.Action("Profile", "Account")';
+
+                return;
+            }
+
+
+            error.textContent =
+                'Invalid login. Use "admin / admin" or "client / client" for the prototype.';
+
+            error.classList.remove("hidden");
+        }
+
     </script>
+
+    <style>
+
+        .tab-btn {
+            position: relative;
+            color: var(--muted);
+            transition: color 0.2s ease;
+        }
+
+            .tab-btn:hover {
+                color: var(--ink);
+            }
+
+            .tab-btn.active {
+                color: var(--red);
+            }
+
+        .tab-underline {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: transparent;
+        }
+
+        .tab-btn.active .tab-underline {
+            background: var(--red);
+        }
+
+    </style>
+
 }

@@ -1,0 +1,297 @@
+﻿@{
+    ViewData["Title"] = "Manage Bookings";
+}
+
+<div class="min-h-screen bg-[var(--cream)]">
+
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-10">
+
+        <!-- HEADER -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-8">
+
+            <div>
+                <a href="/Admin/Dashboard"
+                   class="text-xs font-semibold text-[var(--muted)] hover:text-[var(--red)]">
+                    ← Admin Dashboard
+                </a>
+
+                <h1 class="font-display text-3xl mt-3">
+                    Bookings
+                </h1>
+
+                <p class="text-sm text-[var(--muted)] mt-2">
+                    Manage upcoming sanctuary visits and sessions.
+                </p>
+            </div>
+
+            <div class="flex gap-2">
+                <button class="px-4 py-2 rounded-lg bg-[var(--ink)] text-white text-xs font-semibold">
+                    All
+                </button>
+
+                <button class="px-4 py-2 rounded-lg border border-[var(--hairline)] text-xs font-semibold">
+                    Upcoming
+                </button>
+
+                <button class="px-4 py-2 rounded-lg border border-[var(--hairline)] text-xs font-semibold">
+                    Completed
+                </button>
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="bg-[var(--card)] border border-[var(--hairline)] rounded-2xl overflow-hidden">
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-sm">
+
+                    <thead class="bg-[var(--cream)]/60 border-b border-[var(--hairline)]">
+
+                        <tr>
+                            <th class="text-left px-6 py-4 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                                Visitor
+                            </th>
+
+                            <th class="text-left px-6 py-4 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                                Session
+                            </th>
+
+                            <th class="text-left px-6 py-4 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                                Date
+                            </th>
+
+                            <th class="text-left px-6 py-4 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                                Time
+                            </th>
+
+                            <th class="text-left px-6 py-4 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                                Status
+                            </th>
+
+                            <th class="px-6 py-4"></th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="divide-y divide-[var(--hairline)]">
+
+                        <tr class="hover:bg-[var(--cream)]/30">
+                            <td class="px-6 py-5">
+                                <p class="font-semibold">Sarah Naidoo</p>
+                                <p class="text-xs text-[var(--muted)]">
+                                    sarah@example.com
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-5">
+                                Viewing — Luna
+                            </td>
+
+                            <td class="px-6 py-5">
+                                20 Aug 2026
+                            </td>
+
+                            <td class="px-6 py-5">
+                                10:00
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <span class="status status-confirmed">
+                                    Confirmed
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-5 text-right">
+                                <button onclick="openBooking('Sarah Naidoo', 'Viewing — Luna', '20 August 2026', '10:00', 'sarah@example.com')"
+                                        class="text-xs font-semibold text-[var(--red)]">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-[var(--cream)]/30">
+                            <td class="px-6 py-5">
+                                <p class="font-semibold">Jason Singh</p>
+                                <p class="text-xs text-[var(--muted)]">
+                                    jason@example.com
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-5">
+                                Petting Session
+                            </td>
+
+                            <td class="px-6 py-5">
+                                21 Aug 2026
+                            </td>
+
+                            <td class="px-6 py-5">
+                                11:00
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <span class="status status-confirmed">
+                                    Confirmed
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-5 text-right">
+                                <button onclick="openBooking('Jason Singh', 'Petting Session', '21 August 2026', '11:00', 'jason@example.com')"
+                                        class="text-xs font-semibold text-[var(--red)]">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-[var(--cream)]/30">
+                            <td class="px-6 py-5">
+                                <p class="font-semibold">Amy Govender</p>
+                                <p class="text-xs text-[var(--muted)]">
+                                    amy@example.com
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-5">
+                                Viewing
+                            </td>
+
+                            <td class="px-6 py-5">
+                                22 Aug 2026
+                            </td>
+
+                            <td class="px-6 py-5">
+                                14:00
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <span class="status status-pending">
+                                    Pending
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-5 text-right">
+                                <button onclick="openBooking('Amy Govender', 'Viewing', '22 August 2026', '14:00', 'amy@example.com')"
+                                        class="text-xs font-semibold text-[var(--red)]">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- BOOKING MODAL -->
+<div id="bookingModal"
+     class="fixed inset-0 bg-black/50 hidden items-center justify-center p-5 z-50">
+
+    <div class="bg-[var(--card)] rounded-2xl shadow-2xl max-w-md w-full p-7">
+
+        <div class="flex items-start justify-between mb-6">
+
+            <div>
+                <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                    Booking details
+                </p>
+
+                <h2 class="font-display text-2xl mt-1">
+                    Booking #1024
+                </h2>
+            </div>
+
+            <button onclick="closeBooking()"
+                    class="text-[var(--muted)] hover:text-[var(--ink)] text-xl">
+                ×
+            </button>
+
+        </div>
+
+        <div class="space-y-4 text-sm">
+
+            <div>
+                <p class="text-xs text-[var(--muted)]">Visitor</p>
+                <p id="modalName" class="font-semibold"></p>
+            </div>
+
+            <div>
+                <p class="text-xs text-[var(--muted)]">Email</p>
+                <p id="modalEmail"></p>
+            </div>
+
+            <div>
+                <p class="text-xs text-[var(--muted)]">Session</p>
+                <p id="modalSession" class="font-medium"></p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+
+                <div>
+                    <p class="text-xs text-[var(--muted)]">Date</p>
+                    <p id="modalDate" class="font-medium"></p>
+                </div>
+
+                <div>
+                    <p class="text-xs text-[var(--muted)]">Time</p>
+                    <p id="modalTime" class="font-medium"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="flex gap-2 mt-7">
+
+            <button class="flex-1 rounded-lg bg-[var(--red)] text-white py-2.5 text-xs font-semibold uppercase tracking-wider">
+                Confirm
+            </button>
+
+            <button onclick="closeBooking()"
+                    class="flex-1 rounded-lg border border-[var(--hairline)] py-2.5 text-xs font-semibold uppercase tracking-wider">
+                Close
+            </button>
+
+        </div>
+
+        <button class="w-full mt-3 text-xs text-red-600 font-semibold">
+            Cancel booking
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+    function openBooking(name, session, date, time, email) {
+
+        document.getElementById("modalName").textContent = name;
+        document.getElementById("modalSession").textContent = session;
+        document.getElementById("modalDate").textContent = date;
+        document.getElementById("modalTime").textContent = time;
+        document.getElementById("modalEmail").textContent = email;
+
+        const modal = document.getElementById("bookingModal");
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+    }
+
+    function closeBooking() {
+
+        const modal = document.getElementById("bookingModal");
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    }
+
+</script>
